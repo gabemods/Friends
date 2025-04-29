@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Michael Taylor Woods</title>
+
+  <meta name="description" content="I am Michael Taylor Woods also known as Blonde Boy">
+  <meta name="keywords" content="Michael, Michael Taylor Woods, Blonde Boy">
+  <meta name="author" content="Michael Taylor Woods">
+  <meta property="og:title" content="Michael Taylor Woods">
+  <meta property="og:description" content="I am Michael Taylor Woods also known as Blonde Boy.">
+  <meta property="og:image" content="assets/images/1000023251_anonymized.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="google-site-verification" content="HihCOsgH0UVQPbqo7pMEgDNXIXR16hIm907pXZPI3w8"/>
+  <meta name="msvalidate.01" content="D8E2192242F2093B4379471689E3082A" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/x-icon" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+
+  <style>
+    @font-face {
+      font-family: 'OneUISans';
+      src: url('https://raw.githubusercontent.com/gabemods/gabemods.github.io/main/assets/fonts/(Regular)%20One%20UI%20Sans.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    #55CDFC 0%,
+    #55CDFC 20%,
+    #F7A8B8 20%,
+    #F7A8B8 40%,
+    white 40%,
+    white 60%,
+    #F7A8B8 60%,
+    #F7A8B8 80%,
+    #55CDFC 80%,
+    #55CDFC 100%
+  );
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'OneUISans', sans-serif;
+  color: black;
+}
+
+    .scroll-container {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  width: 100%; /* <--- instead of 100% */
+  height: 100dvh;
+}
+
+    .page {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+      width: 100%;
+      height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+  background: rgba(211, 211, 211, 0.3);
+  border-radius: 25px;
+  padding: 24px 16px;
+  max-width: 280px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba((255, 255, 255, 0.7);
+);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .card {
+    transform: scale(0.75);
+  }
+}
+
+    .card h1 {
+      font-size: 24px;
+      margin: 10px 0 5px;
+    }
+
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="scroll-container">
+    <div class="page">
+      <div class="card">
+        <h1>Gabriel</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>Tommy</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>Charlie</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>Michael</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>James</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>Adam</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>Jayden</h1>
+      </div>
+    </div>
+    <div class="page">
+      <div class="card">
+        <h1>Lewis</h1>
+      </div>
+    </div>
+
+    <div class="indicator-wrapper">
+      <div class="indicators">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const container = document.querySelector('.scroll-container');
+    const dots = document.querySelectorAll('.dot');
+
+    function updateDots() {
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
+    }
+
+    container.addEventListener('scroll', updateDots);
+
+    function fixHeight() {
+      document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
+      document.querySelectorAll('.page').forEach(p => {
+        p.style.height = window.innerHeight + 'px';
+      });
+    }
+
+    window.addEventListener('resize', fixHeight);
+    window.addEventListener('orientationchange', fixHeight);
+    fixHeight();
+  </script>
+</body>
+</html>
