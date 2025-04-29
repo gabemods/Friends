@@ -37,8 +37,8 @@
     #e0f2f7 0%,
     #b2ebf2 20%,
     #80deea 40%,
-    white 40%,
-    white 60%,
+    #f0f8ff 40%,
+    #f0f8ff 60%,
     #80deea 60%,
     #b2ebf2 80%,
     #e0f2f7 100%
@@ -50,14 +50,14 @@
 }
 
     .scroll-container {
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  width: 100%; /* <--- instead of 100% */
-  height: 100dvh;
-}
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      width: 100%; /* <--- instead of 100% */
+      height: 100dvh;
+    }
 
     .page {
       scroll-snap-align: center;
@@ -94,6 +94,14 @@
     .card h1 {
       font-size: 24px;
       margin: 10px 0 5px;
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
     }
 
     .indicator-wrapper {
@@ -148,51 +156,59 @@
   <div class="scroll-container">
     <div class="page">
       <div class="card">
+        <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
         <h1>Gabriel</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
+        <img src="URL_TO_TOMMY_IMAGE" alt="Tommy" />
         <h1>Tommy</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
+        <img src="URL_TO_CHARLIE_IMAGE" alt="Charlie" />
         <h1>Charlie</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
+         <img src="URL_TO_MICHAEL_IMAGE" alt="Michael" />
         <h1>Michael</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
+        <img src="URL_TO_JAMES_IMAGE" alt="James" />
         <h1>James</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    <div class="page">
+     <div class="page">
       <div class="card">
+        <img src="URL_TO_ADAM_IMAGE" alt="Adam" />
         <h1>Adam</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
+        <img src="URL_TO_JAYDEN_IMAGE" alt="Jayden" />
         <h1>Jayden</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
+        <img src="URL_TO_LEWIS_IMAGE" alt="Lewis" />
         <h1>Lewis</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods</p>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
 
     <div class="indicator-wrapper">
