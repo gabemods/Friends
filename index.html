@@ -55,7 +55,7 @@
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      width: 100%; /* <--- instead of 100% */
+      width: 100%;
       height: 100dvh;
     }
 
@@ -67,33 +67,38 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column; /* To place copyright below cards */
+      flex-direction: column;
     }
 
     .card {
-  background: rgba(211, 211, 211, 0.3);
-  border-radius: 25px;
-  padding: 24px 16px;
-  max-width: 280px;
-  text-align: center;
-  box-shadow: 0 0 25px rgba((255, 255, 255, 0.7);
-);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease;
-  margin-bottom: 20px; /* Add some space above the copyright */
-}
+      background: rgba(211, 211, 211, 0.3);
+      border-radius: 25px;
+      padding: 24px 16px;
+      max-width: 280px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba((255, 255, 255, 0.7);
+    );
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+      margin-bottom: 20px;
+    }
 
-@media (max-width: 768px) and (orientation: landscape) {
-  .card {
-    transform: scale(0.75);
-  }
-}
+    @media (max-width: 768px) and (orientation: landscape) {
+      .card {
+        transform: scale(0.75);
+      }
+    }
 
     .card h1 {
       font-size: 24px;
       margin: 10px 0 5px;
+    }
+
+     .card p {
+      margin-top: 10px;
+      font-size: 16px;
     }
 
     .card img {
@@ -106,7 +111,7 @@
 
     .indicator-wrapper {
       position: fixed;
-      bottom: 60px; /* Push indicator above copyright */
+      bottom: 60px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.2);
@@ -158,6 +163,8 @@
       <div class="card">
         <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
         <h1>Gabriel</h1>
+        <p>Jesus is King!</p>
+        <p>I am a coder and modder. I created this website.</p>
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
