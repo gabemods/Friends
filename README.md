@@ -1,2 +1,5 @@
 # Friends
-This project is not licensed for reuse. Please do not copy, redistribute, or use this code without explicit permission.
+Simple Friendship group project.
+
+# License
+This project is not licensed for reuse. Please do not copy, redistribute, or use this code and images without explicit permission.
