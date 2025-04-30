@@ -27,27 +27,27 @@
     }
 
     html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  background: linear-gradient(
-  to bottom,
-  #e0f2f7 0%,
-  #b2ebf2 20%,
-  #80deea 40%,
-  rgba(178, 223, 238, 0.7) 45%,
-  rgba(178, 223, 238, 0.7) 55%,
-  #80deea 60%,
-  #b2ebf2 80%,
-  #e0f2f7 100%
-);
-  background-size: cover;
-  background-repeat: no-repeat;
-  font-family: 'OneUISans', sans-serif;
-  color: black;
-}
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #e0f2f7 0%,
+        #b2ebf2 20%,
+        #80deea 40%,
+        rgba(178, 223, 238, 0.7) 45%,
+        rgba(178, 223, 238, 0.7) 55%,
+        #80deea 60%,
+        #b2ebf2 80%,
+        #e0f2f7 100%
+      );
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: 'OneUISans', sans-serif;
+      color: black;
+    }
 
     .scroll-container {
       display: flex;
@@ -68,6 +68,12 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+
+    .page:nth-child(5) { /* Targeting Michael's page */
+      background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue);
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
     .card {
