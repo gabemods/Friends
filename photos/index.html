@@ -66,24 +66,49 @@ backdrop-filter: blur(10px);
       height: 150px;
     }
     .indicator-wrapper {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
+      align-items: center;
+      z-index: 1000;
     }
+
     .indicators {
       display: flex;
       gap: 10px;
     }
+
     .dot {
       width: 10px;
       height: 10px;
+      background-color: white;
+      opacity: 0.4;
       border-radius: 50%;
-      background: #ccc;
+      transition: all 0.3s ease;
     }
+
     .dot.active {
-      background: #333;
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
     }
   </style>
 </head>
