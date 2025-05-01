@@ -5,165 +5,147 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photos</title>
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      overflow: hidden;
-      background: linear-gradient(
-        to bottom,
-        #e0f2f7 0%,
-        #b2ebf2 20%,
-        #80deea 40%,
-        rgba(178, 223, 238, 0.7) 45%,
-        rgba(178, 223, 238, 0.7) 55%,
-        #80deea 60%,
-        #b2ebf2 80%,
-        #e0f2f7 100%
-      );
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    overflow: hidden;
+    background: linear-gradient(
+      to bottom,
+      #e0f2f7 0%,
+      #b2ebf2 20%,
+      #80deea 40%,
+      rgba(178, 223, 238, 0.7) 45%,
+      rgba(178, 223, 238, 0.7) 55%,
+      #80deea 60%,
+      #b2ebf2 80%,
+      #e0f2f7 100%
+    );
+  }
+
+  .scroll-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    height: 100vh;
+  }
+
+  .page {
+    scroll-snap-align: start;
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Keep content centered vertically */
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .card {
+    background: rgba(211, 211, 211, 0.3);
+    border-radius: 25px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 285px;
+    /* Removed max-height to allow for taller content */
+    padding: 15px; /* Adjust overall padding inside the card */
+    margin-top: 40px; /* Move the card down */
+  }
+
+  .card h1 {
+    padding-left: 15px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  .card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Make profile image round */
+    object-fit: cover;
+    display: block;
+    margin: 15px auto 10px; /* Center profile image and adjust margins */
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px; /* Equal gap between rows and columns */
+    margin-top: 15px;
+    padding: 10px; /* Equal padding around the grid */
+  }
+
+  .photo-grid img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Ensure images are square */
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  .indicator-wrapper {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 8px 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .indicators {
+    display: flex;
+    gap: 10px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    opacity: 0.4;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  .copyright {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8em;
+    color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+  }
+
+  @keyframes buttonExpand {
+    0% {
+      transform: scale(1);
     }
 
-    .scroll-container {
-      display: flex;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
-      height: 100vh;
-    }
-
-    .page {
-      scroll-snap-align: start;
-      flex: 0 0 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start; /* Move content to the top */
-      align-items: center;
-      padding-top: 10px; /* Reduce top padding for the page */
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-bottom: 20px;
-      box-sizing: border-box;
-    }
-
-    .card {
-      background: rgba(211, 211, 211, 0.3);
-      border-radius: 25px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      max-width: 285px;
-      max-height: 55%;
-      padding-top: 1px;
-      padding-bottom: 45px; /* Increased padding below the card */
-      margin-top: 10px; /* Add a little top margin to the card */
-    }
-
-    .card h1 {
-      padding-left: 20px; /* Added left padding */
-      margin-top: 5px; /* Reduced top margin */
-      margin-bottom: 0; /* Reduced bottom margin */
-    }
-
-    .card img {
-      width: 60px;
-      height: 60px;
-      border-radius: 30%;
-      object-fit: cover;
-      display: block;
-      margin: 10px 0 0 20px; /* Reduced top and bottom margin */
-      cursor: pointer; /* Indicate it's clickable */
-      transition: transform 1s ease-in-out; /* Add transition for animation */
-    }
-
-    .card img:active {
-      transform: scale(1.1); /* Slight scale up when actively clicked */
-    }
-
-    .photo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px 15px; /* Reduced row gap, increased column gap */
-      margin-top: 10px; /* Reduced top margin */
-      padding-left: 10px; /* Add left padding */
-      padding-right: 20px; /* Add more right padding */
-    }
-
-    .photo-grid img {
-      width: 100%;
-      aspect-ratio: 1 / 1; /* Make images perfect squares */
-      border-radius: 15px;
-      object-fit: cover;
-      margin-bottom: 5px; /* Reduced bottom margin */
-      cursor: pointer; /* Indicate it's clickable */
-      transition: transform 1s ease-in-out; /* Add transition for animation */
-    }
-
-    .photo-grid img:active {
-      transform: scale(1.1); /* Slight scale up when actively clicked */
-    }
-
-    .indicator-wrapper {
-      position: fixed;
-      bottom: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      padding: 8px 16px;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .indicators {
-      display: flex;
-      gap: 10px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      background-color: white;
-      opacity: 0.4;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-    }
-
-    .dot.active {
-      opacity: 1;
+    50% {
       transform: scale(1.1);
     }
 
-    .copyright {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.8em;
-      color: rgba(0, 0, 0, 0.6);
-      z-index: 1000;
+    100% {
+      transform: scale(1);
     }
+  }
 
-    @keyframes buttonExpand {
-      0% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.1);
-      }
-
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    .nav-button-animate {
-      animation: buttonExpand 0.5s ease;
-    }
-  </style>
+  .nav-button-animate {
+    animation: buttonExpand 0.5s ease;
+  }
+</style>
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
