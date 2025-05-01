@@ -34,9 +34,12 @@
     flex: 0 0 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Move content to the top */
     align-items: center;
-    padding: 20px;
+    padding-top: 10px; /* Reduce top padding for the page */
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     box-sizing: border-box;
   }
 
@@ -50,6 +53,7 @@
     max-height: 55%;
     padding-top: 1px;
     padding-bottom: 45px; /* Increased padding below the card */
+    margin-top: 10px; /* Add a little top margin to the card */
   }
 
   .card h1 {
@@ -70,16 +74,17 @@
   .photo-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 5px; /* Reduced gap between images */
+    gap: 5px 15px; /* Reduced row gap, increased column gap */
     margin-top: 10px; /* Reduced top margin */
-    padding: 0 10px; /* Added horizontal padding for images */
+    padding-left: 10px; /* Add left padding */
+    padding-right: 20px; /* Add more right padding */
   }
 
   .photo-grid img {
-    width: 100%; /* Images take full width of their grid cell */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Make images perfect squares */
     border-radius: 15px;
     object-fit: cover;
-    height: 80px; /* Slightly reduced image height */
     margin-bottom: 5px; /* Reduced bottom margin */
   }
 
@@ -146,7 +151,7 @@
   .nav-button-animate {
     animation: buttonExpand 0.5s ease;
   }
-  </style>
+</style>
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
