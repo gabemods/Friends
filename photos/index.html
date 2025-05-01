@@ -41,36 +41,48 @@
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       max-width: 285px;
       max-height: 55%;
       padding-top: 1px;
       padding-bottom: 30px;
+      text-align: center;
     }
     .card h1 {
-  padding-left: 20px; /* Added left padding */
-  margin: 10px 0;
-}
+      padding-left: 0; /* Reset left padding */
+      margin: 10px 0;
+    }
     .card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 30%;
-  object-fit: cover;
-  display: block;
-  margin: 15px 0 5px 20px;
-}
+      width: 60px;
+      height: 60px;
+      border-radius: 30%;
+      object-fit: cover;
+      display: block;
+      margin: 15px auto 5px auto; /* Center the image */
+      cursor: pointer;
+      transition: transform 0.1s ease-in-out;
+    }
+    .card img:active {
+      transform: scale(1.1);
+    }
     .photo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 20px;
+      padding: 0 20px; /* Add some padding to the sides of the grid */
     }
     .photo-grid img {
-      width: 80%;
+      width: 100%;
       border-radius: 15px;
       object-fit: cover;
       height: 90px;
+      cursor: pointer;
+      transition: transform 0.1s ease-in-out;
+    }
+    .photo-grid img:active {
+      transform: scale(1.1);
     }
     .indicator-wrapper {
       position: fixed;
@@ -121,163 +133,163 @@ backdrop-filter: blur(10px);
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-  <a href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
-  <a href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
+  <a href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;" target="_blank">Profiles</a>
+  <a href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;" target="_blank">Photos</a>
 </div>
   <div class="scroll-container">
-    
+
     <div class="page">
       <div class="card">
-        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" />
+        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" onclick="openNewTab(this.src)" />
         <h1>Gabriel</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" />
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" />
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" />
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
+        <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" onclick="openNewTab(this.src)" />
         <h1>Charlie</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/charlie/1.jpg" alt="Charlie Photo 1" />
-        <img src="../assets/images/charlie/2.jpg" alt="Charlie Photo 2" />
-        <img src="../assets/images/charlie/3.jpg" alt="Charlie Photo 3" />
-        <img src="../assets/images/charlie/4.jpg" alt="Charlie Photo 4" />
+        <img src="../assets/images/charlie/1.jpg" alt="Charlie Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/charlie/2.jpg" alt="Charlie Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/charlie/3.jpg" alt="Charlie Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/charlie/4.jpg" alt="Charlie Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" />
+        <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" onclick="openNewTab(this.src)" />
         <h1>Michael</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/michael/1.jpg" alt="Michael Photo 1" />
-        <img src="../assets/images/michael/2.jpg" alt="Michael Photo 2" />
-        <img src="../assets/images/michael/3.jpg" alt="Michael Photo 3" />
-        <img src="../assets/images/michael/4.jpg" alt="Michael Photo 4" />
+        <img src="../assets/images/michael/1.jpg" alt="Michael Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/michael/2.jpg" alt="Michael Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/michael/3.jpg" alt="Michael Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/michael/4.jpg" alt="Michael Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" />
+        <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" onclick="openNewTab(this.src)" />
         <h1>Tommy</h1>
         <p>I used to play badketball and I like to shred the Guitar 🎸 </p>
     <div class="photo-grid">
-        <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" />
-        <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" />
-        <img src="../assets/images/tommy/3.jpg" alt="Tommy Photo 3" />
-        <img src="../assets/images/tommy/4.jpg" alt="Tommy Photo 4" />
+        <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/tommy/3.jpg" alt="Tommy Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/tommy/4.jpg" alt="Tommy Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_Harry_IMAGE" alt="Harry" />
+        <img src="../URL_TO_Harry_IMAGE" alt="Harry" onclick="openNewTab(this.src)" />
         <h1>Harry</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/harry/1.jpg" alt="Harry Photo 1" />
-        <img src="../assets/images/harry/2.jpg" alt="Harry Photo 2" />
-        <img src="../assets/images/harry/3.jpg" alt="Harry Photo 3" />
-        <img src="../assets/images/harry/4.jpg" alt="Harry Photo 4" />
+        <img src="../assets/images/harry/1.jpg" alt="Harry Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/harry/2.jpg" alt="Harry Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/harry/3.jpg" alt="Harry Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/harry/4.jpg" alt="Harry Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_JAMES_IMAGE" alt="James" />
+        <img src="../URL_TO_JAMES_IMAGE" alt="James" onclick="openNewTab(this.src)" />
         <h1>James</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/james/1.jpg" alt="James Photo 1" />
-        <img src=".//assets/images/james/2.jpg" alt="James Photo 2" />
-        <img src=".//assets/images/james/3.jpg" alt="James Photo 3" />
-        <img src="../assets/images/james/4.jpg" alt="James Photo 4" />
+        <img src="../assets/images/james/1.jpg" alt="James Photo 1" onclick="openNewTab(this.src)" />
+        <img src=".//assets/images/james/2.jpg" alt="James Photo 2" onclick="openNewTab(this.src)" />
+        <img src=".//assets/images/james/3.jpg" alt="James Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/james/4.jpg" alt="James Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/adam/IMG_0226.jpeg" alt="Adam" />
+        <img src="../assets/images/adam/IMG_0226.jpeg" alt="Adam" onclick="openNewTab(this.src)" />
         <h1>Adam</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/adam/1.jpg" alt="Adam Photo 1" />
-        <img src="../assets/images/adam/2.jpg" alt="Adam Photo 2" />
-        <img src="../assets/images/adam/3.jpg" alt="Adam Photo 3" />
-        <img src="../assets/images/adam/4.jpg" alt="Adam Photo 4" />
+        <img src="../assets/images/adam/1.jpg" alt="Adam Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/adam/2.jpg" alt="Adam Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/adam/3.jpg" alt="Adam Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/adam/4.jpg" alt="Adam Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/jayden/IMG_0225.jpeg" alt="Jayden" />
+        <img src="../assets/images/jayden/IMG_0225.jpeg" alt="Jayden" onclick="openNewTab(this.src)" />
         <h1>Jayden</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/jayden/1.jpg" alt="Jayden Photo 1" />
-        <img src="../assets/images/jayden/2.jpg" alt="Jayden Photo 2" />
-        <img src="../assets/images/jayden/3.jpg" alt="Jayden Photo 3" />
-        <img src="../assets/images/jayden/4.jpg" alt="Jayden Photo 4" />
+        <img src="../assets/images/jayden/1.jpg" alt="Jayden Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/jayden/2.jpg" alt="Jayden Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/jayden/3.jpg" alt="Jayden Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/jayden/4.jpg" alt="Jayden Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_LEWIS_IMAGE" alt="Lewis" />
+        <img src="../URL_TO_LEWIS_IMAGE" alt="Lewis" onclick="openNewTab(this.src)" />
         <h1>Lewis</h1>
-        
+
     <div class="photo-grid">
-        <img src="../assets/images/lewis/1.jpg" alt="Lewis Photo 1" />
-        <img src="../assets/images/lewis/2.jpg" alt="Lewis Photo 2" />
-        <img src="../assets/images/lewis/3.jpg" alt="Lewis Photo 3" />
-        <img src="../assets/images/lewis/4.jpg" alt="Lewis Photo 4" />
+        <img src="../assets/images/lewis/1.jpg" alt="Lewis Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/lewis/2.jpg" alt="Lewis Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/lewis/3.jpg" alt="Lewis Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/lewis/4.jpg" alt="Lewis Photo 4" onclick="openNewTab(this.src)" />
     </div>
-    
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-    
+
     <div class="indicator-wrapper">
       <div class="indicators">
         <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
@@ -287,6 +299,7 @@ backdrop-filter: blur(10px);
   <script>
     const container = document.querySelector('.scroll-container');
     const dots = document.querySelectorAll('.dot');
+    const allImages = document.querySelectorAll('.card img, .photo-grid img');
 
     function updateDots() {
       const index = Math.round(container.scrollLeft / container.offsetWidth);
@@ -304,6 +317,10 @@ backdrop-filter: blur(10px);
         p.style.flexDirection = 'column';
         p.style.justifyContent = 'center';
       });
+    }
+
+    function openNewTab(imageSrc) {
+      window.open(imageSrc, '_blank');
     }
 
     window.addEventListener('resize', fixHeight);
