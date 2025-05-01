@@ -43,18 +43,22 @@
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
 backdrop-filter: blur(10px);
 -webkit-backdrop-filter: blur(10px);
-      max-width: 300px;
-      height: auto;
+      max-width: 285px;
+      max-height: 55%;
       padding-top: 1px;
       padding-bottom: 30px;
     }
+    .card h1 {
+  padding-left: 20px; /* Added left padding */
+  margin: 10px 0;
+}
     .card img {
   width: 60px;
   height: 60px;
-  border-radius: 50%;
+  border-radius: 30%;
   object-fit: cover;
   display: block;
-  margin: 15px 0 5px 15px;
+  margin: 15px 0 5px 20px;
 }
     .photo-grid {
       display: grid;
@@ -63,10 +67,10 @@ backdrop-filter: blur(10px);
       margin-top: 20px;
     }
     .photo-grid img {
-      width: 100%;
+      width: 80%;
       border-radius: 15px;
       object-fit: cover;
-      height: 150px;
+      height: 100px;
     }
     .indicator-wrapper {
       position: fixed;
@@ -177,7 +181,7 @@ backdrop-filter: blur(10px);
       <div class="card">
         <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" />
         <h1>Tommy</h1>
-        
+        <p>I used to play badketball and I like to shred the Guitar 🎸 </p>
     <div class="photo-grid">
         <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" />
         <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" />
