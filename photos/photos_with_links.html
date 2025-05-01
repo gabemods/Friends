@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #e0f2f7 0%,
+        #b2ebf2 20%,
+        #80deea 40%,
+        rgba(178, 223, 238, 0.7) 45%,
+        rgba(178, 223, 238, 0.7) 55%,
+        #80deea 60%,
+        #b2ebf2 80%,
+        #e0f2f7 100%
+      );
+    }
+    .scroll-container {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+    }
+    .page {
+      scroll-snap-align: start;
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: rgba(211, 211, 211, 0.3);
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: 285px;
+      max-height: 55%;
+      padding-top: 1px;
+      padding-bottom: 30px;
+    }
+    .card h1 {
+      padding-left: 20px;
+      margin: 10px 0;
+    }
+    .card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 30%;
+      object-fit: cover;
+      display: block;
+      margin: 15px 0 5px 20px;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+      padding-left: 20px;
+    }
+    .photo-grid img {
+      width: 80%;
+      border-radius: 15px;
+      object-fit: cover;
+      height: 100px;
+    }
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .dot.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
+    <a href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
+    <a href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
+  </div>
+  <div class="scroll-container">
+
+    <div class="page">
+      <div class="card">
+        <img src="photos/gabriel.jpg" alt="Gabriel">
+        <h1>Gabriel</h1>
+        <div class="photo-grid">
+    <a href="photos/gabriel1.jpg" target="_blank"><img src="photos/gabriel1.jpg" alt=""></a><a href="photos/gabriel2.jpg" target="_blank"><img src="photos/gabriel2.jpg" alt=""></a><a href="photos/gabriel3.jpg" target="_blank"><img src="photos/gabriel3.jpg" alt=""></a><a href="photos/gabriel4.jpg" target="_blank"><img src="photos/gabriel4.jpg" alt=""></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="page">
+      <div class="card">
+        <img src="photos/charlie.jpg" alt="Charlie">
+        <h1>Charlie</h1>
+        <div class="photo-grid">
+    <a href="photos/charlie1.jpg" target="_blank"><img src="photos/charlie1.jpg" alt=""></a><a href="photos/charlie2.jpg" target="_blank"><img src="photos/charlie2.jpg" alt=""></a><a href="photos/charlie3.jpg" target="_blank"><img src="photos/charlie3.jpg" alt=""></a><a href="photos/charlie4.jpg" target="_blank"><img src="photos/charlie4.jpg" alt=""></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="page">
+      <div class="card">
+        <img src="photos/michael.jpg" alt="Michael">
+        <h1>Michael</h1>
+        <div class="photo-grid">
+    <a href="photos/michael1.jpg" target="_blank"><img src="photos/michael1.jpg" alt=""></a><a href="photos/michael2.jpg" target="_blank"><img src="photos/michael2.jpg" alt=""></a><a href="photos/michael3.jpg" target="_blank"><img src="photos/michael3.jpg" alt=""></a><a href="photos/michael4.jpg" target="_blank"><img src="photos/michael4.jpg" alt=""></a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</body>
+</html>
