@@ -2,155 +2,170 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Photos</title>
+
+  <meta name="description" content="A collection of friends' photos.">
+  <meta name="keywords" content="friends, photos">
+  <meta name="author" content="Gabe Mods">
+  <meta property="og:title" content="Photos">
+  <meta property="og:description" content="A collection of friends' photos.">
+  <meta property="og:image" content="URL_TO_YOUR_DEFAULT_IMAGE">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/x-icon" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+
   <style>
-  body {
-    margin: 0;
-    font-family: sans-serif;
-    overflow: hidden;
-    background: linear-gradient(
-      to bottom,
-      #e0f2f7 0%,
-      #b2ebf2 20%,
-      #80deea 40%,
-      rgba(178, 223, 238, 0.7) 45%,
-      rgba(178, 223, 238, 0.7) 55%,
-      #80deea 60%,
-      #b2ebf2 80%,
-      #e0f2f7 100%
-    );
-  }
-
-  .scroll-container {
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    height: 100vh;
-  }
-
-  .page {
-    scroll-snap-align: start;
-    flex: 0 0 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Keep content centered vertically */
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  .card {
-    background: rgba(211, 211, 211, 0.3);
-    border-radius: 25px;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    max-width: 285px;
-    /* Removed max-height to allow for taller content if needed */
-    padding-top: 1px;
-    padding-bottom: 45px; /* Increased padding below the card */
-    margin-top: 50px; /* Move the card down a bit more */
-  }
-
-  .card h1 {
-    padding-left: 20px; /* Added left padding */
-    margin-top: 5px; /* Reduced top margin */
-    margin-bottom: 0; /* Reduced bottom margin */
-  }
-
-  .card > img { /* Target only the direct img child of .card (the logo) */
-    width: 60px;
-    height: 60px;
-    border-radius: 15%;
-    object-fit: cover;
-    display: block;
-     margin-top: 10px;
-    margin-bottom: 0;
-    margin-left: 20px; /* Move the logo to the left */
-    margin-right: auto; /* Allows the card to determine right margin */
-  }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px; /* Equal gap between rows and columns */
-    margin-top: 10px; /* Reduced top margin */
-    padding: 10px; /* Equal padding around the grid */
-  }
-
-  .photo-grid img {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Ensure images are perfect squares */
-    border-radius: 15px;
-    object-fit: cover;
-  }
-
-  .indicator-wrapper {
-    position: fixed;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 8px 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .indicators {
-    display: flex;
-    gap: 10px;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    opacity: 0.4;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-  }
-
-  .dot.active {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-
-  .copyright {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.8em;
-    color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-  }
-
-  @keyframes buttonExpand {
-    0% {
-      transform: scale(1);
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #e0f2f7 0%,
+        #b2ebf2 20%,
+        #80deea 40%,
+        rgba(178, 223, 238, 0.7) 45%,
+        rgba(178, 223, 238, 0.7) 55%,
+        #80deea 60%,
+        #b2ebf2 80%,
+        #e0f2f7 100%
+      );
     }
 
-    50% {
+    .scroll-container {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+    }
+
+    .page {
+      scroll-snap-align: start;
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Keep content centered vertically */
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: rgba(211, 211, 211, 0.3);
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: 285px;
+      /* Removed max-height to allow for taller content if needed */
+      padding-top: 1px;
+      padding-bottom: 45px; /* Increased padding below the card */
+      margin-top: 50px; /* Move the card down a bit more */
+    }
+
+    .card h1 {
+      padding-left: 20px; /* Added left padding */
+      margin-top: 5px; /* Reduced top margin */
+      margin-bottom: 0; /* Reduced bottom margin */
+    }
+
+    .card > img { /* Target only the direct img child of .card (the logo) */
+      width: 60px;
+      height: 60px;
+      border-radius: 30%;
+      object-fit: cover;
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 0;
+      margin-left: 20px; /* Move the logo to the left */
+      margin-right: auto; /* Allows the card to determine right margin */
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px; /* Equal gap between rows and columns */
+      margin-top: 10px; /* Reduced top margin */
+      padding: 10px; /* Equal padding around the grid */
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* Ensure images are perfect squares */
+      border-radius: 15px;
+      object-fit: cover;
+    }
+
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
       transform: scale(1.1);
     }
 
-    100% {
-      transform: scale(1);
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
     }
-  }
 
-  .nav-button-animate {
-    animation: buttonExpand 0.5s ease;
-  }
-</style>
+    @keyframes buttonExpand {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .nav-button-animate {
+      animation: buttonExpand 0.5s ease;
+    }
+  </style>
 </head>
+
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
     <a id="profilesBtn" href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
@@ -342,7 +357,7 @@
         p.style.height = window.innerHeight + 'px';
         p.style.display = 'flex';
         p.style.flexDirection = 'column';
-        p.style.justifyContent = 'flex-start'; /* Keep this */
+        p.style.justifyContent = 'center';
       });
     }
 
