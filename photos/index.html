@@ -9,7 +9,7 @@
       margin: 0;
       font-family: sans-serif;
       overflow: hidden;
-    background: linear-gradient(
+      background: linear-gradient(
         to bottom,
         #e0f2f7 0%,
         #b2ebf2 20%,
@@ -26,6 +26,7 @@
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
       height: 100vh;
+      scroll-behavior: smooth;
     }
     .page {
       scroll-snap-align: start;
@@ -42,35 +43,34 @@
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
-backdrop-filter: blur(10px);
--webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       max-width: 285px;
       max-height: 55%;
       padding-top: 1px;
       padding-bottom: 30px;
     }
     .card h1 {
-  padding-left: 20px; /* Added left padding */
-  margin: 10px 0;
-}
+      padding-left: 20px;
+      margin: 10px 0;
+    }
     .card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 30%;
-  object-fit: cover;
-  display: block;
-  margin: 15px 0 5px 20px;
-}
-.card>img,
-.photo-grid img {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.card>img:active,
-.photo-grid img:active {
-  transform: scale(1.2);
-}
+      width: 60px;
+      height: 60px;
+      border-radius: 30%;
+      object-fit: cover;
+      display: block;
+      margin: 15px 0 5px 20px;
+    }
+    .card > img,
+    .photo-grid img {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .card > img:active,
+    .photo-grid img:active {
+      transform: scale(1.2);
+    }
     .photo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -99,12 +99,10 @@ backdrop-filter: blur(10px);
       align-items: center;
       z-index: 1000;
     }
-
     .indicators {
       display: flex;
       gap: 10px;
     }
-
     .dot {
       width: 10px;
       height: 10px;
@@ -113,12 +111,10 @@ backdrop-filter: blur(10px);
       border-radius: 50%;
       transition: all 0.3s ease;
     }
-
     .dot.active {
       opacity: 1;
       transform: scale(1.1);
     }
-
     .copyright {
       position: fixed;
       bottom: 10px;
@@ -128,70 +124,62 @@ backdrop-filter: blur(10px);
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
-    
     .nav-button {
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
-
-.nav-button.photos {
-  background-color: #80deea;
-  color: white;
-}
-
-.nav-button.profiles {
-  background-color: #cfcfcf;
-  color: gray;
-}
-.scroll-container {
-  scroll-behavior: smooth;
-}
-@keyframes buttonExpand {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    .nav-button.photos {
+      background-color: #80deea;
+      color: white;
+    }
+    .nav-button.profiles {
+      background-color: #cfcfcf;
+      color: gray;
+    }
+    @keyframes buttonExpand {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 <script src="https://unpkg.com/@barba/core"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <body data-barba="wrapper">
   <div data-barba="container" data-barba-namespace="photos">
-  <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-<a href="../index.html" class="nav-button profiles animate-expand">Profiles</a>
-<a href="index.html" class="nav-button photos animate-expand">Photos</a>
-</div>
-  <div class="scroll-container">
-    
-    <div class="page">
-      <div class="card">
-        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" />
-        <h1>Gabriel</h1>
-        
-    <div class="photo-grid">
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" />
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" />
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" />
-        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" />
+    <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
+      <a href="../index.html" class="nav-button profiles animate-expand">Profiles</a>
+      <a href="index.html" class="nav-button photos animate-expand">Photos</a>
     </div>
     
+    <div class="scroll-container">
+      <!-- Example of one page -->
+      <div class="page">
+        <div class="card">
+          <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" />
+          <h1>Gabriel</h1>
+          <div class="photo-grid">
+            <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" />
+            <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" />
+            <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" />
+            <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" />
+          </div>
+        </div>
+        <p class="copyright">&copy; Gabe Mods 2025</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
-    </div>
-    
-
-    <div class="page">
+      
+   <div class="page">
       <div class="card">
         <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
         <h1>Charlie</h1>
@@ -332,66 +320,65 @@ backdrop-filter: blur(10px);
       </div>
     </div>
   </div>
+
   <script>
-  const container = document.querySelector('.scroll-container');
-  const dots = document.querySelectorAll('.dot');
-  
-  function updateDots() {
-    const index = Math.round(container.scrollLeft / container.offsetWidth);
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-  }
-  
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      container.scrollTo({
-        left: index * container.offsetWidth,
-        behavior: 'smooth'
+    const container = document.querySelector('.scroll-container');
+    const dots = document.querySelectorAll('.dot');
+
+    function updateDots() {
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        container.scrollTo({
+          left: index * container.offsetWidth,
+          behavior: 'smooth'
+        });
       });
     });
-  });
-  
-  container.addEventListener('scroll', updateDots);
-  
-  function fixHeight() {
-    container.style.height = window.innerHeight + 'px';
-    document.querySelectorAll('.page').forEach(p => {
-      p.style.height = window.innerHeight + 'px';
-      p.style.display = 'flex';
-      p.style.flexDirection = 'column';
-      p.style.justifyContent = 'center';
-    });
-  }
-  
-  window.addEventListener('resize', fixHeight);
-  window.addEventListener('orientationchange', fixHeight);
-  window.addEventListener('load', () => {
-    fixHeight();
-    updateDots();
-  });
-</script>
 
-<script>
-barba.init({
-  transitions: [
-    {
-      name: 'fade',
-      leave(data) {
-        return gsap.to(data.current.container, {
-          opacity: 0,
-          duration: 0.2
-        });
-      },
-      enter(data) {
-        return gsap.from(data.next.container, {
-          opacity: 0,
-          duration: 0.2
-        });
-      }
+    container.addEventListener('scroll', updateDots);
+
+    function fixHeight() {
+      container.style.height = window.innerHeight + 'px';
+      document.querySelectorAll('.page').forEach(p => {
+        p.style.height = window.innerHeight + 'px';
+        p.style.display = 'flex';
+        p.style.flexDirection = 'column';
+        p.style.justifyContent = 'center';
+      });
     }
-  ]
-});
-</script>
+
+    window.addEventListener('resize', fixHeight);
+    window.addEventListener('orientationchange', fixHeight);
+    window.addEventListener('load', () => {
+      fixHeight();
+      updateDots();
+    });
+
+    barba.init({
+      transitions: [
+        {
+          name: 'fade',
+          leave(data) {
+            return gsap.to(data.current.container, {
+              opacity: 0,
+              duration: 0.2
+            });
+          },
+          enter(data) {
+            return gsap.from(data.next.container, {
+              opacity: 0,
+              duration: 0.2
+            });
+          }
+        }
+      ]
+    });
+  </script>
 </body>
 </html>
