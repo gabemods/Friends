@@ -186,8 +186,8 @@
 
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-    <a href="https://gabemods.github.io/Friends/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
-    <a href="photos/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+    <a href="https://gabemods.github.io/Friends/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;" target="_blank">Profiles</a>
+    <a href="photos/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;" target="_blank">Photos</a>
   </div>
 
   <div class="scroll-container">
@@ -264,7 +264,6 @@
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
 
-    <!-- Indicator Dots -->
     <div class="indicator-wrapper">
       <div class="indicators">
         <div class="dot active"></div>
@@ -280,12 +279,10 @@
     </div>
   </div>
 
-  <!-- Fullscreen overlay -->
   <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
     <img id="fullscreenImage" src="" alt="Full Image" />
   </div>
 
-  <!-- JavaScript -->
   <script>
     // Scroll indicators
     const container = document.querySelector('.scroll-container');
@@ -323,9 +320,7 @@
       profileImages.forEach(img => {
         img.addEventListener('click', (e) => {
           e.stopPropagation();
-          fullscreenImg.src = img.src;
-          overlay.style.display = 'flex';
-          fullscreenImg.style.transform = 'scale(1.5)';
+          window.open(img.src, '_blank');
         });
       });
 
