@@ -38,6 +38,7 @@
       box-sizing: border-box;
     }
     .card {
+      margin-top: -100px;
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
@@ -59,6 +60,16 @@ backdrop-filter: blur(10px);
   object-fit: cover;
   display: block;
   margin: 15px 0 5px 20px;
+}
+.card>img,
+.photo-grid img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card>img:active,
+.photo-grid img:active {
+  transform: scale(1.2);
 }
     .photo-grid {
       display: grid;
@@ -311,5 +322,39 @@ backdrop-filter: blur(10px);
     fixHeight();
     updateDots();
   </script>
+  <script>
+  const container = document.querySelector('.scroll-container');
+  const dots = document.querySelectorAll('.dot');
+  
+  function updateDots() {
+    const index = Math.round(container.scrollLeft / container.offsetWidth);
+    dots.forEach(dot => dot.classList.remove('active'));
+    if (dots[index]) dots[index].classList.add('active');
+  }
+  
+  container.addEventListener('scroll', updateDots);
+  
+  function fixHeight() {
+    document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
+    document.querySelectorAll('.page').forEach(p => {
+      p.style.height = window.innerHeight + 'px';
+      p.style.display = 'flex';
+      p.style.flexDirection = 'column';
+      p.style.justifyContent = 'center';
+    });
+  }
+  
+  window.addEventListener('resize', fixHeight);
+  window.addEventListener('orientationchange', fixHeight);
+  fixHeight();
+  updateDots();
+  
+  // Open images in a new tab when clicked
+  document.querySelectorAll('.card img').forEach(img => {
+    img.addEventListener('click', () => {
+      window.open(img.src, '_blank');
+    });
+  });
+</script>
 </body>
 </html>
