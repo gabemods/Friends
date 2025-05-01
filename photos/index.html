@@ -5,153 +5,165 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Photos</title>
   <style>
-  body {
-    margin: 0;
-    font-family: sans-serif;
-    overflow: hidden;
-    background: linear-gradient(
-      to bottom,
-      #e0f2f7 0%,
-      #b2ebf2 20%,
-      #80deea 40%,
-      rgba(178, 223, 238, 0.7) 45%,
-      rgba(178, 223, 238, 0.7) 55%,
-      #80deea 60%,
-      #b2ebf2 80%,
-      #e0f2f7 100%
-    );
-  }
-
-  .scroll-container {
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    height: 100vh;
-  }
-
-  .page {
-    scroll-snap-align: start;
-    flex: 0 0 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* Move content to the top */
-    align-items: center;
-    padding-top: 10px; /* Reduce top padding for the page */
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-    box-sizing: border-box;
-  }
-
-  .card {
-    background: rgba(211, 211, 211, 0.3);
-    border-radius: 25px;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    max-width: 285px;
-    max-height: 55%;
-    padding-top: 1px;
-    padding-bottom: 45px; /* Increased padding below the card */
-    margin-top: 10px; /* Add a little top margin to the card */
-  }
-
-  .card h1 {
-    padding-left: 20px; /* Added left padding */
-    margin-top: 5px; /* Reduced top margin */
-    margin-bottom: 0; /* Reduced bottom margin */
-  }
-
-  .card img {
-    width: 60px;
-    height: 60px;
-    border-radius: 30%;
-    object-fit: cover;
-    display: block;
-    margin: 10px 0 0 20px; /* Reduced top and bottom margin */
-  }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5px 15px; /* Reduced row gap, increased column gap */
-    margin-top: 10px; /* Reduced top margin */
-    padding-left: 10px; /* Add left padding */
-    padding-right: 20px; /* Add more right padding */
-  }
-
-  .photo-grid img {
-    width: 100%;
-    aspect-ratio: 1 / 1; /* Make images perfect squares */
-    border-radius: 15px;
-    object-fit: cover;
-    margin-bottom: 5px; /* Reduced bottom margin */
-  }
-
-  .indicator-wrapper {
-    position: fixed;
-    bottom: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 8px 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .indicators {
-    display: flex;
-    gap: 10px;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    opacity: 0.4;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-  }
-
-  .dot.active {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-
-  .copyright {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.8em;
-    color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-  }
-
-  @keyframes buttonExpand {
-    0% {
-      transform: scale(1);
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #e0f2f7 0%,
+        #b2ebf2 20%,
+        #80deea 40%,
+        rgba(178, 223, 238, 0.7) 45%,
+        rgba(178, 223, 238, 0.7) 55%,
+        #80deea 60%,
+        #b2ebf2 80%,
+        #e0f2f7 100%
+      );
     }
 
-    50% {
+    .scroll-container {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+    }
+
+    .page {
+      scroll-snap-align: start;
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start; /* Move content to the top */
+      align-items: center;
+      padding-top: 10px; /* Reduce top padding for the page */
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    .card {
+      background: rgba(211, 211, 211, 0.3);
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: 285px;
+      max-height: 55%;
+      padding-top: 1px;
+      padding-bottom: 45px; /* Increased padding below the card */
+      margin-top: 10px; /* Add a little top margin to the card */
+    }
+
+    .card h1 {
+      padding-left: 20px; /* Added left padding */
+      margin-top: 5px; /* Reduced top margin */
+      margin-bottom: 0; /* Reduced bottom margin */
+    }
+
+    .card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 30%;
+      object-fit: cover;
+      display: block;
+      margin: 10px 0 0 20px; /* Reduced top and bottom margin */
+      cursor: pointer; /* Indicate it's clickable */
+      transition: transform 1s ease-in-out; /* Add transition for animation */
+    }
+
+    .card img:active {
+      transform: scale(1.1); /* Slight scale up when actively clicked */
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 15px; /* Reduced row gap, increased column gap */
+      margin-top: 10px; /* Reduced top margin */
+      padding-left: 10px; /* Add left padding */
+      padding-right: 20px; /* Add more right padding */
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* Make images perfect squares */
+      border-radius: 15px;
+      object-fit: cover;
+      margin-bottom: 5px; /* Reduced bottom margin */
+      cursor: pointer; /* Indicate it's clickable */
+      transition: transform 1s ease-in-out; /* Add transition for animation */
+    }
+
+    .photo-grid img:active {
+      transform: scale(1.1); /* Slight scale up when actively clicked */
+    }
+
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
       transform: scale(1.1);
     }
 
-    100% {
-      transform: scale(1);
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
     }
-  }
 
-  .nav-button-animate {
-    animation: buttonExpand 0.5s ease;
-  }
-</style>
+    @keyframes buttonExpand {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .nav-button-animate {
+      animation: buttonExpand 0.5s ease;
+    }
+  </style>
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
@@ -162,14 +174,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" />
+        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" onclick="openFullscreen(this.src)" />
         <h1>Gabriel</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" />
-          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" />
-          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" />
-          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" />
+          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -179,14 +191,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
+        <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" onclick="openFullscreen(this.src)" />
         <h1>Charlie</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/charlie/1.jpg" alt="Charlie Photo 1" />
-          <img src="../assets/images/charlie/2.jpg" alt="Charlie Photo 2" />
-          <img src="../assets/images/charlie/3.jpg" alt="Charlie Photo 3" />
-          <img src="../assets/images/charlie/4.jpg" alt="Charlie Photo 4" />
+          <img src="../assets/images/charlie/1.jpg" alt="Charlie Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/charlie/2.jpg" alt="Charlie Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/charlie/3.jpg" alt="Charlie Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/charlie/4.jpg" alt="Charlie Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -196,14 +208,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" />
+        <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" onclick="openFullscreen(this.src)" />
         <h1>Michael</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/michael/1.jpg" alt="Michael Photo 1" />
-          <img src="../assets/images/michael/2.jpg" alt="Michael Photo 2" />
-          <img src="../assets/images/michael/3.jpg" alt="Michael Photo 3" />
-          <img src="../assets/images/michael/4.jpg" alt="Michael Photo 4" />
+          <img src="../assets/images/michael/1.jpg" alt="Michael Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/michael/2.jpg" alt="Michael Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/michael/3.jpg" alt="Michael Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/michael/4.jpg" alt="Michael Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -213,13 +225,13 @@
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" />
+        <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" onclick="openFullscreen(this.src)" />
         <h1>Tommy</h1>
         <div class="photo-grid">
-          <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" />
-          <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" />
-          <img src="../assets/images/tommy/3.jpg" alt="Tommy Photo 3" />
-          <img src="../assets/images/tommy/4.jpg" alt="Tommy Photo 4" />
+          <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/tommy/3.jpg" alt="Tommy Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/tommy/4.jpg" alt="Tommy Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -229,14 +241,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_Harry_IMAGE" alt="Harry" />
+        <img src="../URL_TO_Harry_IMAGE" alt="Harry" onclick="openFullscreen(this.src)" />
         <h1>Harry</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/harry/1.jpg" alt="Harry Photo 1" />
-          <img src="../assets/images/harry/2.jpg" alt="Harry Photo 2" />
-          <img src="../assets/images/harry/3.jpg" alt="Harry Photo 3" />
-          <img src="../assets/images/harry/4.jpg" alt="Harry Photo 4" />
+          <img src="../assets/images/harry/1.jpg" alt="Harry Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/harry/2.jpg" alt="Harry Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/harry/3.jpg" alt="Harry Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/harry/4.jpg" alt="Harry Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -246,14 +258,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_JAMES_IMAGE" alt="James" />
+        <img src="../URL_TO_JAMES_IMAGE" alt="James" onclick="openFullscreen(this.src)" />
         <h1>James</h1>
 
         <div class="photo-grid">
-          <img src=".//assets/images/james/2.jpg" alt="James Photo 2" />
-          <img src=".//assets/images/james/3.jpg" alt="James Photo 3" />
-          <img src="../assets/images/james/4.jpg" alt="James Photo 4" />
-          <img src="../assets/images/james/1.jpg" alt="James Photo 1" />
+          <img src=".//assets/images/james/2.jpg" alt="James Photo 2" onclick="openFullscreen(this.src)" />
+          <img src=".//assets/images/james/3.jpg" alt="James Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/james/4.jpg" alt="James Photo 4" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/james/1.jpg" alt="James Photo 1" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -263,14 +275,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/adam/IMG_0226.jpeg" alt="Adam" />
+        <img src="../assets/images/adam/IMG_0226.jpeg" alt="Adam" onclick="openFullscreen(this.src)" />
         <h1>Adam</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/adam/1.jpg" alt="Adam Photo 1" />
-          <img src="../assets/images/adam/2.jpg" alt="Adam Photo 2" />
-          <img src="../assets/images/adam/3.jpg" alt="Adam Photo 3" />
-          <img src="../assets/images/adam/4.jpg" alt="Adam Photo 4" />
+          <img src="../assets/images/adam/1.jpg" alt="Adam Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/adam/2.jpg" alt="Adam Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/adam/3.jpg" alt="Adam Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/adam/4.jpg" alt="Adam Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -280,14 +292,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/jayden/IMG_0225.jpeg" alt="Jayden" />
+        <img src="../assets/images/jayden/IMG_0225.jpeg" alt="Jayden" onclick="openFullscreen(this.src)" />
         <h1>Jayden</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/jayden/1.jpg" alt="Jayden Photo 1" />
-          <img src="../assets/images/jayden/2.jpg" alt="Jayden Photo 2" />
-          <img src="../assets/images/jayden/3.jpg" alt="Jayden Photo 3" />
-          <img src="../assets/images/jayden/4.jpg" alt="Jayden Photo 4" />
+          <img src="../assets/images/jayden/1.jpg" alt="Jayden Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/jayden/2.jpg" alt="Jayden Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/jayden/3.jpg" alt="Jayden Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/jayden/4.jpg" alt="Jayden Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -297,14 +309,14 @@
 
     <div class="page">
       <div class="card">
-        <img src="../URL_TO_LEWIS_IMAGE" alt="Lewis" />
+        <img src="../URL_TO_LEWIS_IMAGE" alt="Lewis" onclick="openFullscreen(this.src)" />
         <h1>Lewis</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/lewis/1.jpg" alt="Lewis Photo 1" />
-          <img src="../assets/images/lewis/2.jpg" alt="Lewis Photo 2" />
-          <img src="../assets/images/lewis/3.jpg" alt="Lewis Photo 3" />
-          <img src="../assets/images/lewis/4.jpg" alt="Lewis Photo 4" />
+          <img src="../assets/images/lewis/1.jpg" alt="Lewis Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/lewis/2.jpg" alt="Lewis Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/lewis/3.jpg" alt="Lewis Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/lewis/4.jpg" alt="Lewis Photo 4" onclick="openFullscreen(this.src)" />
         </div>
 
       </div>
@@ -328,6 +340,7 @@
   <script>
     const container = document.querySelector('.scroll-container');
     const dots = document.querySelectorAll('.dot');
+    const cardImages = document.querySelectorAll('.card img, .photo-grid img');
 
     function updateDots() {
       const index = Math.round(container.scrollLeft / container.offsetWidth);
@@ -343,7 +356,7 @@
         p.style.height = window.innerHeight + 'px';
         p.style.display = 'flex';
         p.style.flexDirection = 'column';
-        p.style.justifyContent = 'center';
+        p.style.justifyContent = 'flex-start'; /* Keep this */
       });
     }
 
@@ -351,25 +364,21 @@
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
     updateDots();
-  </script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const profileImages = document.querySelectorAll('.card img');
-      const overlay = document.getElementById('fullscreenOverlay');
-      const fullscreenImg = document.getElementById('fullscreenImage');
+    function openFullscreen(imgSrc) {
+      window.open(imgSrc, '_blank');
+    }
 
-      profileImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.open(img.src, '_blank');
-        });
+    cardImages.forEach(img => {
+      img.addEventListener('mousedown', function() {
+        this.classList.add('active');
       });
-
-      window.hideFullscreen = function () {
-        overlay.style.display = 'none';
-        fullscreenImg.style.transform = 'scale(1)';
-      }
+      img.addEventListener('mouseup', function() {
+        this.classList.remove('active');
+      });
+      img.addEventListener('mouseleave', function() {
+        this.classList.remove('active');
+      });
     });
   </script>
   <script>
