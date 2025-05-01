@@ -160,6 +160,27 @@
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
+    .fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  display: none;
+}
+
+.fullscreen-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+}
   </style>
 </head>
 
@@ -283,5 +304,29 @@
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
   </script>
+
+  <script>
+  const profileImages = document.querySelectorAll('.card img');
+  const overlay = document.getElementById('fullscreenOverlay');
+  const fullscreenImg = document.getElementById('fullscreenImage');
+
+  profileImages.forEach(img => {
+    img.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevents event bubbling
+      fullscreenImg.src = img.src;
+      overlay.style.display = 'flex';
+      fullscreenImg.style.transform = 'scale(1.5)';
+    });
+  });
+
+  function hideFullscreen() {
+    overlay.style.display = 'none';
+    fullscreenImg.style.transform = 'scale(1)';
+  }
+</script>
+  
+  <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
+  <img id="fullscreenImage" src="" alt="Full Image" />
+</div>
 </body>
 </html>
