@@ -118,6 +118,22 @@ backdrop-filter: blur(10px);
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
+
+   @keyframes buttonExpand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nav-button-animate {
+  animation: buttonExpand 0.5s ease;
+} 
   </style>
 </head>
 <body>
