@@ -70,7 +70,7 @@
       flex-direction: column;
     }
 
-    .page:nth-child(3) { /* Targeting Michael's page */
+    .page:nth-child(3) {
       background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue);
       background-size: cover;
       background-repeat: no-repeat;
@@ -82,8 +82,7 @@
       padding: 24px 16px;
       max-width: 280px;
       text-align: center;
-      box-shadow: 0 0 25px rgba((255, 255, 255, 0.7);
-    );
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -102,7 +101,7 @@
       margin: 10px 0 5px;
     }
 
-     .card p {
+    .card p {
       margin-top: 10px;
       font-size: 16px;
     }
@@ -113,6 +112,7 @@
       border-radius: 50%;
       object-fit: cover;
       margin-bottom: 10px;
+      cursor: pointer;
     }
 
     .indicator-wrapper {
@@ -160,37 +160,38 @@
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
-    .fullscreen-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  display: none;
-}
 
-.fullscreen-overlay img {
-  max-width: 90vw;
-  max-height: 90vh;
-  border-radius: 20px;
-  transition: transform 0.3s ease;
-}
+    .fullscreen-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .fullscreen-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+    }
   </style>
 </head>
 
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-  <a href="https://gabemods.github.io/Friends/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
-  <a href="photos/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
-</div>
+    <a href="https://gabemods.github.io/Friends/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
+    <a href="photos/index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+  </div>
+
   <div class="scroll-container">
-    <div class="page">
+<div class="page">
       <div class="card">
         <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
         <h1>Gabriel</h1>
@@ -263,6 +264,7 @@
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
 
+    <!-- Indicator Dots -->
     <div class="indicator-wrapper">
       <div class="indicators">
         <div class="dot active"></div>
@@ -278,14 +280,21 @@
     </div>
   </div>
 
+  <!-- Fullscreen overlay -->
+  <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
+    <img id="fullscreenImage" src="" alt="Full Image" />
+  </div>
+
+  <!-- JavaScript -->
   <script>
+    // Scroll indicators
     const container = document.querySelector('.scroll-container');
     const dots = document.querySelectorAll('.dot');
 
     function updateDots() {
       const index = Math.round(container.scrollLeft / container.offsetWidth);
       dots.forEach(dot => dot.classList.remove('active'));
-      dots[index].classList.add('active');
+      if (dots[index]) dots[index].classList.add('active');
     }
 
     container.addEventListener('scroll', updateDots);
@@ -306,27 +315,25 @@
   </script>
 
   <script>
-  const profileImages = document.querySelectorAll('.card img');
-  const overlay = document.getElementById('fullscreenOverlay');
-  const fullscreenImg = document.getElementById('fullscreenImage');
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImages = document.querySelectorAll('.card img');
+      const overlay = document.getElementById('fullscreenOverlay');
+      const fullscreenImg = document.getElementById('fullscreenImage');
 
-  profileImages.forEach(img => {
-    img.addEventListener('click', (e) => {
-      e.stopPropagation(); // Prevents event bubbling
-      fullscreenImg.src = img.src;
-      overlay.style.display = 'flex';
-      fullscreenImg.style.transform = 'scale(1.5)';
+      profileImages.forEach(img => {
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fullscreenImg.src = img.src;
+          overlay.style.display = 'flex';
+          fullscreenImg.style.transform = 'scale(1.5)';
+        });
+      });
+
+      window.hideFullscreen = function () {
+        overlay.style.display = 'none';
+        fullscreenImg.style.transform = 'scale(1)';
+      }
     });
-  });
-
-  function hideFullscreen() {
-    overlay.style.display = 'none';
-    fullscreenImg.style.transform = 'scale(1)';
-  }
-</script>
-  
-  <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
-  <img id="fullscreenImage" src="" alt="Full Image" />
-</div>
+  </script>
 </body>
 </html>
