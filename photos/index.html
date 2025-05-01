@@ -32,8 +32,7 @@
       flex: 0 0 100%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* Align items to the left */
       padding: 20px;
       box-sizing: border-box;
     }
@@ -48,6 +47,7 @@
       padding-top: 1px;
       padding-bottom: 30px;
       text-align: center;
+      margin-left: 20px; /* Add some left margin to the card */
     }
     .card h1 {
       padding-left: 0; /* Reset left padding */
@@ -68,16 +68,17 @@
     }
     .photo-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Responsive columns */
+      gap: 5px; /* Reduced gap between images */
+      margin-top: 10px; /* Reduced top margin */
       padding: 0 20px; /* Add some padding to the sides of the grid */
     }
     .photo-grid img {
       width: 100%;
+      height: auto;
+      aspect-ratio: 1 / 1; /* Make images square */
       border-radius: 15px;
       object-fit: cover;
-      height: 90px;
       cursor: pointer;
       transition: transform 0.1s ease-in-out;
     }
@@ -123,19 +124,45 @@
     .copyright {
       position: fixed;
       bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 20px; /* Move copyright to the left */
       font-size: 0.8em;
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
+    .header-nav {
+      display: flex;
+      gap: 10px;
+      padding: 15px 20px; /* Add left padding to align with content */
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      width: 100%; /* Ensure it spans the width */
+      box-sizing: border-box; /* Include padding in width calculation */
+      justify-content: flex-start; /* Align items to the left */
+    }
+    .header-nav a {
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+    .header-nav a:first-child {
+      background-color: #cfcfcf;
+      color: gray;
+    }
+    .header-nav a:last-child {
+      background-color: #80deea;
+      color: white;
+    }
   </style>
 </head>
 <body>
-  <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-  <a href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;" target="_blank">Profiles</a>
-  <a href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;" target="_blank">Photos</a>
-</div>
+  <div class="header-nav">
+    <a href="../index.html" target="_blank">Profiles</a>
+    <a href="index.html" target="_blank">Photos</a>
+  </div>
   <div class="scroll-container">
 
     <div class="page">
@@ -315,7 +342,7 @@
         p.style.height = window.innerHeight + 'px';
         p.style.display = 'flex';
         p.style.flexDirection = 'column';
-        p.style.justifyContent = 'center';
+        p.style.justifyContent = 'flex-start'; /* Align content to the top */
       });
     }
 
