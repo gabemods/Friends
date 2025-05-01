@@ -128,12 +128,49 @@ backdrop-filter: blur(10px);
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
+    
+    .nav-button {
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.nav-button.photos {
+  background-color: #80deea;
+  color: white;
+}
+
+.nav-button.profiles {
+  background-color: #cfcfcf;
+  color: gray;
+}
+.scroll-container {
+  scroll-behavior: smooth;
+}
+@keyframes buttonExpand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
   </style>
 </head>
-<body>
+<script src="https://unpkg.com/@barba/core"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<body data-barba="wrapper">
+  <div data-barba="container" data-barba-namespace="photos">
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-  <a href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
-  <a href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
+<a href="../index.html" class="nav-button profiles animate-expand">Profiles</a>
+<a href="index.html" class="nav-button photos animate-expand">Photos</a>
 </div>
   <div class="scroll-container">
     
@@ -296,46 +333,29 @@ backdrop-filter: blur(10px);
     </div>
   </div>
   <script>
-    const container = document.querySelector('.scroll-container');
-    const dots = document.querySelectorAll('.dot');
-
-    function updateDots() {
-      const index = Math.round(container.scrollLeft / container.offsetWidth);
-      dots.forEach(dot => dot.classList.remove('active'));
-      if (dots[index]) dots[index].classList.add('active');
-    }
-
-    container.addEventListener('scroll', updateDots);
-
-    function fixHeight() {
-      document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
-      document.querySelectorAll('.page').forEach(p => {
-        p.style.height = window.innerHeight + 'px';
-        p.style.display = 'flex';
-        p.style.flexDirection = 'column';
-        p.style.justifyContent = 'center';
-      });
-    }
-
-    window.addEventListener('resize', fixHeight);
-    window.addEventListener('orientationchange', fixHeight);
-    fixHeight();
-    updateDots();
-  </script>
-  <script>
   const container = document.querySelector('.scroll-container');
   const dots = document.querySelectorAll('.dot');
   
   function updateDots() {
     const index = Math.round(container.scrollLeft / container.offsetWidth);
-    dots.forEach(dot => dot.classList.remove('active'));
-    if (dots[index]) dots[index].classList.add('active');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
   }
+  
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      container.scrollTo({
+        left: index * container.offsetWidth,
+        behavior: 'smooth'
+      });
+    });
+  });
   
   container.addEventListener('scroll', updateDots);
   
   function fixHeight() {
-    document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
+    container.style.height = window.innerHeight + 'px';
     document.querySelectorAll('.page').forEach(p => {
       p.style.height = window.innerHeight + 'px';
       p.style.display = 'flex';
@@ -346,15 +366,32 @@ backdrop-filter: blur(10px);
   
   window.addEventListener('resize', fixHeight);
   window.addEventListener('orientationchange', fixHeight);
-  fixHeight();
-  updateDots();
-  
-  // Open images in a new tab when clicked
-  document.querySelectorAll('.card img').forEach(img => {
-    img.addEventListener('click', () => {
-      window.open(img.src, '_blank');
-    });
+  window.addEventListener('load', () => {
+    fixHeight();
+    updateDots();
   });
+</script>
+
+<script>
+barba.init({
+  transitions: [
+    {
+      name: 'fade',
+      leave(data) {
+        return gsap.to(data.current.container, {
+          opacity: 0,
+          duration: 0.2
+        });
+      },
+      enter(data) {
+        return gsap.from(data.next.container, {
+          opacity: 0,
+          duration: 0.2
+        });
+      }
+    }
+  ]
+});
 </script>
 </body>
 </html>
