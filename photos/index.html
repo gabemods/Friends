@@ -327,5 +327,25 @@ backdrop-filter: blur(10px);
     fixHeight();
     updateDots();
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const profileImages = document.querySelectorAll('.card img');
+      const overlay = document.getElementById('fullscreenOverlay');
+      const fullscreenImg = document.getElementById('fullscreenImage');
+
+      profileImages.forEach(img => {
+        img.addEventListener('click', (e) => {
+          e.stopPropagation();
+          window.open(img.src, '_blank');
+        });
+      });
+
+      window.hideFullscreen = function () {
+        overlay.style.display = 'none';
+        fullscreenImg.style.transform = 'scale(1)';
+      }
+    });
+  </script>
 </body>
 </html>
