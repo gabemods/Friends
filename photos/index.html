@@ -2,37 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Friends</title>
-
-  <meta name="description" content="A collection of friends' pages.">
-  <meta name="keywords" content="friends, profiles">
-  <meta name="author" content="Gabe Mods">
-  <meta property="og:title" content="Friends">
-  <meta property="og:description" content="A collection of friends' pages.">
-  <meta property="og:image" content="URL_TO_YOUR_DEFAULT_IMAGE">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/x-icon" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/x-icon" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="assets/favicon/site.webmanifest">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photos</title>
   <style>
-    @font-face {
-      font-family: 'OneUISans';
-      src: url('https://raw.githubusercontent.com/gabemods/gabemods.github.io/main/assets/fonts/(Regular)%20One%20UI%20Sans.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
+      font-family: sans-serif;
       overflow: hidden;
-      background: linear-gradient(
+    background: linear-gradient(
         to bottom,
         #e0f2f7 0%,
         #b2ebf2 20%,
@@ -43,78 +20,70 @@
         #b2ebf2 80%,
         #e0f2f7 100%
       );
-      background-size: cover;
-      background-repeat: no-repeat;
-      font-family: 'OneUISans', sans-serif;
-      color: black;
     }
-
     .scroll-container {
       display: flex;
-      flex-direction: row;
-      overflow-x: auto;
+      overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      width: 100%;
-      height: 100dvh;
+      height: 100vh;
     }
-
     .page {
-      scroll-snap-align: center;
-      flex-shrink: 0;
-      width: 100%;
-      height: 100dvh;
+      scroll-snap-align: start;
+      flex: 0 0 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
     }
-
-    .page:nth-child(3) {
-      background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue);
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
-
     .card {
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
-      padding: 24px 16px;
-      max-width: 280px;
-      text-align: center;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s ease;
-      margin-bottom: 20px;
+      max-width: 285px;
+      max-height: 55%;
+      padding-top: 1px;
+      padding-bottom: 30px;
+      text-align: center;
     }
-
-    @media (max-width: 768px) and (orientation: landscape) {
-      .card {
-        transform: scale(0.75);
-      }
-    }
-
     .card h1 {
-      font-size: 24px;
-      margin: 10px 0 5px;
+      padding-left: 0; /* Reset left padding */
+      margin: 10px 0;
     }
-
-    .card p {
-      margin-top: 10px;
-      font-size: 16px;
-    }
-
     .card img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      border-radius: 30%;
       object-fit: cover;
-      margin-bottom: 10px;
+      display: block;
+      margin: 15px auto 5px auto; /* Center the image */
       cursor: pointer;
+      transition: transform 0.1s ease-in-out;
     }
-
+    .card img:active {
+      transform: scale(1.1);
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 0 20px; /* Add some padding to the sides of the grid */
+    }
+    .photo-grid img {
+      width: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+      height: 90px;
+      cursor: pointer;
+      transition: transform 0.1s ease-in-out;
+    }
+    .photo-grid img:active {
+      transform: scale(1.1);
+    }
     .indicator-wrapper {
       position: fixed;
       bottom: 60px;
@@ -160,148 +129,176 @@
       color: rgba(0, 0, 0, 0.6);
       z-index: 1000;
     }
-
-    .fullscreen-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .fullscreen-overlay img {
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 20px;
-      transition: transform 0.3s ease;
-    }
-
-    @keyframes buttonExpand {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.nav-button-animate {
-  animation: buttonExpand 0.5s ease;
-}
   </style>
 </head>
-
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-    <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;" target="_blank">Profiles</a>
-<a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;" target="_blank">Photos</a>
-  </div>
+  <a href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;" target="_blank">Profiles</a>
+  <a href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;" target="_blank">Photos</a>
+</div>
   <div class="scroll-container">
-<div class="page">
+
+    <div class="page">
       <div class="card">
-        <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
+        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" onclick="openNewTab(this.src)" />
         <h1>Gabriel</h1>
-        <p>Jesus is King of Kings and Lord of Lords! </p>
-        <p>Romans 8:28 -  And we know that all things work together for good to those who love God, to those who are the called according to His purpose.</p>
-        <p>I like to code websites and stuff and mod games and apps. I created this website.</p>
+
+    <div class="photo-grid">
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/IMG_0232.jpeg" alt="Gabriel Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-        <img src="assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
+        <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" onclick="openNewTab(this.src)" />
         <h1>Charlie</h1>
-        <p>I support Chelsea. I also like Cars and Music.</p>
+
+    <div class="photo-grid">
+        <img src="../assets/images/charlie/1.jpg" alt="Charlie Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/charlie/2.jpg" alt="Charlie Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/charlie/3.jpg" alt="Charlie Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/charlie/4.jpg" alt="Charlie Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-         <img src="assets/images/michael/IMG_0229.jpeg" alt="Michael" />
+        <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" onclick="openNewTab(this.src)" />
         <h1>Michael</h1>
-        <p>I support Everton and I like Guitar</p>
+
+    <div class="photo-grid">
+        <img src="../assets/images/michael/1.jpg" alt="Michael Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/michael/2.jpg" alt="Michael Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/michael/3.jpg" alt="Michael Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/michael/4.jpg" alt="Michael Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-        <img src="URL_TO_TOMMY_IMAGE" alt="Tommy" />
+        <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" onclick="openNewTab(this.src)" />
         <h1>Tommy</h1>
-        <p>I think Basketball is cool and I also shred Guitar 🎸</p>
+        <div class="photo-grid">
+        <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/tommy/3.jpg" alt="Tommy Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/tommy/4.jpg" alt="Tommy Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-        <img src="URL_TO_Harry_IMAGE" alt="Lewis" />
+        <img src="../URL_TO_Harry_IMAGE" alt="Harry" onclick="openNewTab(this.src)" />
         <h1>Harry</h1>
-        <p> My Favourite Football team is Liverpool. I also go to the gym 💪</p>
+
+    <div class="photo-grid">
+        <img src="../assets/images/harry/1.jpg" alt="Harry Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/harry/2.jpg" alt="Harry Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/harry/3.jpg" alt="Harry Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/harry/4.jpg" alt="Harry Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-        <img src="URL_TO_JAMES_IMAGE" alt="James" />
+        <img src="../URL_TO_JAMES_IMAGE" alt="James" onclick="openNewTab(this.src)" />
         <h1>James</h1>
+
+    <div class="photo-grid">
+        <img src="../assets/images/james/1.jpg" alt="James Photo 1" onclick="openNewTab(this.src)" />
+        <img src=".//assets/images/james/2.jpg" alt="James Photo 2" onclick="openNewTab(this.src)" />
+        <img src=".//assets/images/james/3.jpg" alt="James Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/james/4.jpg" alt="James Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
-     <div class="page">
+
+
+    <div class="page">
       <div class="card">
-        <img src="assets/images/adam/IMG_0226.jpeg" alt="Adam" />
+        <img src="../assets/images/adam/IMG_0226.jpeg" alt="Adam" onclick="openNewTab(this.src)" />
         <h1>Adam</h1>
-        <p>I like Guitar</p>
+
+    <div class="photo-grid">
+        <img src="../assets/images/adam/1.jpg" alt="Adam Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/adam/2.jpg" alt="Adam Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/adam/3.jpg" alt="Adam Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/adam/4.jpg" alt="Adam Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-        <img src="assets/images/jayden/IMG_0225.jpeg" alt="Jayden" />
+        <img src="../assets/images/jayden/IMG_0225.jpeg" alt="Jayden" onclick="openNewTab(this.src)" />
         <h1>Jayden</h1>
-        <p>I support man united and Michael is a retard👍</p>
+
+    <div class="photo-grid">
+        <img src="../assets/images/jayden/1.jpg" alt="Jayden Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/jayden/2.jpg" alt="Jayden Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/jayden/3.jpg" alt="Jayden Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/jayden/4.jpg" alt="Jayden Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
+
+
     <div class="page">
       <div class="card">
-        <img src="URL_TO_LEWIS_IMAGE" alt="Lewis" />
+        <img src="../URL_TO_LEWIS_IMAGE" alt="Lewis" onclick="openNewTab(this.src)" />
         <h1>Lewis</h1>
+
+    <div class="photo-grid">
+        <img src="../assets/images/lewis/1.jpg" alt="Lewis Photo 1" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/lewis/2.jpg" alt="Lewis Photo 2" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/lewis/3.jpg" alt="Lewis Photo 3" onclick="openNewTab(this.src)" />
+        <img src="../assets/images/lewis/4.jpg" alt="Lewis Photo 4" onclick="openNewTab(this.src)" />
+    </div>
+
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
 
     <div class="indicator-wrapper">
       <div class="indicators">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
       </div>
     </div>
   </div>
-
-  <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
-    <img id="fullscreenImage" src="" alt="Full Image" />
-  </div>
-
   <script>
-    // Scroll indicators
     const container = document.querySelector('.scroll-container');
     const dots = document.querySelectorAll('.dot');
+    const allImages = document.querySelectorAll('.card img, .photo-grid img');
 
     function updateDots() {
       const index = Math.round(container.scrollLeft / container.offsetWidth);
@@ -321,29 +318,14 @@
       });
     }
 
+    function openNewTab(imageSrc) {
+      window.open(imageSrc, '_blank');
+    }
+
     window.addEventListener('resize', fixHeight);
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
-  </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const profileImages = document.querySelectorAll('.card img');
-      const overlay = document.getElementById('fullscreenOverlay');
-      const fullscreenImg = document.getElementById('fullscreenImage');
-
-      profileImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.open(img.src, '_blank');
-        });
-      });
-
-      window.hideFullscreen = function () {
-        overlay.style.display = 'none';
-        fullscreenImg.style.transform = 'scale(1)';
-      }
-    });
+    updateDots();
   </script>
 </body>
 </html>
