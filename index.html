@@ -161,27 +161,6 @@
       z-index: 1000;
     }
 
-    .fullscreen-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    .fullscreen-overlay img {
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 20px;
-      transition: transform 0.3s ease;
-    }
-
     @keyframes buttonExpand {
   0% {
     transform: scale(1);
@@ -329,46 +308,5 @@
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
   </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const profileImages = document.querySelectorAll('.card img');
-      const overlay = document.getElementById('fullscreenOverlay');
-      const fullscreenImg = document.getElementById('fullscreenImage');
-
-      profileImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.open(img.src, '_blank');
-        });
-      });
-
-      window.hideFullscreen = function () {
-        overlay.style.display = 'none';
-        fullscreenImg.style.transform = 'scale(1)';
-      }
-    });
-  </script>
-  <script>
-  barba.init({
-    transitions: [
-      {
-        name: 'fade-transition',
-        leave(data) {
-          return gsap.to(data.current.container, {
-            opacity: 0,
-            duration: 0.5
-          });
-        },
-        enter(data) {
-          return gsap.from(data.next.container, {
-            opacity: 0,
-            duration: 0.5
-          });
-        }
-      }
-    ]
-  });
-</script>
 </body>
 </html>
