@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Photos</title>
+
+  <meta name="description" content="A collection of friends' photos.">
+  <meta name="keywords" content="friends, photos">
+  <meta name="author" content="Gabe Mods">
+  <meta property="og:title" content="Photos">
+  <meta property="og:description" content="A collection of friends' photos.">
+  <meta property="og:image" content="URL_TO_YOUR_DEFAULT_IMAGE">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/x-icon" sizes="16x16" href="../assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="../assets/favicon/site.webmanifest">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      overflow: hidden;
+      background: linear-gradient(
+        to bottom,
+        #e0f2f7 0%,
+        #b2ebf2 20%,
+        #80deea 40%,
+        rgba(178, 223, 238, 0.7) 45%,
+        rgba(178, 223, 238, 0.7) 55%,
+        #80deea 60%,
+        #b2ebf2 80%,
+        #e0f2f7 100%
+      );
+    }
+
+    .scroll-container {
+      display: flex;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      height: 100vh;
+    }
+
+   .page {
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+    .card {
+      background: rgba(211, 211, 211, 0.3);
+      border-radius: 25px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      max-width: 285px;
+      /* Removed max-height to allow for taller content if needed */
+      padding-top: 1px;
+      padding-bottom: 1px; /* Increased padding below the card */
+      margin-top: -100px; /* Move the card down a bit more */
+    }
+
+    .card h1 {
+      padding-left: 20px; /* Added left padding */
+      margin-top: 1px; /* Reduced top margin */
+      margin-bottom: -25px; /* Reduced bottom margin */
+    }
+
+    .card > img { /* Target only the direct img child of .card (the logo) */
+      width: 60px;
+      height: 60px;
+      border-radius: 27%;
+      object-fit: cover;
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+      margin-left: 20px; /* Move the logo to the left */
+      margin-right: auto; /* Allows the card to determine right margin */
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px; /* Equal gap between rows and columns */
+      margin-top: 10px; /* Reduced top margin */
+      padding: 20px; /* Equal padding around the grid */
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* Ensure images are perfect squares */
+      border-radius: 15px;
+      object-fit: cover;
+    }
+
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    @keyframes buttonExpand {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nav-button-animate {
+  animation: buttonExpand 1.0s ease;
+}
+  </style>
+</head>
+
+<body>
+  <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
+  <a id="profilesBtn" href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: white; font-weight: bold;">Profiles</a>
+  <a id="photosBtn" href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
+</div>
+  <div class="scroll-container">
+
+    <div class="page">
+      <div class="card">
+        <img src="../assets/images/IMG_7790.jpeg" alt="Gabriel" onclick="openFullscreen(this.src)" />
+        <h1>Gabriel</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/gabriel/20240626_132211.jpg" alt="Gabriel Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240701_131845.jpg" alt="Gabriel Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240702_112241.jpg" alt="Gabriel Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/HEIF Image.HEIC" alt="Gabriel Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../assets/images/charlie/IMG_0227.jpeg" alt="Charlie" onclick="openFullscreen(this.src)" />
+        <h1>Charlie</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/charlie/1.jpg" alt="Charlie Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/charlie/2.jpg" alt="Charlie Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/charlie/3.jpg" alt="Charlie Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/charlie/4.jpg" alt="Charlie Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" onclick="openFullscreen(this.src)" />
+        <h1>Michael</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/michael/IMG_0243.jpeg" alt="Michael Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/michael/IMG_0244.jpeg" alt="Michael Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/michael/IMG_0245.jpeg" alt="Michael Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/michael/IMG_0246.jpeg" alt="Michael Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../URL_TO_TOMMY_IMAGE" alt="Tommy" onclick="openFullscreen(this.src)" />
+        <h1>Tommy</h1>
+        <div class="photo-grid">
+          <img src="../assets/images/tommy/1.jpg" alt="Tommy Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/tommy/2.jpg" alt="Tommy Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/tommy/3.jpg" alt="Tommy Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/tommy/4.jpg" alt="Tommy Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../URL_TO_Harry_IMAGE" alt="Harry" onclick="openFullscreen(this.src)" />
+        <h1>Harry</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/harry/1.jpg" alt="Harry Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/harry/2.jpg" alt="Harry Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/harry/3.jpg" alt="Harry Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/harry/4.jpg" alt="Harry Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../URL_TO_JAMES_IMAGE" alt="James" onclick="openFullscreen(this.src)" />
+        <h1>James</h1>
+
+        <div class="photo-grid">
+          <img src=".//assets/images/james/2.jpg" alt="James Photo 2" onclick="openFullscreen(this.src)" />
+          <img src=".//assets/images/james/3.jpg" alt="James Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/james/4.jpg" alt="James Photo 4" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/james/1.jpg" alt="James Photo 1" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../assets/images/adam/IMG_0226.jpeg" alt="Adam" onclick="openFullscreen(this.src)" />
+        <h1>Adam</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/adam/1.jpg" alt="Adam Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/adam/2.jpg" alt="Adam Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/adam/3.jpg" alt="Adam Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/adam/4.jpg" alt="Adam Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../assets/images/jayden/IMG_0225.jpeg" alt="Jayden" onclick="openFullscreen(this.src)" />
+        <h1>Jayden</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/jayden/1.jpg" alt="Jayden Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/jayden/2.jpg" alt="Jayden Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/jayden/3.jpg" alt="Jayden Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/jayden/4.jpg" alt="Jayden Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+
+    <div class="page">
+      <div class="card">
+        <img src="../URL_TO_LEWIS_IMAGE" alt="Lewis" onclick="openFullscreen(this.src)" />
+        <h1>Lewis</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/lewis/1.jpg" alt="Lewis Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/lewis/2.jpg" alt="Lewis Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/lewis/3.jpg" alt="Lewis Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/lewis/4.jpg" alt="Lewis Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
+    </div>
+
+    <div class="indicator-wrapper">
+      <div class="indicators">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const container = document.querySelector('.scroll-container');
+    const dots = document.querySelectorAll('.dot');
+    const cardImages = document.querySelectorAll('.card img, .photo-grid img');
+
+    function updateDots() {
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      dots.forEach(dot => dot.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+    }
+
+    container.addEventListener('scroll', updateDots);
+
+    function fixHeight() {
+      document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
+      document.querySelectorAll('.page').forEach(p => {
+        p.style.height = window.innerHeight + 'px';
+        p.style.display = 'flex';
+        p.style.flexDirection = 'column';
+        p.style.justifyContent = 'center';
+      });
+    }
+
+    window.addEventListener('resize', fixHeight);
+    window.addEventListener('orientationchange', fixHeight);
+    fixHeight();
+    updateDots();
+
+    function openFullscreen(imgSrc) {
+      window.open(imgSrc, '_blank');
+    }
+
+    cardImages.forEach(img => {
+      img.addEventListener('mousedown', function() {
+        this.classList.add('active');
+      });
+      img.addEventListener('mouseup', function() {
+        this.classList.remove('active');
+      });
+      img.addEventListener('mouseleave', function() {
+        this.classList.remove('active');
+      });
+    });
+  </script>
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
+    buttons.forEach(btn => {
+      if (btn) {
+        btn.classList.add('nav-button-animate');
+        setTimeout(() => {
+          btn.classList.remove('nav-button-animate');
+        }, 800); // Match the animation duration
+      }
+    });
+  });
+</script>
+<!-- Theme toggle button -->
+<style>
+  #themeToggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    z-index: 2000;
+    transition: transform 0.6s ease;
+  }
+
+  #themeToggle svg {
+    fill: white;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease;
+  }
+
+  body.dark-mode {
+    background: linear-gradient(
+      to bottom,
+      #0a0a0a 0%,
+      #1a1a1a 20%,
+      #222222 40%,
+      rgba(34, 34, 34, 0.7) 45%,
+      rgba(34, 34, 34, 0.7) 55%,
+      #222222 60%,
+      #1a1a1a 80%,
+      #0a0a0a 100%
+    );
+  }
+
+  body.dark-mode .dot {
+    background-color: black;
+  }
+
+  body.dark-mode .indicator-wrapper {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  body.dark-mode .copyright {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .rotate {
+    transform: rotate(180deg);
+  }
+</style>
+
+<button id="themeToggle" aria-label="Toggle theme">
+  <!-- Initial icon: sun -->
+  <svg id="icon" viewBox="0 0 24 24">
+    <path d="M6.76 4.84l-1.8-1.79-1.42 1.42 1.79 1.79 1.43-1.42zM1 13h3v-2H1v2zm10-9h2V1h-2v3zm7.66 2.47l1.79-1.79-1.41-1.41-1.8 1.78 1.42 1.42zM17 13h3v-2h-3v2zm-5 8h2v-3h-2v3zm4.24-2.84l1.8 1.79 1.41-1.42-1.79-1.79-1.42 1.42zM4.22 17.66l1.79 1.8 1.42-1.42-1.8-1.79-1.41 1.41zM12 6a6 6 0 100 12 6 6 0 000-12z"/>
+  </svg>
+</button>
+
+<style>
+  :root {
+    --card-bg: rgba(211, 211, 211, 0.3);
+    --card-shadow: rgba(255, 255, 255, 0.7);
+    --dot-color: white;
+    --dot-active: white;
+    --text-color: black;
+    --copyright-color: rgba(0, 0, 0, 0.6);
+    --gradient: linear-gradient(
+      to bottom,
+      #e0f2f7 0%,
+      #b2ebf2 20%,
+      #80deea 40%,
+      rgba(178, 223, 238, 0.7) 45%,
+      rgba(178, 223, 238, 0.7) 55%,
+      #80deea 60%,
+      #b2ebf2 80%,
+      #e0f2f7 100%
+    );
+  }
+
+  [data-theme="dark"] {
+    --card-bg: rgba(0, 0, 0, 0.3);
+    --card-shadow: rgba(0, 0, 0, 0.7);
+    --dot-color: black;
+    --dot-active: black;
+    --text-color: white;
+    --copyright-color: rgba(255, 255, 255, 0.6);
+    --gradient: linear-gradient(
+      to bottom,
+      #e0f2f7 0%,
+      #b2ebf2 20%,
+      #80deea 40%,
+      rgba(30, 30, 30, 0.7) 45%,
+      rgba(30, 30, 30, 0.7) 55%,
+      #80deea 60%,
+      #b2ebf2 80%,
+      #e0f2f7 100%
+    );
+  }
+
+  body {
+    background: var(--gradient);
+    color: var(--text-color);
+  }
+
+  .card {
+    background: var(--card-bg);
+    box-shadow: 0 0 25px var(--card-shadow);
+  }
+
+  .dot {
+    background-color: var(--dot-color);
+  }
+
+  .dot.active {
+    background-color: var(--dot-active);
+  }
+
+  .copyright {
+    color: var(--copyright-color);
+  }
+
+  h1 {
+    color: var(--text-color);
+  }
+</style>
+</body>
+</html>
