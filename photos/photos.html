@@ -524,6 +524,57 @@
   h1 {
     color: var(--text-color);
   }
+  /* Theme button styling */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+.theme-toggle:focus {
+  outline: none;
+}
+
+.theme-toggle.light {
+  background-color: #fff;
+  color: #000;
+}
+
+.theme-toggle.dark {
+  background-color: #333;
+  color: #fff;
+}
 </style>
+<button id="theme-toggle" class="theme-toggle">Switch Theme</button>
+
+<script>
+  // JavaScript code here
+  const themeToggle = document.getElementById("theme-toggle");
+  
+  themeToggle.addEventListener("click", () => {
+    if (document.body.classList.contains("light-theme")) {
+      document.body.classList.remove("light-theme");
+      document.body.classList.add("dark-theme");
+      themeToggle.classList.remove("light");
+      themeToggle.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark-theme");
+      document.body.classList.add("light-theme");
+      themeToggle.classList.remove("dark");
+      themeToggle.classList.add("light");
+    }
+  });
+  
+  // Default to light theme on page load
+  document.body.classList.add("light-theme");
+  themeToggle.classList.add("light");
+</script>
 </body>
 </html>
