@@ -385,13 +385,16 @@
   </script>
 
   <script>
-  // Animate the active button on load
   window.addEventListener('DOMContentLoaded', () => {
-    const activeButton = document.querySelector('#profilesBtn') || document.querySelector('#photosBtn');
-    const photosBtn = document.getElementById('photosBtn');
-    if (activeButton) {
-      activeButton.classList.add('nav-button-animate');
-    }
+    const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
+    buttons.forEach(btn => {
+      if (btn) {
+        btn.classList.add('nav-button-animate');
+        setTimeout(() => {
+          btn.classList.remove('nav-button-animate');
+        }, 1000); // Match the animation duration
+      }
+    });
   });
 </script>
 </body>
