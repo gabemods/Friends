@@ -148,30 +148,30 @@
     }
 
     @keyframes buttonExpand {
-      0% {
-        transform: scale(1);
-      }
+  0% {
+    transform: scale(1);
+  }
 
-      50% {
-        transform: scale(1.1);
-      }
+  50% {
+    transform: scale(1.1);
+  }
 
-      100% {
-        transform: scale(1);
-      }
-    }
+  100% {
+    transform: scale(1);
+  }
+}
 
-    .nav-button-animate {
-      animation: buttonExpand 1.0s ease;
-    }
+.nav-button-animate {
+  animation: buttonExpand 1.0s ease;
+}
   </style>
 </head>
 
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-    <a id="profilesBtn" href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
-    <a id="photosBtn" href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
-  </div>
+  <a id="profilesBtn" href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
+  <a id="photosBtn" href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+</div>
   <div class="scroll-container">
 
     <div class="page">
@@ -383,5 +383,15 @@
       });
     });
   </script>
+
+  <script>
+  // Animate the active button on load
+  window.addEventListener('DOMContentLoaded', () => {
+    const activeButton = document.querySelector('#profilesBtn') || document.querySelector('#photosBtn');
+    if (activeButton) {
+      activeButton.classList.add('nav-button-animate');
+    }
+  });
+</script>
 </body>
 </html>
