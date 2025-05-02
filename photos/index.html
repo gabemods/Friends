@@ -388,6 +388,7 @@
   // Animate the active button on load
   window.addEventListener('DOMContentLoaded', () => {
     const activeButton = document.querySelector('#profilesBtn') || document.querySelector('#photosBtn');
+    const photosBtn = document.getElementById('photosBtn');
     if (activeButton) {
       activeButton.classList.add('nav-button-animate');
     }
