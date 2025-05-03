@@ -247,6 +247,37 @@ body.dark-mode header {
 body.dark-mode button {
   color: black; /* Make button text black */
 }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .button {
+      width: 45px;
+      height: 45px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    .button svg, .button img {
+      width: 25px;
+      height: 25px;
+      fill: white;
+    }
   </style>
 </head>
 <body>
@@ -280,6 +311,17 @@ body.dark-mode button {
         <p>Jesus is King of Kings and Lord of Lords! </p>
         <p>Romans 8:28 -  And we know that all things work together for good to those who love God, to those who are the called according to His purpose.</p>
         <p>I like to code websites and stuff and mod games and apps. I created this website.</p>
+      <div class="buttons">
+          <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
+          </a>
+          <a href="https://github.com/gabemods" class="button" title="GitHub" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12c0 5.092 3.292 9.398 7.86 10.925.574.103.785-.25.785-.557 0-.274-.01-1.004-.016-1.97-3.197.695-3.87-1.54-3.87-1.54-.522-1.328-1.276-1.683-1.276-1.683-1.044-.714.08-.7.08-.7 1.154.082 1.761 1.185 1.761 1.185 1.027 1.76 2.695 1.252 3.35.957.104-.744.402-1.252.73-1.54-2.553-.29-5.238-1.276-5.238-5.682 0-1.255.448-2.28 1.183-3.082-.118-.29-.512-1.458.113-3.04 0 0 .964-.31 3.158 1.18.916-.254 1.9-.382 2.88-.387.98.005 1.964.133 2.88.387 2.193-1.49 3.156-1.18 3.156-1.18.627 1.582.233 2.75.115 3.04.736.802 1.183 1.827 1.183 3.082 0 4.416-2.688 5.39-5.25 5.675.41.35.776 1.037.776 2.09 0 1.51-.014 2.725-.014 3.096 0 .31.21.665.79.552C20.21 21.394 23.5 17.09 23.5 12c0-6.352-5.148-11.5-11.5-11.5z"/></svg>
+          </a>
+          <a href="https://www.snapchat.com/add/gabe_mods?share_id=1AxCc8C2wmk&locale=en-GB" class="button" title="Snapchat" target="_blank">
+            <img src="assets/images/snapchat-outline-svgrepo-com.svg" alt="Snapchat" />
+          </a>
+        </div>
       </div>
       <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
