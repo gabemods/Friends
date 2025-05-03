@@ -290,24 +290,44 @@ body.dark-mode button {
   color: inherit;
   font-size: 1rem;
   cursor: pointer;
-  padding: 10px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  position: relative;
+  transition: transform 0.3s ease;
+  transform: translateY(-15px); /* Move up */
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: var(--background);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-  z-index: 1;
-  padding: 10px;
-  border-radius: 8px;
-  white-space: nowrap;
-}
-
-.dropdown:hover .dropdown-content {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  position: absolute;
+  background-color: rgba(255,255,255,0.9);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown.active .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .dropdown-content .button svg,
@@ -342,8 +362,10 @@ body.dark-mode button {
   </svg>
 </button>
   <div class="dropdown">
-  <button class="dropbtn">Socials ▼ </button>
-  <div class="dropdown-content">
+  <button class="dropbtn" id="socialToggle">
+    Socials <span class="arrow" id="arrowIcon">▼</span>
+  </button>
+  <div class="dropdown-content" id="socialLinks">
     <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
       <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
     </a>
@@ -526,6 +548,24 @@ body.dark-mode button {
 
     // remove spin after it finishes
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
+  });
+</script>
+  <script>
+  const dropdown = document.querySelector('.dropdown');
+  const arrow = document.getElementById('arrowIcon');
+  const toggle = document.getElementById('socialToggle');
+
+  toggle.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+    arrow.classList.toggle('rotate');
+  });
+
+  // Optional: Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+      arrow.classList.remove('rotate');
+    }
   });
 </script>
 </body>
