@@ -287,10 +287,24 @@ body.dark-mode button {
 .dropbtn {
   background: none;
   border: none;
-  color: inherit;
-  font-size: 1rem;
   cursor: pointer;
-  padding: 10px;
+  display: flex;
+  align-items: flex-start; /* move text upward */
+  gap: 5px;
+  padding: 5px 10px;
+  font-size: 1rem;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #00c6ff, #0072ff); /* Example gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.arrow {
+  font-size: 0.75rem;
+  margin-top: 2px;
+  color: white;
 }
 
 .dropdown-content {
@@ -314,7 +328,7 @@ body.dark-mode button {
 .dropdown-content .button img {
   width: 24px;
   height: 24px;
-  fill: currentColor;
+  fill: white;
 }
   </style>
 </head>
@@ -344,6 +358,8 @@ body.dark-mode button {
   <div class="dropdown">
   <button class="dropbtn">Socials</button>
   <div class="dropdown-content">
+   <span class="gradient-text">Socials</span>
+    <span class="arrow">▾</span>
     <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
       <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
     </a>
