@@ -292,7 +292,7 @@ body.dark-mode button {
   font-size: 1rem;
   cursor: pointer;
   top: 20px;
-  left: 10px;
+  left: 5px;
   padding: 10px 20px;
   border-radius: 25px;
   position: relative;
@@ -336,7 +336,9 @@ body.dark-mode button {
   width: 24px;
   height: 24px;
 }
-
+body.dark-mode .arrow {
+  color: black;
+}
 /* Light Mode */
 :root {
   --dropdown-bg: rgba(255, 255, 255, 0.1);
@@ -345,7 +347,7 @@ body.dark-mode button {
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --dropdown-bg: rgba(0, 0, 0, 0.2);
+    --dropdown-bg: rgba(0, 0, 0, 0.1);
   }
 }
 
