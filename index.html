@@ -198,6 +198,7 @@
 .nav-button-animate {
   animation: buttonExpand 0.5s ease;
 }
+    https://github.com/gabemods/Friends/blob/main/photos/photos.html
   </style>
 </head>
 
@@ -206,6 +207,24 @@
     <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
 <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
   </div>
+  <button id="themeToggle" aria-label="Toggle theme"
+        style="position: fixed; top: 20px; right: 10px;
+               background: none; border: none; cursor: pointer;
+               z-index: 1001;">
+  <svg id="themeIcon"
+       xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 24 24"
+       width="28" height="28"
+       fill="none" stroke-width="2" stroke="currentColor">
+    <!-- start with the Sun outline path -->
+    <path d="M12 3v2m0 14v2m9-9h-2M5 12H3
+             m15.364-6.364l-1.414 1.414
+             M6.05 17.95l-1.414 1.414
+             M17.95 17.95l1.414-1.414
+             M6.05 6.05L4.636 7.464
+             M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+  </svg>
+</button>
   <div class="scroll-container">
 <div class="page">
       <div class="card">
@@ -347,5 +366,37 @@
       }
     });
   </script>
+  <script>
+  const themeToggle = document.getElementById("themeToggle");
+  const themeIcon   = document.getElementById("themeIcon");
+
+  // Sun and Moon outline paths from Heroicons
+  const sunPath  = "M12 3v2m0 14v2m9-9h-2M5 12H3"
+                 + "m15.364-6.364l-1.414 1.414"
+                 + "M6.05 17.95l-1.414 1.414"
+                 + "M17.95 17.95l1.414-1.414"
+                 + "M6.05 6.05L4.636 7.464"
+                 + "M12 8a4 4 0 100 8 4 4 0 000-8z";
+
+  const moonPath = "M21 12.79A9 9 0 1111.21 3"
+                 + "a7 7 0 009.79 9.79z";
+
+  let dark = false;
+
+  themeToggle.addEventListener("click", () => {
+    dark = !dark;
+    document.body.classList.toggle("dark-mode", dark);
+
+    // spin
+    themeIcon.classList.add("spin");
+
+    // swap path
+    themeIcon.querySelector("path")
+             .setAttribute("d", dark ? moonPath : sunPath);
+
+    // remove spin after it finishes
+    setTimeout(() => themeIcon.classList.remove("spin"), 500);
+  });
+</script>
 </body>
 </html>
