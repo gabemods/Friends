@@ -191,6 +191,13 @@ body.dark-mode .dot {
 body.dark-mode .copyright {
   color: rgba(255, 255, 255, 0.6);
 } 
+    #themeIcon {
+  transition: transform 0.5s ease;
+}
+
+#themeIcon.spin {
+  transform: rotate(180deg);
+}
   </style>
 </head>
 
@@ -199,7 +206,11 @@ body.dark-mode .copyright {
   <a id="profilesBtn" href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: white; font-weight: bold;">Profiles</a>
   <a id="photosBtn" href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
 </div>
-  <button id="themeToggle" style="position: fixed; top: 10px; right: 10px; z-index: 1001;">Toggle Theme</button>
+  <button id="themeToggle" aria-label="Toggle theme" style="position: fixed; top: 10px; right: 10px; background: none; border: none; cursor: pointer; z-index: 1001;">
+  <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="32px" height="32px">
+    <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zm10.45 0l1.8-1.79 1.41 1.41-1.79 1.8-1.42-1.42zM12 4c-.55 0-1 .45-1 1v3h2V5c0-.55-.45-1-1-1zm0 12c-.55 0-1 .45-1 1v3h2v-3c0-.55-.45-1-1-1zm8-4c0-.55-.45-1-1-1h-3v2h3c.55 0 1-.45 1-1zm-12 0c0-.55-.45-1-1-1H4v2h3c.55 0 1-.45 1-1zm9.19 6.19l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM4.22 18.36l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM12 8a4 4 0 100 8 4 4 0 000-8z"/>
+  </svg>
+</button>
   <div class="scroll-container">
 
     <div class="page">
@@ -437,6 +448,27 @@ body.dark-mode .copyright {
     if (localStorage.getItem('theme') === 'dark') {
       document.body.classList.add('dark-mode');
     }
+  });
+</script>
+  <script>
+  const toggleBtn = document.getElementById('themeToggle');
+  const icon = document.getElementById('themeIcon');
+
+  const sunIcon = `
+    <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zm10.45 0l1.8-1.79 1.41 1.41-1.79 1.8-1.42-1.42zM12 4c-.55 0-1 .45-1 1v3h2V5c0-.55-.45-1-1-1zm0 12c-.55 0-1 .45-1 1v3h2v-3c0-.55-.45-1-1-1zm8-4c0-.55-.45-1-1-1h-3v2h3c.55 0 1-.45 1-1zm-12 0c0-.55-.45-1-1-1H4v2h3c.55 0 1-.45 1-1zm9.19 6.19l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM4.22 18.36l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM12 8a4 4 0 100 8 4 4 0 000-8z"/>`;
+
+  const moonIcon = `
+    <path d="M9.37 5.51A7.5 7.5 0 1018.5 14.63 9 9 0 019.37 5.51z"/>`;
+
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    icon.classList.add('spin');
+
+    // Delay icon switch to match spin animation
+    setTimeout(() => {
+      icon.innerHTML = document.body.classList.contains('dark-mode') ? moonIcon : sunIcon;
+      icon.classList.remove('spin');
+    }, 250);
   });
 </script>
 </body>
