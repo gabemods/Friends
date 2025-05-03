@@ -257,9 +257,9 @@ body.dark-mode button {
     .button {
       width: 45px;
       height: 45px;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       display: flex;
@@ -312,6 +312,9 @@ body.dark-mode button {
 
 /* Dropdown Content */
 .dropdown-content {
+  background-color: var(--dropdown-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -335,13 +338,13 @@ body.dark-mode button {
 
 /* Light Mode */
 :root {
-  --dropdown-bg: rgba(255, 255, 255, 0.8);
+  --dropdown-bg: rgba(255, 255, 255, 0.5);
 }
 
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --dropdown-bg: rgba(0, 0, 0, 0.8);
+    --dropdown-bg: rgba(0, 0, 0, 0.5);
   }
 }
 
