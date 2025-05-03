@@ -284,29 +284,32 @@ body.dark-mode button {
   margin-left: 10px;
 }
 
+/* Socials Button */
 .dropbtn {
   background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
   border: none;
-  color: inherit;
   font-size: 1rem;
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 20px 20px;
   border-radius: 25px;
   position: relative;
   transition: transform 0.3s ease;
-  transform: translateY(-15px); /* Move up */
+  transform: translateY(-15px);
 }
 
 .arrow {
   display: inline-block;
   margin-left: 6px;
   transition: transform 0.3s ease;
+  color: white;
 }
 
 .arrow.rotate {
   transform: rotate(180deg);
 }
 
+/* Dropdown Content */
 .dropdown-content {
   display: flex;
   flex-direction: column;
@@ -319,22 +322,38 @@ body.dark-mode button {
   pointer-events: none;
   transition: all 0.3s ease;
   position: absolute;
-  background-color: rgba(255,255,255,0.9);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   z-index: 1;
+  color: white;
 }
 
+.dropdown-content svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+
+/* Light Mode */
+:root {
+  --dropdown-bg: rgba(255, 255, 255, 0.8);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dropdown-bg: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Apply theme-based background */
+.dropdown-content {
+  background-color: var(--dropdown-bg);
+}
+
+/* Show dropdown when active */
 .dropdown.active .dropdown-content {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
-}
-
-.dropdown-content .button svg,
-.dropdown-content .button img {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
 }
   </style>
 </head>
