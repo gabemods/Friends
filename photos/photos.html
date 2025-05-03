@@ -213,8 +213,8 @@ body.dark-mode button {
   color: black; /* Make button text black */
 }
 .fade {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
 }
 body.fade-in {
   opacity: 1;
@@ -504,37 +504,33 @@ body.fade-in {
   });
 </script>
   <script>
-  const toggleThemeButton = document.getElementById('toggle-theme');
-  const body = document.body;
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
 
-  function applyTheme(theme) {
-    body.classList.remove('light-mode', 'dark-mode');
-    body.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }
+  themeToggle.addEventListener('click', () => {
+    // Add fade class
+    document.body.classList.add('fade');
 
-  function switchTheme() {
-    const currentTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
-    const newTheme = currentTheme === 'dark-mode' ? 'light-mode' : 'dark-mode';
-
-    body.classList.add('fade'); // Start fade-out
-
+    // Wait for the fade-out to complete
     setTimeout(() => {
-      applyTheme(newTheme);
-      body.classList.remove('fade'); // Remove fade-out
-      body.classList.add('fade-in'); // Start fade-in
+      // Toggle theme
+      document.body.classList.toggle('dark-mode');
+      themeIcon.classList.toggle('spin');
 
-      setTimeout(() => {
-        body.classList.remove('fade-in'); // Clean up
-      }, 400);
-    }, 400);
-  }
+      // Trigger fade-in
+      requestAnimationFrame(() => {
+        document.body.classList.remove('fade');
+      });
+    }, 200); // matches the CSS transition duration
+  });
 
-  // Apply saved theme on load
-  const savedTheme = localStorage.getItem('theme') || 'light-mode';
-  applyTheme(savedTheme);
-
-  toggleThemeButton.addEventListener('click', switchTheme);
+  // Optional: Set initial fade-in for page load
+  window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('fade');
+    requestAnimationFrame(() => {
+      document.body.classList.remove('fade');
+    });
+  });
 </script>
 </body>
 </html>
