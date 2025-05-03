@@ -212,7 +212,14 @@ body.dark-mode header {
 body.dark-mode button {
   color: black; /* Make button text black */
 }
-
+.fade {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+body.fade-in {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
   </style>
 </head>
 
@@ -495,6 +502,39 @@ body.dark-mode button {
     // remove spin after it finishes
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
   });
+</script>
+  <script>
+  const toggleThemeButton = document.getElementById('toggle-theme');
+  const body = document.body;
+
+  function applyTheme(theme) {
+    body.classList.remove('light-mode', 'dark-mode');
+    body.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }
+
+  function switchTheme() {
+    const currentTheme = body.classList.contains('dark-mode') ? 'dark-mode' : 'light-mode';
+    const newTheme = currentTheme === 'dark-mode' ? 'light-mode' : 'dark-mode';
+
+    body.classList.add('fade'); // Start fade-out
+
+    setTimeout(() => {
+      applyTheme(newTheme);
+      body.classList.remove('fade'); // Remove fade-out
+      body.classList.add('fade-in'); // Start fade-in
+
+      setTimeout(() => {
+        body.classList.remove('fade-in'); // Clean up
+      }, 400);
+    }, 400);
+  }
+
+  // Apply saved theme on load
+  const savedTheme = localStorage.getItem('theme') || 'light-mode';
+  applyTheme(savedTheme);
+
+  toggleThemeButton.addEventListener('click', switchTheme);
 </script>
 </body>
 </html>
