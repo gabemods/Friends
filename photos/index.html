@@ -164,6 +164,54 @@
 .nav-button-animate {
   animation: buttonExpand 1.0s ease;
 }
+   body.dark-mode {
+  background: linear-gradient(to right,
+  #000000,
+  #000033, /* dark blue */
+  #000066, /* blue */
+  #000099, /* lighter blue */
+  #0000CC, /* bright blue */
+  #0033CC, /* deep blue */
+  #0066CC, /* vibrant blue */
+  #0099FF); /* light blue */
+  colour: white; }
+
+body.dark-mode .card {
+  background: rgba(50, 50, 50, 0.4);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .dot {
+  background-color: black;
+}
+
+body.dark-mode .copyright {
+  color: rgba(255, 255, 255, 0.6);
+} 
+#themeIcon {
+  transition: transform 0.5s ease;
+}
+#themeIcon.spin {
+  transform: rotate(180deg);
+}
+
+/* colour inheritance */
+#themeToggle {
+  color: black;
+}
+body.dark-mode #themeToggle {
+  color: white;
+}
+    /* Header styling */
+body.dark-mode header {
+  color: white; /* Ensure header text is white */
+}
+
+/* Button text styling in dark mode */
+body.dark-mode button {
+  color: black; /* Make button text black */
+}
+
   </style>
 </head>
 
@@ -172,6 +220,24 @@
   <a id="profilesBtn" href="../index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: white; font-weight: bold;">Profiles</a>
   <a id="photosBtn" href="index.html" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
 </div>
+  <button id="themeToggle" aria-label="Toggle theme"
+        style="position: fixed; top: 20px; right: 10px;
+               background: none; border: none; cursor: pointer;
+               z-index: 1001;">
+  <svg id="themeIcon"
+       xmlns="http://www.w3.org/2000/svg"
+       viewBox="0 0 24 24"
+       width="28" height="28"
+       fill="none" stroke-width="2" stroke="currentColor">
+    <!-- start with the Sun outline path -->
+    <path d="M12 3v2m0 14v2m9-9h-2M5 12H3
+             m15.364-6.364l-1.414 1.414
+             M6.05 17.95l-1.414 1.414
+             M17.95 17.95l1.414-1.414
+             M6.05 6.05L4.636 7.464
+             M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+  </svg>
+</button>
   <div class="scroll-container">
 
     <div class="page">
@@ -395,6 +461,38 @@
         }, 800); // Match the animation duration
       }
     });
+  });
+</script>
+ <script>
+  const themeToggle = document.getElementById("themeToggle");
+  const themeIcon   = document.getElementById("themeIcon");
+
+  // Sun and Moon outline paths from Heroicons
+  const sunPath  = "M12 3v2m0 14v2m9-9h-2M5 12H3"
+                 + "m15.364-6.364l-1.414 1.414"
+                 + "M6.05 17.95l-1.414 1.414"
+                 + "M17.95 17.95l1.414-1.414"
+                 + "M6.05 6.05L4.636 7.464"
+                 + "M12 8a4 4 0 100 8 4 4 0 000-8z";
+
+  const moonPath = "M21 12.79A9 9 0 1111.21 3"
+                 + "a7 7 0 009.79 9.79z";
+
+  let dark = false;
+
+  themeToggle.addEventListener("click", () => {
+    dark = !dark;
+    document.body.classList.toggle("dark-mode", dark);
+
+    // spin
+    themeIcon.classList.add("spin");
+
+    // swap path
+    themeIcon.querySelector("path")
+             .setAttribute("d", dark ? moonPath : sunPath);
+
+    // remove spin after it finishes
+    setTimeout(() => themeIcon.classList.remove("spin"), 500);
   });
 </script>
 </body>
