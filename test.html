@@ -70,12 +70,10 @@
       flex-direction: column;
     }
 
-    .page:nth-child(3) {
-      background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue);
-      background-size: cover;
-      background-repeat: no-repeat;
+.page:nth-child(3) .card {
+    background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
     }
-
+    
     .card {
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
@@ -87,7 +85,7 @@
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: transform 0.3s ease;
-      margin-top: -100px;
+      margin-top: -170px;
       margin-bottom: 20px;
     }
 
@@ -214,7 +212,7 @@
 
 body.dark-mode .card {
   background: rgba(50, 50, 50, 0.4);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
 }
 
 body.dark-mode .dot {
@@ -222,7 +220,6 @@ body.dark-mode .dot {
 }
 
 body.dark-mode .copyright {
-  color: rgba(255, 255, 255, 0.6);
 } 
 #themeIcon {
   transition: transform 0.5s ease;
@@ -255,11 +252,11 @@ body.dark-mode button {
     }
 
     .button {
-      width: 35px;
-      height: 35px;
-      background: rgba(255, 255, 255, 0.0);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      width: 45px;
+      height: 45px;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       display: flex;
@@ -274,23 +271,93 @@ body.dark-mode button {
     }
 
     .button svg, .button img {
-      width: 20px;
-      height: 20px;
+      width: 25px;
+      height: 25px;
       fill: white;
     }
-    .social-buttons {
-  position: fixed;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 15px;
-  z-index: 1000;
-    }
+    .dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
 
-body.dark-mode .button svg,
-body.dark-mode .button img {
-  filter: invert(1);
+/* Socials Button */
+.dropbtn {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  top: 30px;
+  left: 5px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  position: relative;
+  transition: transform 0.3s ease;
+  transform: translateY(-15px);
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  background-color: var(--dropdown-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  position: absolute;
+  z-index: 1;
+  color: white;
+}
+
+.dropdown-content svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+body.dark-mode .arrow {
+  color: black;
+}
+/* Light Mode */
+:root {
+  --dropdown-bg: rgba(255, 255, 255, 0.0);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dropdown-bg: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Apply theme-based background */
+.dropdown-content {
+  background-color: var(--dropdown-bg);
+}
+
+/* Show dropdown when active */
+.dropdown.active .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
   </style>
 </head>
@@ -317,6 +384,49 @@ body.dark-mode .button img {
              M12 8a4 4 0 100 8 4 4 0 000-8z"/>
   </svg>
 </button>
+  <!-- Settings icon -->
+<button id="settingsToggle" aria-label="Open settings"
+        style="position: fixed; top: 20px; right: 50px;
+               background: none; border: none; cursor: pointer;
+               z-index: 1001;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"></circle>
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 
+             1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 
+             1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 
+             1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 
+             1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 
+             1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 
+             1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 
+             1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 
+             1.65 0 0 0-1.51 1z"/>
+  </svg>
+</button>
+
+<!-- Settings popup -->
+<div id="settingsPopup" style="display:none; position: fixed; top: 70px; right: 10px; background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; z-index: 1001; backdrop-filter: blur(10px);">
+  <label style="font-weight: bold; display: block; margin-bottom: 10px;">
+    <input type="checkbox" id="followSystemTheme">
+    Follow system theme
+  </label>
+</div>
+  <div class="dropdown">
+  <button class="dropbtn" id="socialToggle">
+    Socials <span class="arrow" id="arrowIcon">▼</span>
+  </button>
+  <div class="dropdown-content" id="socialLinks">
+    <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
+    </a>
+    <a href="https://github.com/gabemods" class="button" title="GitHub" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12c0 5.092 3.292 9.398 7.86 10.925.574.103.785-.25.785-.557 0-.274-.01-1.004-.016-1.97-3.197.695-3.87-1.54-3.87-1.54-.522-1.328-1.276-1.683-1.276-1.683-1.044-.714.08-.7.08-.7 1.154.082 1.761 1.185 1.761 1.185 1.027 1.76 2.695 1.252 3.35.957.104-.744.402-1.252.73-1.54-2.553-.29-5.238-1.276-5.238-5.682 0-1.255.448-2.28 1.183-3.082-.118-.29-.512-1.458.113-3.04 0 0 .964-.31 3.158 1.18.916-.254 1.9-.382 2.88-.387.98.005 1.964.133 2.88.387 2.193-1.49 3.156-1.18 3.156-1.18.627 1.582.233 2.75.115 3.04.736.802 1.183 1.827 1.183 3.082 0 4.416-2.688 5.39-5.25 5.675.41.35.776 1.037.776 2.09 0 1.51-.014 2.725-.014 3.096 0 .31.21.665.79.552C20.21 21.394 23.5 17.09 23.5 12c0-6.352-5.148-11.5-11.5-11.5z"/></svg>
+    </a>
+    <a href="https://www.snapchat.com/add/gabe_mods?share_id=1AxCc8C2wmk&locale=en-GB" class="button" title="Snapchat" target="_blank">
+      <img src="assets/images/snapchat-outline-svgrepo-com.svg" alt="Snapchat" />
+    </a>
+  </div>
+</div>
   <div class="scroll-container">
 <div class="page">
       <div class="card">
@@ -326,6 +436,7 @@ body.dark-mode .button img {
         <p>Romans 8:28 -  And we know that all things work together for good to those who love God, to those who are the called according to His purpose.</p>
         <p>I like to code websites and stuff and mod games and apps. I created this website.</p>
       </div>
+      <p class="copyright">&copy; Gabe Mods 2025</p>
 </div>
     <div class="page">
       <div class="card">
@@ -361,7 +472,7 @@ body.dark-mode .button img {
     </div>
     <div class="page">
       <div class="card">
-        <img src="assets/images/james/IMG_0248.jpeg" alt="James" />
+        <img src="assets/images/james/IMG_0252.jpeg" alt="James" />
         <h1>James</h1>
         <p>Hi, I'm James and I support Port Vale. </p>
       </div>
@@ -489,19 +600,91 @@ body.dark-mode .button img {
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
   });
 </script>
-<footer>
-    <p>© 2025 Gabe Mods | All rights reserved.</p>
-<div class="social-buttons">
-  <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
-    <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
-  </a>
-  <a href="https://github.com/gabemods" class="button" title="GitHub" target="_blank">
-    <svg viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12c0 5.092 3.292 9.398 7.86 10.925.574.103.785-.25.785-.557 0-.274-.01-1.004-.016-1.97-3.197.695-3.87-1.54-3.87-1.54-.522-1.328-1.276-1.683-1.276-1.683-1.044-.714.08-.7.08-.7 1.154.082 1.761 1.185 1.761 1.185 1.027 1.76 2.695 1.252 3.35.957.104-.744.402-1.252.73-1.54-2.553-.29-5.238-1.276-5.238-5.682 0-1.255.448-2.28 1.183-3.082-.118-.29-.512-1.458.113-3.04 0 0 .964-.31 3.158 1.18.916-.254 1.9-.382 2.88-.387.98.005 1.964.133 2.88.387 2.193-1.49 3.156-1.18 3.156-1.18.627 1.582.233 2.75.115 3.04.736.802 1.183 1.827 1.183 3.082 0 4.416-2.688 5.39-5.25 5.675.41.35.776 1.037.776 2.09 0 1.51-.014 2.725-.014 3.096 0 .31.21.665.79.552C20.21 21.394 23.5 17.09 23.5 12c0-6.352-5.148-11.5-11.5-11.5z"/></svg>
-  </a>
-  <a href="https://www.snapchat.com/add/gabe_mods?share_id=1AxCc8C2wmk&locale=en-GB" class="button" title="Snapchat" target="_blank">
-    <img src="assets/images/snapchat-outline-svgrepo-com.svg" alt="Snapchat" />
-  </a>
-</div>
-  </footer>
+  <script>
+  const dropdown = document.querySelector('.dropdown');
+  const arrow = document.getElementById('arrowIcon');
+  const toggle = document.getElementById('socialToggle');
+
+  toggle.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+    arrow.classList.toggle('rotate');
+  });
+
+  // Optional: Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+      arrow.classList.remove('rotate');
+    }
+  });
+</script>
+  <script>
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  let followSystem = JSON.parse(localStorage.getItem('followSystem')) || false;
+
+  function applyTheme(theme) {
+    document.body.classList.toggle('dark-mode', theme === 'dark');
+    themeIcon.classList.toggle('spin');
+  }
+
+  function detectSystemTheme() {
+    applyTheme(prefersDark.matches ? 'dark' : 'light');
+  }
+
+  function toggleManualTheme() {
+    followSystem = false;
+    localStorage.setItem('followSystem', 'false');
+    const isDark = document.body.classList.toggle('dark-mode');
+    themeIcon.classList.toggle('spin');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }
+
+  // Theme toggle button
+  themeToggle.addEventListener('click', toggleManualTheme);
+
+  // Listen to system changes
+  prefersDark.addEventListener('change', (e) => {
+    if (followSystem) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // On load
+  window.addEventListener('DOMContentLoaded', () => {
+    if (followSystem) {
+      detectSystemTheme();
+    } else {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      applyTheme(savedTheme);
+    }
+  });
+</script>
+  <script>
+  const settingsToggle = document.getElementById('settingsToggle');
+  const settingsPopup = document.getElementById('settingsPopup');
+  const followSystemCheckbox = document.getElementById('followSystemTheme');
+
+  // Load checkbox state
+  window.addEventListener('DOMContentLoaded', () => {
+    followSystemCheckbox.checked = followSystem;
+  });
+
+  // Toggle popup
+  settingsToggle.addEventListener('click', () => {
+    settingsPopup.style.display = settingsPopup.style.display === 'none' ? 'block' : 'none';
+  });
+
+  // Toggle follow system theme
+  followSystemCheckbox.addEventListener('change', () => {
+    followSystem = followSystemCheckbox.checked;
+    localStorage.setItem('followSystem', followSystem);
+    if (followSystem) {
+      detectSystemTheme();
+    }
+  });
+</script>
 </body>
 </html>
