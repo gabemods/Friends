@@ -424,34 +424,49 @@ body.dark-mode button {
     </div>
   </div>
   <script>
-  const container = document.querySelector('.scroll-container');
-  const dots = document.querySelectorAll('.dot');
-  const cardImages = document.querySelectorAll('.card img, .photo-grid img');
+    const container = document.querySelector('.scroll-container');
+    const dots = document.querySelectorAll('.dot');
+    const cardImages = document.querySelectorAll('.card img, .photo-grid img');
 
-  function updateDots() {
-    const index = Math.round(container.scrollLeft / container.offsetWidth);
-    dots.forEach(dot => dot.classList.remove('active'));
-    if (dots[index]) dots[index].classList.add('active');
-  }
+    function updateDots() {
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      dots.forEach(dot => dot.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+    }
 
-  container.addEventListener('scroll', updateDots);
+    container.addEventListener('scroll', updateDots);
 
-  function fixHeight() {
-    document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
-    document.querySelectorAll('.page').forEach(p => {
-      p.style.height = window.innerHeight + 'px';
-      p.style.display = 'flex';
-      p.style.flexDirection = 'column';
-      p.style.justifyContent = 'center';
+    function fixHeight() {
+      document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
+      document.querySelectorAll('.page').forEach(p => {
+        p.style.height = window.innerHeight + 'px';
+        p.style.display = 'flex';
+        p.style.flexDirection = 'column';
+        p.style.justifyContent = 'center';
+      });
+    }
+
+    window.addEventListener('resize', fixHeight);
+    window.addEventListener('orientationchange', fixHeight);
+    fixHeight();
+    updateDots();
+
+    function openFullscreen(imgSrc) {
+      window.open(imgSrc, '_blank');
+    }
+
+    cardImages.forEach(img => {
+      img.addEventListener('mousedown', function() {
+        this.classList.add('active');
+      });
+      img.addEventListener('mouseup', function() {
+        this.classList.remove('active');
+      });
+      img.addEventListener('mouseleave', function() {
+        this.classList.remove('active');
+      });
     });
-  }
-
-  window.addEventListener('resize', fixHeight);
-  window.addEventListener('orientationchange', fixHeight);
-  fixHeight();
-  updateDots();
-  });
-</script>
+  </script>
 
   <script>
   window.addEventListener('DOMContentLoaded', () => {
