@@ -389,6 +389,19 @@ body.dark-mode .arrow {
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
 }
+    /* Light mode (default) */
+.copyright-box {
+  color: grey;
+  background: rgba(230, 230, 230, 0.9);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+}
+
+/* Dark mode override */
+body.dark-mode .copyright-box {
+  color: white;
+  background: rgba(30, 30, 30, 0.9);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+}
   </style>
 </head>
 <body>
