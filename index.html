@@ -360,10 +360,32 @@ body.dark-mode .arrow {
   transform: translateY(0);
   pointer-events: auto;
 }
+    #secretButton {
+  position: fixed;
+  top: 20px;
+  left: 15px;
+  font-size: 24px;
+  text-decoration: none;
+  z-index: 1001;
+  transition: transform 0.2s ease;
+}
+
+#secretButton:hover {
+  transform: scale(1.2);
+}
   </style>
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
+    <a id="secretLink" href="secret/index.html" style="
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  text-decoration: none;
+  z-index: 1002;
+  transition: transform 0.3s ease;
+">🤫</a>
     <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
 <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
   </div>
@@ -590,6 +612,19 @@ body.dark-mode .arrow {
       dropdown.classList.remove('active');
       arrow.classList.remove('rotate');
     }
+  });
+</script>
+  <script>
+  const secretLink = document.getElementById('secretLink');
+
+  secretLink.addEventListener('click', function (e) {
+    e.preventDefault(); // Stop immediate navigation
+    secretLink.style.transform = 'scale(1.3)';
+
+    setTimeout(() => {
+      secretLink.style.transform = 'scale(1)';
+      window.location.href = secretLink.href;
+    }, 300); // Match transition duration
   });
 </script>
 </body>
