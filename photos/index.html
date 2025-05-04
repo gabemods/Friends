@@ -513,26 +513,5 @@ body.dark-mode button {
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
   });
 </script>
-  <script>
-  document.querySelectorAll('img').forEach(img => {
-    img.addEventListener('click', function () {
-      img.classList.add('expand-animation');
-      setTimeout(() => {
-        img.classList.remove('expand-animation');
-        // Open image in a new tab
-        const win = window.open();
-        const fullImg = new Image();
-        fullImg.src = img.src;
-        fullImg.style.maxWidth = "100%";
-        fullImg.style.maxHeight = "100vh";
-        fullImg.style.display = "block";
-        fullImg.style.margin = "0 auto";
-        win.document.body.style.margin = "0";
-        win.document.body.style.backgroundColor = "black";
-        win.document.body.appendChild(fullImg);
-      }, 1000); // Delay matches animation duration
-    });
-  });
-</script>
 </body>
 </html>
