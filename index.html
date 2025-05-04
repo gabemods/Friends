@@ -361,12 +361,74 @@ body.dark-mode .arrow {
   transform: translateY(0);
   pointer-events: auto;
 }
+    /* Style for the top-right buttons container */
+.top-right-buttons {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+/* Style for the info button */
+.info-btn {
+    margin-left: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Expansion effect when the button is clicked */
+.info-btn.expanded {
+    transform: scale(1.2); /* Expand the button slightly */
+}
+
+/* Theme toggle button styles */
+.theme-toggle {
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+/* Ensure SVG icon color changes with theme */
+.info-btn svg {
+    stroke: currentColor; /* Use the current text color for stroke */
+    transition: stroke 0.2s ease;
+}
+
+/* Dark Mode */
+body.dark-mode .info-btn svg {
+    stroke: white; /* Change the icon color to white in dark mode */
+}
+
+/* Light Mode */
+body.light-mode .info-btn svg {
+    stroke: black; /* Icon color is black in light mode */
+}
   </style>
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
     <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
 <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+  <div class="top-right-buttons">
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <!-- Info Button (SVG Icon) -->
+    <button class="info-btn" onclick="expandInfo()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12" y2="16"></line>
+        </svg>
+    </button>
+</div>
   </div>
   <button id="themeToggle" aria-label="Toggle theme"
         style="position: fixed; top: 20px; right: 10px;
@@ -592,6 +654,20 @@ body.dark-mode .arrow {
       arrow.classList.remove('rotate');
     }
   });
+</script>
+  <script>
+  // Function to expand the info button for a second and then navigate
+function expandInfo() {
+    const infoButton = document.querySelector('.info-btn');
+    
+    // Add 'expanded' class for the expansion effect
+    infoButton.classList.add('expanded');
+
+    // After 1 second (for the expansion effect), navigate to info.html
+    setTimeout(() => {
+        window.location.href = 'info.html'; // Navigate to the new page
+    }, 1000); // Wait for the expansion effect to complete
+}
 </script>
 </body>
 </html>
