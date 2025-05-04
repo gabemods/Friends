@@ -450,39 +450,6 @@ body.dark-mode button {
   window.addEventListener('orientationchange', fixHeight);
   fixHeight();
   updateDots();
-
-  function openFullscreen(imgSrc) {
-    const win = window.open();
-    const fullImg = new Image();
-    fullImg.src = imgSrc;
-    fullImg.style.maxWidth = "100%";
-    fullImg.style.maxHeight = "100vh";
-    fullImg.style.display = "block";
-    fullImg.style.margin = "0 auto";
-    win.document.body.style.margin = "0";
-    win.document.body.style.backgroundColor = "black";
-    win.document.body.appendChild(fullImg);
-  }
-
-  cardImages.forEach(img => {
-    img.addEventListener('mousedown', function () {
-      this.classList.add('active');
-    });
-    img.addEventListener('mouseup', function () {
-      this.classList.remove('active');
-    });
-    img.addEventListener('mouseleave', function () {
-      this.classList.remove('active');
-    });
-
-    img.addEventListener('click', function (event) {
-      event.stopPropagation();
-      this.classList.add('expand-animation');
-      setTimeout(() => {
-        this.classList.remove('expand-animation');
-        openFullscreen(this.src);
-      }, 400); // Animation duration
-    });
   });
 </script>
 
