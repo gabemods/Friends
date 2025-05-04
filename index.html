@@ -364,8 +364,8 @@ body.dark-mode .arrow {
     /* Style for the top-right buttons container */
 .top-right-buttons {
     position: fixed;
-    top: 15px;
-    right: 15px;
+    top: 25px;
+    right: 330px;
     display: flex;
     align-items: center;
 }
@@ -373,6 +373,7 @@ body.dark-mode .arrow {
 /* Style for the info button */
 .info-btn {
     margin-left: 10px;
+    stroke: black;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -418,7 +419,7 @@ body.light-mode .info-btn svg {
 <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
   <div class="top-right-buttons">
     <!-- Theme Toggle Button -->
-    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <button class="theme-toggle" onclick="toggleTheme()"></button>
 
     <!-- Info Button (SVG Icon) -->
     <button class="info-btn" onclick="expandInfo()">
