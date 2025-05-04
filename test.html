@@ -772,5 +772,52 @@ body.dark-mode #settingsToggle svg {
     }
   });
 </script>
+  <script>
+  const themeToggle = document.getElementById("themeToggle");
+  const themeIcon = document.getElementById("themeIcon");
+
+  // Apply system preference on first load
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (systemPrefersDark) {
+    document.body.classList.add("dark-mode");
+  }
+
+  // Toggle dark/light mode
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    themeIcon.classList.add("spin");
+
+    setTimeout(() => {
+      themeIcon.classList.remove("spin");
+    }, 500); // match your CSS transition time
+  });
+</script>
+  <script>
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const popup = document.createElement('div');
+  popup.classList.add('popup');
+  popup.textContent = "Settings Panel";
+  document.body.appendChild(popup);
+
+  let popupVisible = false;
+
+  themeToggle.addEventListener('click', () => {
+    // Spin the icon
+    themeIcon.classList.add('spin');
+    setTimeout(() => themeIcon.classList.remove('spin'), 500);
+
+    // Toggle dark mode
+    document.body.classList.toggle('dark-mode');
+
+    // Show or hide popup
+    popupVisible = !popupVisible;
+    if (popupVisible) {
+      popup.classList.add('show');
+    } else {
+      popup.classList.remove('show');
+    }
+  });
+</script>
 </body>
 </html>
