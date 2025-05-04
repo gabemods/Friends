@@ -220,6 +220,7 @@ body.dark-mode .dot {
 }
 
 body.dark-mode .copyright {
+color: rgba(255, 255, 255, 0.7);
 } 
 #themeIcon {
   transition: transform 0.5s ease;
@@ -359,120 +360,15 @@ body.dark-mode .arrow {
   transform: translateY(0);
   pointer-events: auto;
 }
-    /* Popup */
-.popup {
-  position: fixed;
-  top: 60px;
-  right: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  color: black;
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-  opacity: 0;
-  transform: scale(0.8);
-  transform-origin: top right;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1002;
-  pointer-events: none;
-}
-.popup.show {
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: auto;
-}
-
-/* Settings icon color */
-#settingsToggle svg {
-  stroke: black;
-}
-body.dark-mode #settingsToggle svg {
-  stroke: white;
-}
-    /* Settings icon spin animation */
-@keyframes spinAnimation {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(180deg); }
-}
-.spin {
-  animation: spinAnimation 0.4s ease forwards;
-}
-
-/* Optional: allow reversing if toggled off */
-.spin-reverse {
-  animation: spinAnimationReverse 0.4s ease forwards;
-}
-@keyframes spinAnimationReverse {
-  from { transform: rotate(180deg); }
-  to { transform: rotate(0deg); }
-}
   </style>
 </head>
 <body>
   <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-    <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
-<a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
-  </div>
-  <button id="themeToggle" aria-label="Toggle theme"
-        style="position: fixed; top: 20px; right: 10px;
-               background: none; border: none; cursor: pointer;
-               z-index: 1001;">
-  <svg id="themeIcon"
-       xmlns="http://www.w3.org/2000/svg"
-       viewBox="0 0 24 24"
-       width="28" height="28"
-       fill="none" stroke-width="2" stroke="currentColor">
-    <!-- start with the Sun outline path -->
-    <path d="M12 3v2m0 14v2m9-9h-2M5 12H3
-             m15.364-6.364l-1.414 1.414
-             M6.05 17.95l-1.414 1.414
-             M17.95 17.95l1.414-1.414
-             M6.05 6.05L4.636 7.464
-             M12 8a4 4 0 100 8 4 4 0 000-8z"/>
-  </svg>
-</button>
-  <!-- Settings icon -->
-<button id="settingsToggle" aria-label="Open settings"
-        style="position: fixed; top: 20px; right: 50px;
-               background: none; border: none; cursor: pointer;
-               z-index: 1001;">
-  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="12" r="3"></circle>
-    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 
-             1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 
-             1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 
-             1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 
-             1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 
-             1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 
-             1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 
-             1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 
-             1.65 0 0 0-1.51 1z"/>
-  </svg>
-</button>
-
-<!-- Settings popup -->
-<div id="settingsPopup" style="display:none; position: fixed; top: 70px; right: 10px; background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; z-index: 1001; backdrop-filter: blur(10px);">
-  <label style="font-weight: bold; display: block; margin-bottom: 10px;">
-    <input type="checkbox" id="followSystemTheme">
-    Follow system theme
-  </label>
-</div>
-  <div class="dropdown">
-  <button class="dropbtn" id="socialToggle">
+  <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
+  <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+  <button class="dropbtn" id="socialToggle" style="background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; border: none; font-size: 1rem; cursor: pointer; top: 30px; left: 5px; padding: 10px 20px; border-radius: 25px; transform: translateY(-15px);">
     Socials <span class="arrow" id="arrowIcon">▼</span>
   </button>
-  <div class="dropdown-content" id="socialLinks">
-    <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
-      <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
-    </a>
-    <a href="https://github.com/gabemods" class="button" title="GitHub" target="_blank">
-      <svg viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12c0 5.092 3.292 9.398 7.86 10.925.574.103.785-.25.785-.557 0-.274-.01-1.004-.016-1.97-3.197.695-3.87-1.54-3.87-1.54-.522-1.328-1.276-1.683-1.276-1.683-1.044-.714.08-.7.08-.7 1.154.082 1.761 1.185 1.761 1.185 1.027 1.76 2.695 1.252 3.35.957.104-.744.402-1.252.73-1.54-2.553-.29-5.238-1.276-5.238-5.682 0-1.255.448-2.28 1.183-3.082-.118-.29-.512-1.458.113-3.04 0 0 .964-.31 3.158 1.18.916-.254 1.9-.382 2.88-.387.98.005 1.964.133 2.88.387 2.193-1.49 3.156-1.18 3.156-1.18.627 1.582.233 2.75.115 3.04.736.802 1.183 1.827 1.183 3.082 0 4.416-2.688 5.39-5.25 5.675.41.35.776 1.037.776 2.09 0 1.51-.014 2.725-.014 3.096 0 .31.21.665.79.552C20.21 21.394 23.5 17.09 23.5 12c0-6.352-5.148-11.5-11.5-11.5z"/></svg>
-    </a>
-    <a href="https://www.snapchat.com/add/gabe_mods?share_id=1AxCc8C2wmk&locale=en-GB" class="button" title="Snapchat" target="_blank">
-      <img src="assets/images/snapchat-outline-svgrepo-com.svg" alt="Snapchat" />
-    </a>
-  </div>
 </div>
   <div class="scroll-container">
 <div class="page">
@@ -662,160 +558,6 @@ body.dark-mode #settingsToggle svg {
     if (!dropdown.contains(e.target)) {
       dropdown.classList.remove('active');
       arrow.classList.remove('rotate');
-    }
-  });
-</script>
-  <script>
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-  let followSystem = JSON.parse(localStorage.getItem('followSystem')) || false;
-
-  function applyTheme(theme) {
-    document.body.classList.toggle('dark-mode', theme === 'dark');
-    themeIcon.classList.toggle('spin');
-  }
-
-  function detectSystemTheme() {
-    applyTheme(prefersDark.matches ? 'dark' : 'light');
-  }
-
-  function toggleManualTheme() {
-    followSystem = false;
-    localStorage.setItem('followSystem', 'false');
-    const isDark = document.body.classList.toggle('dark-mode');
-    themeIcon.classList.toggle('spin');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  }
-
-  // Theme toggle button
-  themeToggle.addEventListener('click', toggleManualTheme);
-
-  // Listen to system changes
-  prefersDark.addEventListener('change', (e) => {
-    if (followSystem) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
-  });
-
-  // On load
-  window.addEventListener('DOMContentLoaded', () => {
-    if (followSystem) {
-      detectSystemTheme();
-    } else {
-      const savedTheme = localStorage.getItem('theme') || 'light';
-      applyTheme(savedTheme);
-    }
-  });
-</script>
-  <script>
-  const settingsToggle = document.getElementById('settingsToggle');
-  const settingsPopup = document.getElementById('settingsPopup');
-  const followSystemCheckbox = document.getElementById('followSystemTheme');
-
-  // Load checkbox state
-  window.addEventListener('DOMContentLoaded', () => {
-    followSystemCheckbox.checked = followSystem;
-  });
-
-  // Toggle popup
-  settingsToggle.addEventListener('click', () => {
-    settingsPopup.style.display = settingsPopup.style.display === 'none' ? 'block' : 'none';
-  });
-
-  // Toggle follow system theme
-  followSystemCheckbox.addEventListener('change', () => {
-    followSystem = followSystemCheckbox.checked;
-    localStorage.setItem('followSystem', followSystem);
-    if (followSystem) {
-      detectSystemTheme();
-    }
-  });
-</script>
-  <script>
-  const themeToggle = document.getElementById("themeToggle");
-  const themeIcon = document.getElementById("themeIcon");
-  const popup = document.createElement("div");
-  popup.className = "popup";
-  popup.innerText = "Settings";
-  document.body.appendChild(popup);
-
-  // Show popup when settings icon is clicked
-  themeToggle.addEventListener("click", () => {
-    // Toggle theme
-    const currentTheme = document.body.classList.contains("dark-mode") ? "dark" : "light";
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    document.body.classList.toggle("dark-mode", newTheme === "dark");
-    localStorage.setItem("theme", newTheme);
-
-    // Spin icon
-    themeIcon.classList.add("spin");
-    setTimeout(() => themeIcon.classList.remove("spin"), 500);
-
-    // Toggle popup
-    popup.classList.add("show");
-    clearTimeout(popup._timeout);
-    popup._timeout = setTimeout(() => popup.classList.remove("show"), 2000);
-  });
-
-  // Apply stored theme or system preference
-  const storedTheme = localStorage.getItem("theme");
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
-  document.body.classList.toggle("dark-mode", initialTheme === "dark");
-
-  // Close popup if clicked outside
-  window.addEventListener("click", (e) => {
-    if (!themeToggle.contains(e.target) && !popup.contains(e.target)) {
-      popup.classList.remove("show");
-    }
-  });
-</script>
-  <script>
-  const themeToggle = document.getElementById("themeToggle");
-  const themeIcon = document.getElementById("themeIcon");
-
-  // Apply system preference on first load
-  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  if (systemPrefersDark) {
-    document.body.classList.add("dark-mode");
-  }
-
-  // Toggle dark/light mode
-  themeToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    themeIcon.classList.add("spin");
-
-    setTimeout(() => {
-      themeIcon.classList.remove("spin");
-    }, 500); // match your CSS transition time
-  });
-</script>
-  <script>
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const popup = document.createElement('div');
-  popup.classList.add('popup');
-  popup.textContent = "Settings Panel";
-  document.body.appendChild(popup);
-
-  let popupVisible = false;
-
-  themeToggle.addEventListener('click', () => {
-    // Spin the icon
-    themeIcon.classList.add('spin');
-    setTimeout(() => themeIcon.classList.remove('spin'), 500);
-
-    // Toggle dark mode
-    document.body.classList.toggle('dark-mode');
-
-    // Show or hide popup
-    popupVisible = !popupVisible;
-    if (popupVisible) {
-      popup.classList.add('show');
-    } else {
-      popup.classList.remove('show');
     }
   });
 </script>
