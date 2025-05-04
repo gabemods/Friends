@@ -216,6 +216,21 @@ body.dark-mode .card h1 {
 body.dark-mode button {
   color: black; /* Make button text black */
 }
+    @keyframes imageExpand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.expand-animation {
+  animation: imageExpand 0.4s ease;
+}
   </style>
 </head>
 <body>
@@ -496,6 +511,17 @@ body.dark-mode button {
 
     // remove spin after it finishes
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
+  });
+</script>
+  <script>
+  // Add animation on all images
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('click', function () {
+      img.classList.add('expand-animation');
+      setTimeout(() => {
+        img.classList.remove('expand-animation');
+      }, 400); // Match the duration of the animation
+    });
   });
 </script>
 </body>
