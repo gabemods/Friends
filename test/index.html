@@ -360,6 +360,37 @@ body.dark-mode .arrow {
   transform: translateY(0);
   pointer-events: auto;
 }
+    /* Container for the buttons */
+.menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures buttons are spaced evenly */
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5); /* Keep background with transparency */
+  backdrop-filter: blur(10px); /* Keep the blur effect */
+  z-index: 999; /* Ensure it stays above other content */
+  padding: 10px 20px; /* Adjust padding as needed */
+}
+
+/* Socials Button */
+.socials-button {
+  margin-right: 20px; /* Adds space between socials and other buttons */
+  position: relative;
+  z-index: 1; /* Make sure it’s on top */
+}
+
+/* Other buttons */
+.menu-button {
+  margin-left: 20px; /* Adds spacing between buttons */
+}
+
+/* Optional: Make sure the other buttons are centered */
+.menu-container button {
+  margin: 0 10px; /* Adds equal spacing between all buttons */
+}
   </style>
 </head>
 <body>
