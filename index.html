@@ -75,6 +75,7 @@
     }
     
     .card {
+      position: relative;
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
       padding: 24px 16px;
@@ -116,7 +117,7 @@
 
     .indicator-wrapper {
       position: fixed;
-      bottom: 60px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.2);
@@ -284,15 +285,17 @@ body.dark-mode button {
 
 /* Socials Button */
 .dropbtn {
+  position: absolute;
+  z-index: 900;
   background: linear-gradient(90deg, #00c6ff, #0072ff);
   color: white;
   border: none;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  top: 30px;
-  left: 5px;
-  padding: 10px 20px;
+  top: 115px;
+  left: 40px;
+  padding: 10px 10px;
   border-radius: 25px;
   position: relative;
   transition: transform 0.3s ease;
@@ -317,6 +320,8 @@ body.dark-mode button {
   -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
+  top: 150px;
+  left: 30px;
   gap: 8px;
   padding: 10px;
   border-radius: 8px;
@@ -363,18 +368,23 @@ body.dark-mode .arrow {
 }
     .copyright-box {
   position: absolute;
-  bottom: 90px;
-  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9000;
+  bottom: -620px;
+  left: 190%;
   transform: translateX(-50%);
-  margin: 20px auto 10px;
-  padding: 10px 20px;
-  width: 180px;
-  max-width: 280px;
+  margin: 10px auto 10px;
+  padding: 5px 10px;
+  height: 30px;
+  width: 400px;
+  max-width: 400px;
   font-size: 12px;
   color: grey;
-  background: rgba(0, 0, 0, 0.1);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
-  border-radius: 30px;
+  background: rgba(230, 230, 230, 0.5);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
   text-align: center;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -420,7 +430,7 @@ body.dark-mode .arrow {
     </a>
   </div>
     <div class="copyright-box">
-  &copy;Designed and coded by Gabe Mods | All rights reserved
+  &copy; Designed and coded by Gabe Mods | All rights reserved
 </div>
 </div>
   <div class="scroll-container">
@@ -432,7 +442,6 @@ body.dark-mode .arrow {
         <p>Romans 8:28 -  And we know that all things work together for good to those who love God, to those who are the called according to His purpose.</p>
         <p>I like to code websites and stuff and mod games and apps. I created this website.</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
 </div>
     <div class="page">
       <div class="card">
@@ -440,7 +449,6 @@ body.dark-mode .arrow {
         <h1>Charlie</h1>
         <p>I support Chelsea. I also like Cars and Music.</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -448,7 +456,6 @@ body.dark-mode .arrow {
         <h1>Michael</h1>
         <p>I support Everton and I like Guitar</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -456,15 +463,13 @@ body.dark-mode .arrow {
         <h1>Tommy</h1>
         <p>I think Basketball is cool and I also shred Guitar 🎸</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
-        <img src="URL_TO_Harry_IMAGE" alt="Lewis" />
+        <img src="URL_TO_Harry_IMAGE" alt="Harry" />
         <h1>Harry</h1>
         <p> My Favourite Football team is Liverpool. I also go to the gym 💪</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -472,7 +477,6 @@ body.dark-mode .arrow {
         <h1>James</h1>
         <p>Hi, I'm James and I support Port Vale. </p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
      <div class="page">
       <div class="card">
@@ -480,7 +484,6 @@ body.dark-mode .arrow {
         <h1>Adam</h1>
         <p>I like Guitar</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -488,14 +491,12 @@ body.dark-mode .arrow {
         <h1>Jayden</h1>
         <p>I support man united and Michael is a retard👍</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
         <img src="URL_TO_LEWIS_IMAGE" alt="Lewis" />
         <h1>Lewis</h1>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
 
     <div class="indicator-wrapper">
