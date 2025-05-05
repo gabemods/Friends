@@ -232,14 +232,16 @@ body.dark-mode header {
   color: white; /* Ensure header text is white */
 }
     
-    body.dark-mode .profiles-button {
-  background-color: #001f4d; /* dark blue */
-  color: #d3d3d3; /* light grey text */
-}
+    @media (prefers-color-scheme: dark) {
+  .profiles-button {
+    background-color: #001f4d;
+    color: #d3d3d3;
+  }
 
-body.dark-mode .photos-button {
-  background-color: #2e2e2e; /* dark grey */
-  color: #d3d3d3; /* light grey text */
+  .photos-button {
+    background-color: #2e2e2e;
+    color: #d3d3d3;
+  }
 }
     .buttons {
       display: flex;
