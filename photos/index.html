@@ -251,7 +251,7 @@ body.dark-mode button {
   font-weight: bold;
   cursor: pointer;
   top: 15px;
-  left: -10px;
+  left: -5px;
   padding: 0px 0px;
   border-radius: 25px;
   position: relative;
@@ -676,6 +676,24 @@ body.dark-mode .copyright-box {
 
     // remove spin after it finishes
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
+  });
+</script>
+  <script>
+  const dropdown = document.querySelector('.dropdown');
+  const arrow = document.getElementById('arrowIcon');
+  const toggle = document.getElementById('socialToggle');
+
+  toggle.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+    arrow.classList.toggle('rotate');
+  });
+
+  // Optional: Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+      arrow.classList.remove('rotate');
+    }
   });
 </script>
 </body>
