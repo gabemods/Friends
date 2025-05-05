@@ -384,6 +384,23 @@ body.dark-mode .copyright-box {
     display: none;
   }
 }
+    /* Dark mode Socials button text */
+body.dark-mode .dropbtn,
+body.dark-mode .arrow {
+  color: black !important;
+}
+
+/* Dark mode Profiles button */
+body.dark-mode .profiles-button {
+  background-color: #1c1fba !important;
+  color: #d3d3d3 !important;
+}
+
+/* Dark mode Photos button */
+body.dark-mode .photos-button {
+  background-color: ##7d7e80 !important;
+  color: #d3d3d3 !important;
+}
   </style>
 </head>
 <body>
@@ -393,8 +410,8 @@ body.dark-mode .copyright-box {
   <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1);  display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 10px;">
-    <a href="../index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
-    <a href="index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
+    <a href="../index.html" class="profiles button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
+    <a href="index.html" class="photos button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
 
         <div class="dropdown" style="position: relative;">
       <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
