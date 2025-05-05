@@ -480,7 +480,31 @@ body.dark-mode .copyright-box {
   <div class="scroll-container">
 <div class="page">
       <div class="card">
-        <span id="secretEmoji" style="position: absolute; top: 5px; left: 5px; font-size: 1em; cursor: pointer; transition: transform 0.2s ease-in-out; background-image: url('assets/images/IMG_7787.jpeg'); background-color: rgba(255, 255, 255, 0.3); border-radius: 25px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background-size: cover; background-position: center;">🤫</span>
+        <span id="secretEmoji" style="position: absolute; top: 5px; left: 5px; font-size: 1em; cursor: pointer; transition: transform 0.2s ease-in-out; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; background-image: url('assets/images/IMG_7787.jpeg'); background-size: cover; background-position: center; border-radius: 50%; /* Make it a circle */ filter: blur(12px); /* Blur the image */">
+  <span style="position: relative; z-index: 1; backdrop-filter: none; -webkit-backdrop-filter: none; background: none;">🤫</span>
+</span>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const secretEmoji = document.getElementById('secretEmoji');
+
+    if (secretEmoji) {
+      secretEmoji.addEventListener('click', () => {
+        secretEmoji.classList.add('expand-emoji');
+        setTimeout(() => {
+          window.location.href = 'secret/index.html';
+        }, 200);
+      });
+    }
+  });
+</script>
+
+<style>
+.expand-emoji {
+  transform: scale(1.2);
+}
+</style>
+
 
 
 <script>
