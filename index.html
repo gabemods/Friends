@@ -320,7 +320,7 @@ body.dark-mode button {
   -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
-  top: -100px;
+  top: 100px;
   left: 30px;
   gap: 8px;
   padding: 10px;
@@ -429,17 +429,17 @@ body.dark-mode .copyright-box {
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
 </div>
-  <header style="position: sticky; top: 0; margin-left: 15px; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
+  <header style="position: sticky; top: 0; margin-left: 15px; z-index: 1000; background-color: rgba(255, 255, 255, 0.1);  display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 10px;">
     <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
     <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
 
-    <div class="dropdown" style="position: relative;">
+        <div class="dropdown" style="position: relative;">
       <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
         Socials <span class="arrow" id="arrowIcon">▼</span>
       </button>
-      <div class="dropdown-content" id="socialLinks" style="display: none; position: absolute; top: 100%; left: 0; background-color: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000;">
+      <div class="dropdown-content" id="socialLinks">
         <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
           <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
         </a>
