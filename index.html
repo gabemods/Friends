@@ -480,6 +480,29 @@ body.dark-mode .copyright-box {
   <div class="scroll-container">
 <div class="page">
       <div class="card">
+        <span id="secretEmoji" style="position: absolute; top: 10px; left: 10px; font-size: 2em; cursor: pointer; transition: transform 0.2s ease-in-out;">🤫</span>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const secretEmoji = document.getElementById('secretEmoji');
+
+    if (secretEmoji) {
+      secretEmoji.addEventListener('click', () => {
+        secretEmoji.classList.add('expand-emoji');
+        setTimeout(() => {
+          window.location.href = 'secret/index.html';
+        }, 200);
+      });
+    }
+  });
+</script>
+
+<style>
+.expand-emoji {
+  transform: scale(1.2);
+}
+</style>
+
         <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
         <h1>Gabriel</h1>
         <p>Jesus is King of Kings and Lord of Lords! </p>
