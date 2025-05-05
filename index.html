@@ -494,7 +494,7 @@ body.dark-mode .copyright-box {
         setTimeout(() => {
           secretEmoji.classList.remove('expand-emoji'); // Remove the class after 1 second
           window.location.href = 'secret/index.html';
-        }, 1000); // Changed timeout to 1000ms (1 second)
+        }, 500); // Changed timeout to 1000ms (1 second)
       });
     }
   });
@@ -505,31 +505,6 @@ body.dark-mode .copyright-box {
   transform: scale(1.2);
 }
 </style>
-
-
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const secretEmoji = document.getElementById('secretEmoji');
-
-    if (secretEmoji) {
-      secretEmoji.addEventListener('click', () => {
-        secretEmoji.classList.add('expand-emoji');
-        setTimeout(() => {
-          secretEmoji.classList.remove('expand-emoji'); // Remove the class after 1 second
-          window.location.href = 'secret/index.html';
-        }, 1000); // Changed timeout to 1000ms (1 second)
-      });
-    }
-  });
-</script>
-
-<style>
-.expand-emoji {
-  transform: scale(1.2);
-}
-</style>
-
         <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
         <h1>Gabriel</h1>
         <p>Jesus is King of Kings and Lord of Lords! </p>
