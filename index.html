@@ -476,6 +476,7 @@ body.dark-mode .copyright-box {
     <div class="copyright-box">
   &copy; Designed and coded by Gabe Mods | All rights reserved
 </div>
+</div>
   <div class="scroll-container">
 <div class="page">
       <div class="card">
@@ -491,11 +492,31 @@ body.dark-mode .copyright-box {
       secretEmoji.addEventListener('click', () => {
         secretEmoji.classList.add('expand-emoji');
         setTimeout(() => {
-          secretEmoji.classList.remove('expand-emoji'); // Remove the class to scale back down
-          setTimeout(() => {
-            window.location.href = 'secret/index.html'; // Navigate after scaling back
-          }, 200); // Delay for the scale-down animation (adjust as needed)
-        }, 200); // Delay for the scale-up effect (should match the CSS transition duration)
+          window.location.href = 'secret/index.html';
+        }, 200);
+      });
+    }
+  });
+</script>
+
+<style>
+.expand-emoji {
+  transform: scale(1.2);
+}
+</style>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const secretEmoji = document.getElementById('secretEmoji');
+
+    if (secretEmoji) {
+      secretEmoji.addEventListener('click', () => {
+        secretEmoji.classList.add('expand-emoji');
+        setTimeout(() => {
+          window.location.href = 'secret/index.html';
+        }, 200);
       });
     }
   });
@@ -513,6 +534,7 @@ body.dark-mode .copyright-box {
         <p>Romans 8:28 -  And we know that all things work together for good to those who love God, to those who are the called according to His purpose.</p>
         <p>I like to code websites and stuff and mod games and apps. I created this website.</p>
       </div>
+</div>
     <div class="page">
       <div class="card">
         <img src="assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
