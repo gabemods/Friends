@@ -19,11 +19,11 @@
   <link rel="manifest" href="../assets/favicon/site.webmanifest">
 
   <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      overflow: hidden;
-      background: linear-gradient(to bottom, #e0f7fa, #80deea, #26c6da);
+    @font-face {
+      font-family: 'OneUISans';
+      src: url('https://raw.githubusercontent.com/gabemods/gabemods.github.io/main/assets/fonts/(Regular)%20One%20UI%20Sans.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
     }
 
     .scroll-container {
@@ -328,26 +328,21 @@ body.dark-mode .arrow {
   width: 370px;
   font-size: 12px;
   color: grey;
-  background: rgba(230, 230, 230, 0.9);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.2); /* transparent white */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
   border-radius: 4px;
   text-align: center;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 9999;
-}
-    /* Light mode (default) */
-.copyright-box {
-  color: grey;
-  background: rgba(230, 230, 230, 0.9);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+  line-height: 30px;
 }
 
 /* Dark mode override */
 body.dark-mode .copyright-box {
   color: white;
-  background: rgba(30, 30, 30, 0.9);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2); /* transparent black */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
 }
     .landscape-warning {
   display: none;
