@@ -516,8 +516,9 @@ body.dark-mode .copyright-box {
       secretEmoji.addEventListener('click', () => {
         secretEmoji.classList.add('expand-emoji');
         setTimeout(() => {
+          secretEmoji.classList.remove('expand-emoji'); // Remove the class after 1 second
           window.location.href = 'secret/index.html';
-        }, 200);
+        }, 1000); // Changed timeout to 1000ms (1 second)
       });
     }
   });
