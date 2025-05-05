@@ -231,18 +231,7 @@ body.dark-mode #themeToggle {
 body.dark-mode header {
   color: white; /* Ensure header text is white */
 }
-    
-    @media (prefers-color-scheme: dark) {
-  .profiles-button {
-    background-color: #001f4d;
-    color: #d3d3d3;
-  }
 
-  .photos-button {
-    background-color: #2e2e2e;
-    color: #d3d3d3;
-  }
-}
     .buttons {
       display: flex;
       justify-content: center;
@@ -417,6 +406,23 @@ body.dark-mode .copyright-box {
   .scroll-container {
     display: none;
   }
+}
+    /* Dark mode Socials button text */
+body.dark-mode .dropbtn,
+body.dark-mode .arrow {
+  color: black;
+}
+
+/* Dark mode Profiles button */
+body.dark-mode .profiles-button {
+  background-color: #001f4d;
+  color: #d3d3d3;
+}
+
+/* Dark mode Photos button */
+body.dark-mode .photos-button {
+  background-color: #2e2e2e;
+  color: #d3d3d3;
 }
 </style>
 </head>
