@@ -424,9 +424,58 @@ body.dark-mode .photos-button {
   background-color: #7d7e80 !important;
   color: #d3d3d3 !important;
 }
-</style>
+    
+.ios-popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+}
+
+.ios-popup {
+  background: white;
+  color: black;
+  padding: 15px 20px; /* slightly reduced padding */
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  transform: scale(0);
+  transition: transform 0.3s ease;
+  text-align: center;
+  width: 80%;          /* make it wider to fit more text on one line */
+  max-width: 270px;    /* cap the width so it doesn't stretch too far on large screens */
+  word-break: normal;
+  white-space: normal;
+}
+
+.ios-popup.show {
+  transform: scale(1);
+}
+
+.ios-popup button {
+  margin-top: 15px;
+  padding: 12px 20px;    /* increase padding for a bigger button */
+  font-size: 16px;       /* bigger font */
+  border: none;
+  border-radius: 10px;
+  background: #007aff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+  </style>
 </head>
 <body>
+<div class="ios-popup-overlay" id="popupOverlay">
+  <div class="ios-popup" id="popup">
+    <p>This Website and its images are copyrighted and are NOT licensed for reuse</p>
+    <button id="popupOkButton">Okay</button>
+  </div>
+</div>
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
 </div>
