@@ -733,5 +733,24 @@ body.dark-mode .photos-button {
     }
   });
 </script>
+  <script>
+  window.addEventListener("load", () => {
+    const overlay = document.getElementById("popupOverlay");
+    const popup = document.getElementById("popup");
+    const button = document.getElementById("popupOkButton");
+
+    // Show popup
+    overlay.style.display = "flex";
+    requestAnimationFrame(() => popup.classList.add("show"));
+
+    // Hide popup on button press
+    button.addEventListener("click", () => {
+      popup.classList.remove("show");
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 300);
+    });
+  });
+</script>
 </body>
 </html>
