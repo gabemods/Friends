@@ -604,7 +604,19 @@ body.dark-mode .photos-button {
   <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
     <img id="fullscreenImage" src="" alt="Full Image" />
   </div>
-
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
+    buttons.forEach(btn => {
+      if (btn) {
+        btn.classList.add('nav-button-animate');
+        setTimeout(() => {
+          btn.classList.remove('nav-button-animate');
+        }, 800); // Match the animation duration
+      }
+    });
+  });
+</script>
   <script>
     // Scroll indicators
     const container = document.querySelector('.scroll-container');
