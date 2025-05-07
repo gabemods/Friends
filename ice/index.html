@@ -2,35 +2,175 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ice Cube Background</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0,
+                 maximum-scale=1.0, user-scalable=no,
+                 viewport-fit=cover">
+  <title>Ice Cube</title>
+
+  <meta name="description" content="Ice Cube–themed card.">
+  <meta name="keywords" content="ice, cube, frosty">
+  <meta name="author" content="Gabe Mods">
+  <meta property="og:title" content="Ice Cube">
+  <meta property="og:description" content="A frosty, ice-cube-inspired card.">
+  <meta property="og:image" content="URL_TO_ICE_CUBE_IMAGE">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="apple-touch-icon" sizes="180x180"
+        href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" sizes="32x32"
+        href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/x-icon" sizes="16x16"
+        href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: radial-gradient(circle at 30% 30%, #d6f1ff, #a4e0f5 40%, #6dcce6 70%, #3bb3d8);
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      font-family: sans-serif;
+    @font-face {
+      font-family: 'OneUISans';
+      src: url('https://raw.githubusercontent.com/gabemods/gabemods.github.io/main/assets/fonts/(Regular)%20One%20UI%20Sans.ttf')
+           format('truetype');
     }
 
-    .glass {
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-      margin: 2rem auto;
-      max-width: 500px;
-      color: #fff;
-      text-align: center;
+    html, body {
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
+      overflow: hidden;
+      font-family: 'OneUISans', sans-serif;
+      color: black;
+      /* ICE CUBE BACKGROUND */
+      background: linear-gradient(
+        to bottom,
+        #d6f1ff 0%,
+        #a4e0f5 40%,
+        #6dcce6 70%,
+        #3bb3d8 100%
+      );
+      background-size: cover;
+      background-repeat: no-repeat;
     }
+
+    .scroll-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      width: 100%; height: 100dvh;
+    }
+
+    .page {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+      width: 100%; height: 100dvh;
+      display: flex; justify-content: center;
+      align-items: center; flex-direction: column;
+    }
+
+    .card {
+      position: relative;
+      /* FROSTED GLASS + ICE CUBE TINT */
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 25px;
+      padding: 24px 16px;
+      max-width: 280px;
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease;
+      margin-top: -100px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      .card { transform: scale(0.75); }
+    }
+
+    .card h1 {
+      font-size: 24px; margin: 10px 0 5px;
+      /* ICE TEXT EFFECT */
+      background: linear-gradient(90deg, #a4e0f5, #3bb3d8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card p {
+      margin-top: 10px; font-size: 16px;
+      color: #ffffffcc;
+    }
+
+    .indicator-wrapper {
+      position: fixed; bottom: 60px;
+      left: 50%; transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px; padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex; justify-content: center;
+      align-items: center; z-index: 1000;
+    }
+
+    .indicators { display: flex; gap: 10px; }
+
+    .dot {
+      width: 10px; height: 10px;
+      background-color: white; opacity: 0.4;
+      border-radius: 50%; transition: all 0.3s ease;
+    }
+
+    .dot.active { opacity: 1; transform: scale(1.1); }
+
+    header {
+      position: sticky; top: 0; left: 0;
+      width: 100%; padding: 10px 5px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      background-color: rgba(255,255,255,0.1);
+      z-index: 1000;
+    }
+
+    /* … include all your existing header, button, dropdown, dark-mode,
+         scripts etc. exactly as you have them currently … */
+
+    .copyright-box {
+      position: fixed; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 10px; height: 30px;
+      font-size: 12px; color: grey;
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 25px rgba(255,255,255,0.4);
+      border-radius: 4px; text-align: center;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999;
+    }
+
+    /* dark‐mode overrides… */
   </style>
 </head>
 <body>
-  <div class="glass">
-    <h1>Ice Cube Vibes</h1>
-    <p>This background is inspired by the One UI 5 ice cube emoji!</p>
+  <!-- iOS popup, landscape warning, header, socials dropdown, theme toggle -->
+  <!-- … copy-paste your existing markup here … -->
+
+  <div class="scroll-container">
+    <div class="page">
+      <div class="card">
+        <h1>🧊 Ice Cube 🧊</h1>
+        <p>
+          Cool, crisp, and frosty – this card brings the One UI 5
+          ice cube emoji straight into your layout.
+        </p>
+      </div>
+    </div>
+    <div class="indicator-wrapper">
+      <div class="indicators">
+        <div class="dot active"></div>
+      </div>
+    </div>
   </div>
+
+  <!-- fullscreen overlay, scripts, etc. (unchanged) -->
 </body>
 </html>
