@@ -411,57 +411,56 @@ body.dark-mode .photos-button {
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.0); /* lighter overlay */
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 10001;
+  transition: background-color 0.3s ease;
 }
 
 .ios-popup {
-  background: white;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
   color: black;
-  padding: 15px 20px; /* slightly reduced padding */
+  padding: 18px 22px;
   border-radius: 20px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-  transform: scale(0);
-  transition: transform 0.3s ease;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   text-align: center;
-  width: 80%;          /* make it wider to fit more text on one line */
-  max-width: 270px;    /* cap the width so it doesn't stretch too far on large screens */
-  word-break: normal;
+  width: 60%;
+  max-width: 300px;
+  word-break: break-word;
   white-space: normal;
 }
 
 .ios-popup.show {
   transform: scale(1);
+  opacity: 1;
 }
 
 .ios-popup button {
-  margin-top: 15px;
-  padding: 12px 20px;    /* increase padding for a bigger button */
-  font-size: 16px;       /* bigger font */
-  border: none;
-  border-radius: 10px;
-  background: #007aff;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-    .settings-icon {
+  margin-top: 5px;
   background: none;
   border: none;
+  padding: 10px 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #007aff; /* iOS blue */
   cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-  padding: 10px;
+  transition: color 0.2s ease;
 }
 
-.settings-icon:hover {
-  transform: scale(1.1);
+.ios-popup button.destructive {
+  color: #ff3b30; /* iOS red for destructive actions */
 }
 
-.settings-icon:active {
-  transform: scale(0.95);
+.ios-popup button:hover {
+  color: #0051cc;
 }
   </style>
 </head>
