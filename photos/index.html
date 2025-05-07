@@ -360,7 +360,7 @@ body.dark-mode .copyright-box {
   background: rgba(0, 0, 0, 0.2); /* transparent black */
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
 }
-    .landscape-warning {
+     .landscape-warning {
   display: none;
   position: fixed;
   top: 0; left: 0;
@@ -376,7 +376,7 @@ body.dark-mode .copyright-box {
   padding: 20px;
 }
 
-@media screen and (orientation: landscape) {
+@media screen and (max-height: 500px) and (orientation: landscape) {
   .landscape-warning {
     display: flex;
   }
