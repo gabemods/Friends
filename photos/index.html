@@ -64,19 +64,31 @@
     background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
 }
 
-    .card {
-      background: rgba(211, 211, 211, 0.3);
-      border-radius: 25px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      max-width: 285px;
-      /* Removed max-height to allow for taller content if needed */
-      padding-top: 1px;
-      padding-bottom: 1px; /* Increased padding below the card */
-      margin-top: -100px; /* Move the card down a bit more */
-    }
-
+.card {
+  background: rgba(211, 211, 211, 0.3);
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: 285px;
+  max-height: 55vh; /* Set a max height */
+  overflow-y: auto;  /* Allow vertical scroll */
+  padding-top: 1px;
+  padding-bottom: 20px;
+  margin-top: -100px;
+}
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+.card::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.3);
+  border-radius: 3px;
+}
+.card:nth-child(2) {
+  max-height: 75vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
     .card h1 {
       padding-left: 20px; /* Added left padding */
       margin-top: 1px; /* Reduced top margin */
@@ -406,14 +418,15 @@ body.dark-mode .photos-button {
   aspect-ratio: 16 / 9; /* or 4 / 3, etc. */
   border-radius: 22px;
   overflow: hidden;
-  margin: 0 auto 20px auto;
+  margin: -10px auto -20px auto;
+  margin-top: 30px;
 }
 
 .video-container video {
   display: block;
   width: 100%; /* Make the video fill the width of its container */
   aspect-ratio: 16 / 9; /* Set a common landscape aspect ratio */
-  border-radius: 5px;
+  border-radius: 0px;
   object-fit: cover; /* Ensure the video covers the area without distortion */
 }
   </style>
@@ -488,20 +501,26 @@ body.dark-mode .photos-button {
       <div class="card">
         <img src="../assets/images/josh/IMG_0310.jpeg" alt="Josh" onclick="openFullscreen(this.src)" />
         <h1>Josh</h1>
-
+        <div class="video-container">
+  <video controls poster="../assets/images/josh/20230522_154108_Original.jpeg" style="width: 100%; height: auto; border-radius: 0px; margin-top: 0px;">
+    <source src="../assets/images/josh/20230522_153949.mov" type="video/quicktime">
+    Your browser does not support the video tag.
+  </video>
+</div>
         <div class="photo-grid">
           <img src="../assets/images/josh/IMG_0309.jpeg" alt="Josh Photo 1" onclick="openFullscreen(this.src)" />
-          <img src="../assets/images/josh/IMG_0311.jpeg" alt="Josh Photo 2" onclick="openFullscreen(this.src)" />
-          <img src="../assets/images/josh/IMG_0312.jpeg" alt="Josh Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/Snapchat-1225027816_Original.jpeg" alt="Josh Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/Snapchat-1942572315_Original.png" alt="Josh Photo 3" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/josh/20230522_154108_Original.jpeg" alt="Josh Photo 4" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/IMG_7714.jpeg" alt="Josh Photo 5" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_7974.jpeg" alt="Josh Photo 6" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_8212.jpeg" alt="Josh Photo 7" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9729.jpeg" alt="Josh Photo 8" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9740.png" alt="Josh Photo 9" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9876.jpeg" alt="Josh Photo 10" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9877.jpeg" alt="Josh Photo 11" onclick="openFullscreen(this.src)" />
         </div>
-        <div class="video-container">
-      <video controls poster="../assets/images/josh/20230522_154108_Original.jpeg" style="width: 100%; height: auto; border-radius: 5px; margin-top: 0px;">
-        <source src="../assets/images/josh/20230522_153949.mov" type="video/quicktime">
-        Your browser does not support the video tag.
-      </video>
     </div>
-      </div>
     </div>
 
     <div class="page">
@@ -628,7 +647,6 @@ body.dark-mode .photos-button {
 
     <div class="indicator-wrapper">
       <div class="indicators">
-        <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
