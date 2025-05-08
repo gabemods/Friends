@@ -401,6 +401,20 @@ body.dark-mode .photos-button {
   background-color: #1c1fba !important;
   color: #d3d3d3 !important;
 }
+     .video-container {
+  margin-top: 20px; /* Add some space between the grid and the video */
+  border-radius: 8px;
+  overflow: hidden; /* Hide any potential overflow from video controls */
+  width: 100%; /* Make the container take the full width of the card */
+}
+
+.video-container video {
+  display: block;
+  width: 100%; /* Make the video fill the width of its container */
+  aspect-ratio: 16 / 9; /* Set a common landscape aspect ratio */
+  border-radius: 8px;
+  object-fit: cover; /* Ensure the video covers the area without distortion */
+}
   </style>
 </head>
 <body>
@@ -480,6 +494,12 @@ body.dark-mode .photos-button {
           <img src="../assets/images/josh/IMG_0312.jpeg" alt="Charlie Photo 3" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/josh/20230522_154108_Original.jpeg" alt="Charlie Photo 4" onclick="openFullscreen(this.src)" />
         </div>
+        <div class="video-container">
+      <video controls poster="../assets/images/josh/20230522_154108_Original.jpeg" style="width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">
+        <source src="../assets/images/A58387D0-CD02-4BA1-ABC1-C2946C6167D6.mov" type="video/quicktime">
+        Your browser does not support the video tag.
+      </video>
+    </div>
       </div>
     </div>
 
