@@ -401,11 +401,12 @@ body.dark-mode .photos-button {
   background-color: #1c1fba !important;
   color: #d3d3d3 !important;
 }
-     .video-container {
-  margin-top: 20px; /* Add some space between the grid and the video */
-  border-radius: 8px;
-  overflow: hidden; /* Hide any potential overflow from video controls */
-  width: 100%; /* Make the container take the full width of the card */
+.video-container {
+  width: 85%;
+  aspect-ratio: 16 / 9; /* or 4 / 3, etc. */
+  border-radius: 22px;
+  overflow: hidden;
+  margin: 0 auto 20px auto;
 }
 
 .video-container video {
@@ -485,17 +486,17 @@ body.dark-mode .photos-button {
 
     <div class="page">
       <div class="card">
-        <img src="../assets/images/josh/IMG_0310.jpeg" alt="Charlie" onclick="openFullscreen(this.src)" />
+        <img src="../assets/images/josh/IMG_0310.jpeg" alt="Josh" onclick="openFullscreen(this.src)" />
         <h1>Josh</h1>
 
         <div class="photo-grid">
-          <img src="../assets/images/josh/IMG_0309.jpeg" alt="Charlie Photo 1" onclick="openFullscreen(this.src)" />
-          <img src="../assets/images/josh/IMG_0311.jpeg" alt="Charlie Photo 2" onclick="openFullscreen(this.src)" />
-          <img src="../assets/images/josh/IMG_0312.jpeg" alt="Charlie Photo 3" onclick="openFullscreen(this.src)" />
-          <img src="../assets/images/josh/20230522_154108_Original.jpeg" alt="Charlie Photo 4" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/IMG_0309.jpeg" alt="Josh Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/IMG_0311.jpeg" alt="Josh Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/IMG_0312.jpeg" alt="Josh Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/20230522_154108_Original.jpeg" alt="Josh Photo 4" onclick="openFullscreen(this.src)" />
         </div>
         <div class="video-container">
-      <video controls poster="../assets/images/josh/20230522_154108_Original.jpeg" style="width: 100%; height: auto; border-radius: 8px; margin-top: 10px;">
+      <video controls poster="../assets/images/josh/20230522_154108_Original.jpeg" style="width: 100%; height: auto; border-radius: 8px; margin-top: 0px;">
         <source src="../assets/images/josh/20230522_153949.mov" type="video/quicktime">
         Your browser does not support the video tag.
       </video>
