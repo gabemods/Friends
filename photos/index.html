@@ -421,14 +421,6 @@ body.dark-mode .photos-button {
   margin: -10px auto -20px auto;
   margin-top: 30px;
 }
-.video-container-michael {
-  width: 85%;
-  aspect-ratio: 16 / 9; /* or 4 / 3, etc. */
-  border-radius: 22px;
-  overflow: hidden;
-  margin: 0px auto 10px auto;
-  margin-top: 0px;
-}
 
 .video-container video {
   display: block;
@@ -550,6 +542,12 @@ body.dark-mode .photos-button {
       <div class="card">
         <img src="../assets/images/michael/IMG_0229.jpeg" alt="Michael" onclick="openFullscreen(this.src)" />
         <h1>Michael</h1>
+        <div class="video-container">
+  <video controls poster="../assets/images/michael/IMG_0216.jpeg" style="width: 100%; height: auto; border-radius: 0px; margin-top: 0px;">
+    <source src="../assets/images/michael/A58387D0-CD02-4BA1-ABC1-C2946C6167D6.mov" type="video/quicktime">
+    Your browser does not support the video tag.
+  </video>
+</div>
         <div class="photo-grid">
           <img src="../assets/images/michael/IMG_0243.jpeg" alt="Michael Photo 1" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/michael/IMG_0244.jpeg" alt="Michael Photo 2" onclick="openFullscreen(this.src)" />
@@ -560,12 +558,6 @@ body.dark-mode .photos-button {
           <img src="../assets/images/michael/IMG_9801.jpeg" alt="Michael Photo 6" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/michael/IMG_9798.jpeg" alt="Michael Photo 6" onclick="openFullscreen(this.src)" />
         </div>
-        <div class="video-container-michael">
-  <video controls poster="../assets/images/michael/IMG_0216.jpeg" style="width: 100%; height: auto; border-radius: 0;">
-    <source src="../assets/images/michael/A58387D0-CD02-4BA1-ABC1-C2946C6167D6.mov" type="video/quicktime">
-    Your browser does not support the video tag.
-  </video>
-</div>
       </div>
     </div>
 
