@@ -478,6 +478,7 @@ body.dark-mode .photos-button {
   justify-content: center;
   width: 20px;
   height: 20px;
+  transition: transform 0.3s ease;
 }
 
 a.info-button svg {
@@ -487,13 +488,14 @@ a.info-button svg {
 
 /* Dark mode */
 body.dark-mode a.info-button {
-  background-color: rgba(0, 0, 0, 0.6); /* translucent black */
+  background-color: transparent;
+  transform: scale(1.2);
 }
 
 body.dark-mode a.info-button svg circle,
 body.dark-mode a.info-button svg rect,
 body.dark-mode a.info-button svg circle:last-child {
-  stroke: black;
+  stroke: white;
   fill: none;
 }
   </style>
