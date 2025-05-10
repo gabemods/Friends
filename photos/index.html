@@ -429,6 +429,24 @@ body.dark-mode .photos-button {
   border-radius: 0px;
   object-fit: cover; /* Ensure the video covers the area without distortion */
 }
+ a.info-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.3); /* translucent white */
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+a.info-button svg {
+  width: 20px;
+  height: 20px;
+}
   </style>
 </head>
 <body>
@@ -484,6 +502,13 @@ body.dark-mode .photos-button {
 
     <div class="page">
       <div class="card">
+      <a href="info/index.html" class="info-button" title="Info">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none" />
+    <rect x="11" y="10" width="2" height="6" fill="white" />
+    <circle cx="12" cy="7" r="1" fill="white" />
+  </svg>
+</a>
         <img src="../assets/images/gabriel/20250509_223705.jpg" alt="Gabriel" onclick="openFullscreen(this.src)" />
         <h1>Gabriel</h1>
 
