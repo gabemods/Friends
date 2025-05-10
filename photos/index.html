@@ -186,16 +186,18 @@
   animation: buttonExpand 1.0s ease;
 }
    body.dark-mode {
-  background: linear-gradient(to right,
-  #000000,
-  #000033, /* dark blue */
-  #000066, /* blue */
-  #000099, /* lighter blue */
-  #0000CC, /* bright blue */
-  #0033CC, /* deep blue */
-  #0066CC, /* vibrant blue */
-  #0099FF); /* light blue */
-  colour: white; }
+  background: linear-gradient(
+    to right,
+    #000000 0%,
+    #000033 20%,
+    #000066 40%,
+    #000099 60%,
+    #0033CC 80%,
+    #0099FF 100%
+  );
+  background-size: 200% 100%; /* Makes the gradient stretch smoothly on wide screens */
+  color: white;
+}
 
 body.dark-mode .card {
   background: rgba(50, 50, 50, 0.4);
