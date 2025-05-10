@@ -375,12 +375,12 @@ body.dark-mode .arrow {
   width: 100vw;
   font-size: 12px;
   color: white;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
   border-radius: 4px;
   text-align: center;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   z-index: 9999;
   line-height: 20px;
 }
@@ -707,8 +707,8 @@ body.dark-mode a.info-button svg circle:last-child {
   <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
     <img id="fullscreenImage" src="" alt="Full Image" />
   </div>
-  <div id="toast" class="toast">Have you found the secret page yet? 🤫</div>
-  <div id="toast2" class="toast">I bet you havent seen the ice cube page either 🧊</div>
+  <div id="toast" class="toast">🤫 Have you found the secret page yet?</div>
+  <div id="toast2" class="toast">I bet you haven't discovered the Ice Cube page either 🧊</div>
   <script>
   window.addEventListener('DOMContentLoaded', () => {
     const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
