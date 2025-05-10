@@ -502,6 +502,26 @@ body.dark-mode a.info-button svg circle:last-child {
   stroke: white;
   fill: none;
 }
+    .toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+}
   </style>
 </head>
 <body>
@@ -822,6 +842,21 @@ body.dark-mode a.info-button svg circle:last-child {
 </script>
   <script>
   console.log("Welcome to my simple website project where you can find me and my friends' profiles and photos!");
+</script>
+  <div id="toast" class="toast">Have you found the secret page yet?</div>
+  <script>
+window.addEventListener('load', () => {
+  // Show toast after 5 seconds
+  setTimeout(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+
+    // Hide toast after 4 seconds
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4000); // 4 seconds for the toast to disappear
+  }, 5000); // 5 seconds delay
+});
 </script>
 </body>
 </html>
