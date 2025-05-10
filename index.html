@@ -595,7 +595,7 @@ a.info-button svg {
         <img src="assets/images/gabriel/20250509_223705.jpg" alt="Gabriel" />
         <h1>
   Gabriel
-  <a href="ice/index.html">
+  <a href="ice/index.html" id="ice-link">
     <img src="assets/images/IMG_0298.png" alt="Ice Cube" 
          style="vertical-align: middle; margin-left: 5px; width: 25px; height: auto; margin-top: 3px;" 
          onclick="window.location='ice/index.html'; return false;">
@@ -808,6 +808,12 @@ a.info-button svg {
         overlay.style.display = "none";
       }, 300);
     });
+  });
+</script>
+  <script>
+  document.getElementById("ice-link").addEventListener("click", function(event) {
+    event.preventDefault(); // Stop default behavior (like opening image in new tab)
+    window.location.href = this.href; // Manually navigate to the link in the same tab
   });
 </script>
 </body>
