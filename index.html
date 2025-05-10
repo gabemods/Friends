@@ -708,7 +708,8 @@ body.dark-mode a.info-button svg circle:last-child {
     <img id="fullscreenImage" src="" alt="Full Image" />
   </div>
   <div id="toast" class="toast">Have you found the secret page yet?</div>
-<script>
+  <div id="toast2" class="toast">I bet you havent seen the ice cube page either</div>
+  <script>
   window.addEventListener('DOMContentLoaded', () => {
     const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
     buttons.forEach(btn => {
@@ -848,16 +849,27 @@ body.dark-mode a.info-button svg circle:last-child {
 </script>
   <script>
 window.addEventListener('load', () => {
-  // Show toast after 5 seconds
+  // Show the first toast after 1.5 seconds
   setTimeout(() => {
     const toast = document.getElementById('toast');
     toast.classList.add('show');
 
-    // Hide toast after 4 seconds
+    // Hide the first toast after 4 seconds
     setTimeout(() => {
       toast.classList.remove('show');
-    }, 5000); // 4 seconds for the toast to disappear
-  }, 1500); // 5 seconds delay
+    }, 3500); // 4 seconds for the first toast to disappear
+  }, 1500); // 1.5 seconds delay for the first toast
+
+  // Show the second toast after an additional 3 seconds (4.5 seconds from page load)
+  setTimeout(() => {
+    const toast2 = document.getElementById('toast2');
+    toast2.classList.add('show');
+
+    // Hide the second toast after 4 seconds
+    setTimeout(() => {
+      toast2.classList.remove('show');
+    }, 3500); // 4 seconds for the second toast to disappear
+  }, 4500); // 4.5 seconds delay for the second toast (3 seconds after the first)
 });
 </script>
 </body>
