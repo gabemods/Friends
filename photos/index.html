@@ -441,11 +441,25 @@ body.dark-mode .photos-button {
   justify-content: center;
   width: 20px;
   height: 20px;
+  transition: transform 0.3s ease;
 }
 
 a.info-button svg {
   width: 20px;
   height: 20px;
+}
+
+/* Dark mode */
+body.dark-mode a.info-button {
+  background-color: transparent;
+  transform: scale(1.2);
+}
+
+body.dark-mode a.info-button svg circle,
+body.dark-mode a.info-button svg rect,
+body.dark-mode a.info-button svg circle:last-child {
+  stroke: white;
+  fill: none;
 }
   </style>
 </head>
