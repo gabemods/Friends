@@ -486,17 +486,15 @@ a.info-button svg {
 }
 
 /* Dark mode */
-@media (prefers-color-scheme: dark) {
-  a.info-button {
-    background-color: rgba(0, 0, 0, 0.6); /* translucent black */
-  }
+body.dark-mode a.info-button {
+  background-color: rgba(0, 0, 0, 0.6); /* translucent black */
+}
 
-  a.info-button svg circle,
-  a.info-button svg rect,
-  a.info-button svg circle:last-child {
-    stroke: black;
-    fill: none;
-  }
+body.dark-mode a.info-button svg circle,
+body.dark-mode a.info-button svg rect,
+body.dark-mode a.info-button svg circle:last-child {
+  stroke: black;
+  fill: none;
 }
   </style>
 </head>
