@@ -479,34 +479,34 @@ body.dark-mode .photos-button {
 .ios-popup button:hover {
   color: #0051cc;
 }
-    a.button {
+    a.info-button {
   position: absolute;
   top: 12px;
   left: 12px;
   padding: 6px;
-  background-color: rgba(255, 255, 255, 0.3); /* translucent white by default */
+  background-color: rgba(255, 255, 255, 0.3); /* translucent white */
   border-radius: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+a.info-button svg {
   width: 20px;
   height: 20px;
 }
 
-a.button svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Dark mode support */
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-  a.button {
-    background-color: rgba(0, 0, 0, 0.6); /* translucent black in dark mode */
+  a.info-button {
+    background-color: rgba(0, 0, 0, 0.6); /* translucent black */
   }
 
-  a.button svg circle,
-  a.button svg rect,
-  a.button svg circle:last-child {
+  a.info-button svg circle,
+  a.info-button svg rect,
+  a.info-button svg circle:last-child {
     stroke: black;
     fill: black;
   }
@@ -562,13 +562,19 @@ a.button svg {
   &copy; 2025 Gabriel Mods | All rights reserved 
 </div>
 </div>
-  <div class="scroll-container"> <div class="page"> <div class="card">      <a href="../info/index.html" class="button" title="Info">
-   <svg viewBox="0 0 24 24" fill="currentColor">
-     <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none" />
-     <rect x="11" y="10" width="2" height="6" fill="white" />
-     <circle cx="12" cy="7" r="1" fill="white" />
-   </svg>
- </a> <img src="../assets/images/IMG_0298.png" alt="Gabriel" /> <h1>Ice Cube 🧊</h1> <p> This page is based of my favourite emoji, the Ice cube from One UI 5 <strong style="background: linear-gradient(90deg, #00F6FF, #00FCFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"> More coming soon! </</p> </div> </div> <div  </div>
+  <div class="scroll-container">
+    <div class="page">
+      <div class="card">
+        <a href="../info/index.html" class="info-button" title="Info">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none" />
+    <rect x="11" y="10" width="2" height="6" fill="white" />
+    <circle cx="12" cy="7" r="1" fill="white" />
+  </svg>
+</a>
+    <img src="../assets/images/IMG_0298.png" alt="Gabriel" />
+        <h1>Ice Cube 🧊</h1> 
+        <p> This page is based of my favourite emoji, the Ice cube from One UI 5 <strong style="background: linear-gradient(90deg, #00F6FF, #00FCFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"> More coming soon! </</p> </div> </div> <div  </div>
   </div>
 
   <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
