@@ -509,13 +509,15 @@ body.dark-mode a.info-button svg circle:last-child {
   transform: translateX(-50%);
   background-color: #333;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 16px; /* Smaller padding */
   border-radius: 20px;
-  font-size: 16px;
+  font-size: 14px; /* Smaller text size */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 10000; /* High z-index to ensure it's on top */
+  white-space: nowrap; /* Ensure it's a single line */
 }
 
 .toast.show {
@@ -855,7 +857,7 @@ window.addEventListener('load', () => {
     setTimeout(() => {
       toast.classList.remove('show');
     }, 4000); // 4 seconds for the toast to disappear
-  }, 5000); // 5 seconds delay
+  }, 3000); // 5 seconds delay
 });
 </script>
 </body>
