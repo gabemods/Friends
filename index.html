@@ -565,6 +565,16 @@ body.dark-mode a.info-button svg circle:last-child {
     transform: translate(-50%, -50%) translateY(-100%); /* Move up off-screen */
     transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
   }
+    .notification-content h4 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .notification-content p {
+    margin: 8px 0 0;
+    font-size: 16px;
+  }
   </style>
 </head>
 <body>
@@ -814,7 +824,10 @@ body.dark-mode a.info-button svg circle:last-child {
   <div id="toast" class="toast">🤫 Have you found the secret page yet?</div>
   <div id="toast2" class="toast">I bet you haven't discovered the Ice Cube page either 🧊</div>
   <div class="notification">
-  <p>Scroll left for the special guest card.</p>
+  <div class="notification-content">
+    <h4>Special Guest</h4>
+    <p>Scroll left to see their card</p>
+  </div>
 </div>
   <script>
   window.addEventListener('DOMContentLoaded', () => {
