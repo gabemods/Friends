@@ -521,48 +521,47 @@ body.dark-mode a.info-button svg circle:last-child {
 .toast.show {
   opacity: 1;
   visibility: visible;
-}
-    /* General Styles for the Notification */
-.notification {
-  position: fixed;
-  top: 0;
-  left: 70%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-  backdrop-filter: blur(10px); /* Blurring effect */
-  border-radius: 12px; /* Rounded corners */
-  padding: 12px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%; /* Adjust as necessary */
-  max-width: 400px; /* Limit to a reasonable width */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  font-family: 'OneUISans', sans-serif;
-  color: #333;
-  z-index: 9999; /* Ensure it stays on top */
-  opacity: 0; /* Hidden by default */
-  transform: translateY(-100%); /* Start off-screen */
-  transition: opacity 0.3s, transform 0.3s; /* Smooth transition */
-}
+}/* General Styles for the Notification */
+  .notification {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0); /* Ensures perfect horizontal centering */
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    backdrop-filter: blur(10px); /* Blurring effect */
+    border-radius: 12px; /* Rounded corners */
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto; /* Let it scale automatically with content */
+    max-width: 400px; /* Limit to a reasonable width */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    font-family: 'OneUISans', sans-serif;
+    color: #333;
+    z-index: 9999; /* Ensure it stays on top */
+    opacity: 0; /* Hidden by default */
+    transform: translateY(-100%); /* Start off-screen */
+    transition: opacity 0.3s, transform 0.3s; /* Smooth transition */
+  }
 
-.notification p {
-  margin: 0;
-  font-size: 16px;
-}
+  .notification p {
+    margin: 0;
+    font-size: 16px;
+  }
 
-/* Show the notification */
-.notification.show {
-  opacity: 1;
-  transform: translateY(0);
-}
+  /* Show the notification */
+  .notification.show {
+    opacity: 1;
+    transform: translate(-50%, 0); /* Keeps it centered when shown */
+  }
 
-/* Disappear animation */
-.notification.hide {
-  opacity: 0;
-  transform: translateY(-100%);
-  transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
-}
+  /* Disappear animation */
+  .notification.hide {
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
+  }
   </style>
 </head>
 <body>
