@@ -525,13 +525,13 @@ body.dark-mode a.info-button svg circle:last-child {
   /* General Styles for the Notification */
   .notification {
   position: fixed;
-  top: 10%; /* Slightly lower on the screen */
+  top: 10%;
   left: 50%;
   transform: translate(-50%, -50%) translateY(-100%);
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  padding: 12px 20px; /* Slightly reduced padding */
+  padding: 12px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -543,8 +543,8 @@ body.dark-mode a.info-button svg circle:last-child {
   z-index: 9999;
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
-  line-height: 1.4;
-  text-align: left; /* Left-align the text */
+  line-height: 1.3;
+  text-align: left;
 }
 
 .notification.show {
@@ -558,8 +558,12 @@ body.dark-mode a.info-button svg circle:last-child {
   transition: opacity 0.5s, transform 0.5s;
 }
 
+.notification-content {
+  width: 100%; /* Ensures left-aligned text takes up full width */
+}
+
 .notification-content h4 {
-  margin: 0 0 4px 0; /* Reduced bottom margin */
+  margin: 0 0 2px 0; /* Very small space between title and paragraph */
   font-size: 20px;
   font-weight: 600;
 }
