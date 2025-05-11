@@ -522,6 +522,47 @@ body.dark-mode a.info-button svg circle:last-child {
   opacity: 1;
   visibility: visible;
 }
+    /* General Styles for the Notification */
+.notification {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  backdrop-filter: blur(10px); /* Blurring effect */
+  border-radius: 12px; /* Rounded corners */
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%; /* Adjust as necessary */
+  max-width: 400px; /* Limit to a reasonable width */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  font-family: 'OneUISans', sans-serif;
+  color: #333;
+  z-index: 9999; /* Ensure it stays on top */
+  opacity: 0; /* Hidden by default */
+  transform: translateY(-100%); /* Start off-screen */
+  transition: opacity 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+.notification p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Show the notification */
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Disappear animation */
+.notification.hide {
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
+}
   </style>
 </head>
 <body>
@@ -770,6 +811,9 @@ body.dark-mode a.info-button svg circle:last-child {
   </div>
   <div id="toast" class="toast">🤫 Have you found the secret page yet?</div>
   <div id="toast2" class="toast">I bet you haven't discovered the Ice Cube page either 🧊</div>
+  <div class="notification">
+  <p>Scroll left for the special guest card.</p>
+</div>
   <script>
   window.addEventListener('DOMContentLoaded', () => {
     const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
@@ -943,6 +987,22 @@ window.addEventListener('load', () => {
       const leftOffset = defaultPage.offsetLeft;
       scroller.scrollLeft = leftOffset;
     }
+  });
+</script>
+  <script>
+  // Show the notification after a slight delay
+  window.addEventListener('DOMContentLoaded', () => {
+    const notification = document.querySelector('.notification');
+    
+    // Show the notification
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 500); // Delay for 0.5 seconds after page load
+    
+    // Hide the notification after 3 seconds
+    setTimeout(() => {
+      notification.classList.add('hide');
+    }, 3500); // Hide after 3 seconds (3500ms for full 3-second visibility)
   });
 </script>
 </body>
