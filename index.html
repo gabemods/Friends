@@ -448,6 +448,11 @@ body.dark-mode .photos-button {
   opacity: 1;
 }
 
+.ios-popup.hide {
+  transform: scale(0.9);
+  opacity: 0;
+}
+
 .ios-popup button {
   margin-top: -10px !important;
   background: none;
@@ -458,14 +463,25 @@ body.dark-mode .photos-button {
   color: #007aff; /* iOS blue */
   cursor: pointer;
   transition: color 0.2s ease;
+  width: 100%;
 }
 
 .ios-popup button.destructive {
   color: #ff3b30; /* iOS red for destructive actions */
 }
 
-.ios-popup button:hover {
+.ios-popup button.destructive:active {
+  color: #ff3b30; /* prevent color change on press */
+}
+
+.ios-popup button:hover:not(.destructive) {
   color: #0051cc;
+}
+
+.ios-divider {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+  margin: 0 -17px;
 }
     
     a.info-button {
@@ -578,7 +594,10 @@ body.dark-mode a.info-button svg circle:last-child {
 <div class="ios-popup-overlay" id="popupOverlay">
   <div class="ios-popup" id="popup">
     <p>All content on this website is copyrighted and not permitted for reuse.</p>
+    <div class="divider"></div>
     <button id="popupOkButton">Okay</button>
+    <div class="divider"></div>
+    <button class="destructive" id="popupDisagreeButton">I Disagree</button>
   </div>
 </div>
   <div class="landscape-warning">
