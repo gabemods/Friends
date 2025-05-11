@@ -518,9 +518,20 @@ body.dark-mode a.info-button svg circle:last-child {
   &copy; 2025 Gabe Mods | All rights reserved
 </div>
 </div>
-  <div class="scroll-container">
-
-    <div class="page">
+  <div class="scroll-container" id="cardScroller">
+   <div class="page">
+      <div class="card">
+        <img src="../assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" alt="Ollie Beaumonty" />
+        <h1>Ollie Beaumonty</h1>
+        <div class="photo-grid">
+          <img src="../assets/images/OllieBeaumonty/Snapchat-1715924679_Original.jpeg" alt="Ollie Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/OllieBeaumonty/Snapchat-239861880_Original.jpeg" alt="Ollie Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/OllieBeaumonty/.jpg" alt="Ollie Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/OllieBeaumonty/.jpg" alt="Ollie Photo 4" onclick="openFullscreen(this.src)" />
+      </div>
+    </div>
+    
+    <div class="page" id="main-profile">
       <div class="card">
       <a href="../info/index.html" class="info-button" title="Info">
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -813,6 +824,18 @@ body.dark-mode a.info-button svg circle:last-child {
     if (!dropdown.contains(e.target)) {
       dropdown.classList.remove('active');
       arrow.classList.remove('rotate');
+    }
+  });
+</script>
+  <script>
+  window.addEventListener('load', () => {
+    const scroller = document.getElementById('cardScroller');
+    const defaultPage = document.getElementById('main-profile');
+
+    if (scroller && defaultPage) {
+      // Get the horizontal position of your card relative to the container
+      const leftOffset = defaultPage.offsetLeft;
+      scroller.scrollLeft = leftOffset;
     }
   });
 </script>
