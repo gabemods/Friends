@@ -448,7 +448,11 @@ body.dark-mode .photos-button {
   transform: scale(1);
   opacity: 1;
 }
-
+.ios-popup.hide {
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+    }
 .ios-popup p {
   padding: 0 17px 12px;
   margin: 0;
@@ -598,9 +602,9 @@ body.dark-mode a.info-button svg circle:last-child {
   <div class="ios-popup" id="popup">
     <p>All content on this website is copyrighted and not permitted for reuse.</p>
     <div class="popup-divider"></div>
-    <button id="popupOkButton">I Agree</button>
+    <button id="popupOkButton">Okay</button>
     <div class="popup-divider"></div>
-    <button class="destructive" id="popupRejectButton">I Disagree</button>
+    <button class="destructive" id="popupRejectButton">No</button>
   </div>
 </div>
   <div class="landscape-warning">
