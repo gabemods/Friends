@@ -580,7 +580,7 @@ body.dark-mode a.info-button svg circle:last-child {
   &copy; 2025 Gabe Mods | All rights reserved
 </div>
 </div>
-  <div class="scroll-container">
+  <div class="scroll-container" id="cardScroller">
     <div class="page">
       <div class="card">
         <img src="assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" alt="Ollie Beaumonty" />
@@ -880,9 +880,13 @@ window.addEventListener('load', () => {
 </script>
   <script>
   window.addEventListener('load', () => {
+    const scroller = document.getElementById('cardScroller');
     const defaultPage = document.getElementById('main-profile');
-    if (defaultPage) {
-      defaultPage.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+
+    if (scroller && defaultPage) {
+      // Get the horizontal position of your card relative to the container
+      const leftOffset = defaultPage.offsetLeft;
+      scroller.scrollLeft = leftOffset;
     }
   });
 </script>
