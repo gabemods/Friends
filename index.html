@@ -594,9 +594,9 @@ body.dark-mode a.info-button svg circle:last-child {
 <div class="ios-popup-overlay" id="popupOverlay">
   <div class="ios-popup" id="popup">
     <p>All content on this website is copyrighted and not permitted for reuse.</p>
-    <div class="divider"></div>
+    <div class="ios-divider"></div>
     <button id="popupOkButton">Okay</button>
-    <div class="divider"></div>
+    <div class="ios-divider"></div>
     <button class="destructive" id="popupDisagreeButton">I Disagree</button>
   </div>
 </div>
@@ -965,13 +965,22 @@ body.dark-mode a.info-button svg circle:last-child {
     overlay.style.display = "flex";
     requestAnimationFrame(() => popup.classList.add("show"));
 
-    // Hide popup on button press
+    // Hide popup on OK button press
     button.addEventListener("click", () => {
       popup.classList.remove("show");
       setTimeout(() => {
         overlay.style.display = "none";
       }, 300);
     });
+
+    // Handle "I Disagree" destructive button
+    const disagreeBtn = document.getElementById("popupDisagreeButton");
+    if (disagreeBtn) {
+      disagreeBtn.addEventListener("click", () => {
+        window.open('', '_self');
+        window.close();
+      });
+    }
   });
 </script>
   <script>
