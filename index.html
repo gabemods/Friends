@@ -459,6 +459,12 @@ body.dark-mode .photos-button {
   cursor: pointer;
   transition: color 0.2s ease;
 }
+.popup-divider {
+  height: 1px;
+  background: #c6c6c8;
+  margin: 0;
+}
+
 
 .ios-popup button.destructive {
   color: #ff3b30; /* iOS red for destructive actions */
@@ -578,7 +584,10 @@ body.dark-mode a.info-button svg circle:last-child {
 <div class="ios-popup-overlay" id="popupOverlay">
   <div class="ios-popup" id="popup">
     <p>All content on this website is copyrighted and not permitted for reuse.</p>
-    <button id="popupOkButton">Okay</button>
+    <div class="popup-divider"></div>
+    <button id="popupOkButton">I Agree</button>
+    <div class="popup-divider"></div>
+    <button class="destructive" id="popupRejectButton">I Disagree</button>
   </div>
 </div>
   <div class="landscape-warning">
