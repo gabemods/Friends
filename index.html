@@ -521,21 +521,23 @@ body.dark-mode a.info-button svg circle:last-child {
 .toast.show {
   opacity: 1;
   visibility: visible;
-}/* General Styles for the Notification */
+}
+  
+  /* General Styles for the Notification */
   .notification {
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translate(-50%, 0); /* Ensures perfect horizontal centering */
+    transform: translateX(-50%); /* Center horizontally */
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
     backdrop-filter: blur(10px); /* Blurring effect */
     border-radius: 12px; /* Rounded corners */
-    padding: 12px 20px;
+    padding: 12px 40px; /* Increased padding for wider notification */
     display: flex;
     justify-content: center;
     align-items: center;
     width: auto; /* Let it scale automatically with content */
-    max-width: 400px; /* Limit to a reasonable width */
+    max-width: 600px; /* Increased max-width for wider notification */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
     font-family: 'OneUISans', sans-serif;
     color: #333;
@@ -553,13 +555,13 @@ body.dark-mode a.info-button svg circle:last-child {
   /* Show the notification */
   .notification.show {
     opacity: 1;
-    transform: translate(-50%, 0); /* Keeps it centered when shown */
+    transform: translateY(0); /* Move to the visible position */
   }
 
-  /* Disappear animation */
+  /* Disappear animation (straight up) */
   .notification.hide {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-100%); /* Move up off-screen */
     transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
   }
   </style>
