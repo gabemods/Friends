@@ -525,9 +525,9 @@ body.dark-mode a.info-button svg circle:last-child {
   /* General Styles for the Notification */
   .notification {
     position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%); /* Center horizontally */
+    top: 50%; /* Center vertically on screen */
+    left: 50%; /* Center horizontally on screen */
+    transform: translate(-50%, -50%); /* Adjust to perfectly center */
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
     backdrop-filter: blur(10px); /* Blurring effect */
     border-radius: 12px; /* Rounded corners */
@@ -542,7 +542,7 @@ body.dark-mode a.info-button svg circle:last-child {
     color: #333;
     z-index: 9999; /* Ensure it stays on top */
     opacity: 0; /* Hidden by default */
-    transform: translateY(-100%); /* Start off-screen */
+    transform: translate(-50%, -50%) translateY(-100%); /* Start off-screen, center with translate */
     transition: opacity 0.3s, transform 0.3s; /* Smooth transition */
     line-height: 1.4; /* Ensure it's good for two lines */
     text-align: center; /* Center text */
@@ -556,13 +556,13 @@ body.dark-mode a.info-button svg circle:last-child {
   /* Show the notification */
   .notification.show {
     opacity: 1;
-    transform: translateY(0); /* Move to the visible position */
+    transform: translate(-50%, -50%) translateY(0); /* Move to the visible position */
   }
 
   /* Disappear animation (straight up) */
   .notification.hide {
     opacity: 0;
-    transform: translateY(-100%); /* Move up off-screen */
+    transform: translate(-50%, -50%) translateY(-100%); /* Move up off-screen */
     transition: opacity 0.5s, transform 0.5s; /* Smooth transition */
   }
   </style>
