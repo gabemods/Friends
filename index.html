@@ -522,7 +522,6 @@ body.dark-mode a.info-button svg circle:last-child {
   opacity: 1;
   visibility: visible;
 }
-  
   /* General Styles for the Notification */
   .notification {
     position: fixed;
@@ -532,12 +531,12 @@ body.dark-mode a.info-button svg circle:last-child {
     background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
     backdrop-filter: blur(10px); /* Blurring effect */
     border-radius: 12px; /* Rounded corners */
-    padding: 12px 40px; /* Increased padding for wider notification */
+    padding: 12px 30px; /* Padding to make it wide enough for two lines of text */
     display: flex;
     justify-content: center;
     align-items: center;
     width: auto; /* Let it scale automatically with content */
-    max-width: 600px; /* Increased max-width for wider notification */
+    max-width: 600px; /* Increased max-width to ensure the notification can expand */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
     font-family: 'OneUISans', sans-serif;
     color: #333;
@@ -545,11 +544,13 @@ body.dark-mode a.info-button svg circle:last-child {
     opacity: 0; /* Hidden by default */
     transform: translateY(-100%); /* Start off-screen */
     transition: opacity 0.3s, transform 0.3s; /* Smooth transition */
+    line-height: 1.4; /* Control line height for two lines of text */
   }
 
   .notification p {
     margin: 0;
     font-size: 16px;
+    text-align: center; /* Ensure text is centered */
   }
 
   /* Show the notification */
