@@ -581,7 +581,15 @@ body.dark-mode a.info-button svg circle:last-child {
 </div>
 </div>
   <div class="scroll-container">
-<div class="page">
+    <div class="page">
+      <div class="card">
+        <img src="assets/images/Ollie/IMG_0000.jpeg" alt="Ollie Beaumonty" />
+        <h1>Ollie Beaumonty</h1>
+        <p>I work at McDonalds.</p>
+      </div>
+    </div>
+    
+    <div class="page" id="main-profile">
       <div class="card">
         <span id="secretEmoji" style="position: absolute; top: 5px; left: 5px; font-size: 1em; cursor: pointer; transition: transform 0.2s ease-in-out; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; border-radius: 50%; /* Make it a circle */ background-color: transparent;">
   <span style="width: 80%; height: 80%; border-radius: 50%; background-image: url('assets/images/IMG_0151.jpeg'); background-size: cover; background-position: center; filter: blur(3px); position: absolute; z-index: -1;"></span>
@@ -869,6 +877,14 @@ window.addEventListener('load', () => {
     }, 3500); // 4 seconds for the second toast to disappear
   }, 7500); // 7.5 seconds delay for the second toast (4 seconds after the first)
 });
+</script>
+  <script>
+  window.addEventListener('load', () => {
+    const defaultPage = document.getElementById('main-profile');
+    if (defaultPage) {
+      defaultPage.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+    }
+  });
 </script>
 </body>
 </html>
