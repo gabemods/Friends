@@ -864,15 +864,15 @@ body.dark-mode a.info-button svg circle:last-child {
   });
 </script>
   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".scroll-container");
-    if (container) {
-      container.addEventListener("wheel", (e) => {
-        e.preventDefault(); // prevent vertical scroll
-        container.scrollLeft += e.deltaY; // scroll horizontally
-      }, { passive: false });
-    }
-  });
+  const scroller = document.getElementById('cardScroller');
+
+  scroller.addEventListener('wheel', function(e) {
+    // Prevent vertical scrolling
+    e.preventDefault();
+
+    // Scroll horizontally instead
+    scroller.scrollLeft += e.deltaY;
+  }, { passive: false });
 </script>
   <script>
   window.addEventListener('load', () => {
