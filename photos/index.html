@@ -71,20 +71,7 @@
 .page:nth-child(4) .card {
     background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
 }
-@keyframes cardBounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.0);
-  }
-}
+
 .card {
   background: rgba(211, 211, 211, 0.3);
   border-radius: 25px;
@@ -97,12 +84,6 @@
   padding-top: 1px;
   padding-bottom: 5px; /* Ensure 5px gap from the bottom of the card */
   margin-top: -100px;
-}
-    .card.animate-in {
-  animation: cardBounceIn 0.6s ease forwards;
-}
-.card::-webkit-scrollbar {
-  width: 6px;
 }
 .card::-webkit-scrollbar-thumb {
   background: rgba(100, 100, 100, 0.3);
@@ -864,26 +845,6 @@ body.dark-mode a.info-button svg circle:last-child {
     }
   });
 </script>
-  <script>
-window.addEventListener("orientationchange", () => {
-  const cards = document.querySelectorAll('.card');
-  const texts = document.querySelectorAll('.card h1, .card h2, .card h3, .card p');
-
-  // Reset and re-trigger card animations
-  cards.forEach(card => {
-    card.style.animation = 'none';
-    card.offsetHeight; // Trigger reflow
-    card.style.animation = 'cardBounceIn 0.6s ease forwards';
-  });
-
-  // Reset and re-trigger text animations
-  texts.forEach((text, index) => {
-    text.style.animation = 'none';
-    text.offsetHeight; // Trigger reflow
-    text.style.animation = `fadeBounceIn 0.6s ease forwards`;
-    text.style.animationDelay = `${0.1 + index * 0.05}s`; // Slight stagger
-  });
-});
-</script>
+  
 </body>
 </html>
