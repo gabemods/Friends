@@ -1052,4 +1052,16 @@ window.addEventListener('load', () => {
     }, 3500); // Hide after 3 seconds (3500ms for full 3-second visibility)
   });
 </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".scroll-container");
+    if (container) {
+      container.addEventListener("wheel", (e) => {
+        e.preventDefault(); // prevent vertical scroll
+        container.scrollLeft += e.deltaY; // scroll horizontally
+      }, { passive: false });
+    }
+  });
+</script>
 </body>
+</html>
