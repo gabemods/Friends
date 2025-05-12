@@ -50,6 +50,7 @@
       display: flex;
       flex-direction: row;
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       width: 100%;
@@ -947,6 +948,16 @@ body.dark-mode a.info-button svg circle:last-child {
   });
 </script>
   <script>
+  const scroller = document.getElementById('cardScroller');
+
+  if (scroller) {
+    scroller.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      scroller.scrollLeft += e.deltaY;
+    }, { passive: false });
+  }
+</script>
+  <script>
     document.addEventListener('DOMContentLoaded', () => {
       const profileImages = document.querySelectorAll('.card img');
       const overlay = document.getElementById('fullscreenOverlay');
@@ -1090,17 +1101,6 @@ window.addEventListener('load', () => {
     setTimeout(() => {
       notification.classList.add('hide');
     }, 3500); // Hide after 3 seconds (3500ms for full 3-second visibility)
-  });
-</script>
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".scroll-container");
-    if (container) {
-      container.addEventListener("wheel", (e) => {
-        e.preventDefault(); // prevent vertical scroll
-        container.scrollLeft += e.deltaY; // scroll horizontally
-      }, { passive: false });
-    }
   });
 </script>
 <script>
