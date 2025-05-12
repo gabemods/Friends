@@ -596,6 +596,26 @@ body.dark-mode a.info-button svg circle:last-child {
   margin: 0;
   font-size: 16px;
 }
+    @keyframes fadeBounceIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+    .card h1,
+.card h2,
+.card h3,
+.card p {
+  opacity: 0;
+  animation: fadeBounceIn 0.6s ease forwards;
+}
   </style>
 </head>
 <body>
