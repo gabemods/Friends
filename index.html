@@ -893,7 +893,18 @@ body.dark-mode a.info-button svg circle:last-child {
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
   </script>
+  <script>
+  window.addEventListener('load', () => {
+    const scroller = document.getElementById('cardScroller');
+    const defaultPage = document.getElementById('main-profile');
 
+    if (scroller && defaultPage) {
+      // Get the horizontal position of your card relative to the container
+      const leftOffset = defaultPage.offsetLeft;
+      scroller.scrollLeft = leftOffset;
+    }
+  });
+</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const profileImages = document.querySelectorAll('.card img');
@@ -1023,18 +1034,6 @@ window.addEventListener('load', () => {
     }, 3500); // 4 seconds for the second toast to disappear
   }, 7500); // 7.5 seconds delay for the second toast (4 seconds after the first)
 });
-</script>
-  <script>
-  window.addEventListener('load', () => {
-    const scroller = document.getElementById('cardScroller');
-    const defaultPage = document.getElementById('main-profile');
-
-    if (scroller && defaultPage) {
-      // Get the horizontal position of your card relative to the container
-      const leftOffset = defaultPage.offsetLeft;
-      scroller.scrollLeft = leftOffset;
-    }
-  });
 </script>
   <script>
   // Show the notification after a slight delay
