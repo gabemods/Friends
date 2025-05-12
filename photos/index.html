@@ -866,6 +866,16 @@ body.dark-mode a.info-button svg circle:last-child {
   });
 </script>
   <script>
+  window.addEventListener('load', () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add('animate-in');
+      }, i * 100); // optional stagger
+    });
+  });
+</script>
+  <script>
 window.addEventListener("orientationchange", () => {
   const cards = document.querySelectorAll('.card');
   const texts = document.querySelectorAll('.card h1, .card h2, .card h3, .card p');
