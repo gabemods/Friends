@@ -1113,5 +1113,15 @@ window.addEventListener('load', () => {
     });
   });
 </script>
+  <script>
+window.addEventListener("orientationchange", () => {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    card.style.animation = 'none';
+    card.offsetHeight; // trigger reflow
+    card.style.animation = 'cardBounceIn 0.6s ease forwards';
+  });
+});
+</script>
 </body>
 </html>
