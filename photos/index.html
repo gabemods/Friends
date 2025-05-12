@@ -788,7 +788,18 @@ body.dark-mode a.info-button svg circle:last-child {
       });
     });
   </script>
+  <script>
+  window.addEventListener('load', () => {
+    const scroller = document.getElementById('cardScroller');
+    const defaultPage = document.getElementById('main-profile');
 
+    if (scroller && defaultPage) {
+      // Get the horizontal position of your card relative to the container
+      const leftOffset = defaultPage.offsetLeft;
+      scroller.scrollLeft = leftOffset;
+    }
+  });
+</script>
   <script>
   window.addEventListener('DOMContentLoaded', () => {
     const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
