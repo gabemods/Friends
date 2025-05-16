@@ -251,22 +251,41 @@ body.dark-mode .copyright {
 color: rgba(255, 255, 255, 0.7);
 } 
 
-@keyframes rotateFadeOut {
+@keyframes sunRotateFadeOut {
   0%   { transform: rotate(0deg); opacity: 1; }
   100% { transform: rotate(180deg); opacity: 0; }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+@keyframes moonFadeSpinIn {
+  0%   { transform: rotate(-10deg) scale(0.95); opacity: 0; }
+  50%  { transform: rotate(0deg) scale(1.02); opacity: 0.5; }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
 }
 
-.sun-rotate-fade {
-  animation: rotateFadeOut 0.6s ease forwards;
+@keyframes moonFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 
-.fade-in {
-  animation: fadeIn 0.4s ease forwards;
+@keyframes sunFadeSpinIn {
+  0%   { transform: rotate(180deg); opacity: 0; }
+  100% { transform: rotate(360deg); opacity: 1; }
+}
+
+.sun-rotate-fade-out {
+  animation: sunRotateFadeOut 0.6s ease forwards;
+}
+
+.moon-fade-spin-in {
+  animation: moonFadeSpinIn 0.6s ease forwards;
+}
+
+.moon-fade-out {
+  animation: moonFadeOut 0.4s ease forwards;
+}
+
+.sun-fade-spin-in {
+  animation: sunFadeSpinIn 0.6s ease forwards;
 }
 
 /* colour inheritance */
@@ -1008,40 +1027,37 @@ body.dark-mode a.info-button svg circle:last-child {
   themeToggle.addEventListener("click", () => {
     if (isAnimating) return;
     isAnimating = true;
-    dark = !dark;
 
+    dark = !dark;
     document.body.classList.toggle("dark-mode", dark);
-    themeIcon.classList.remove("sun-rotate-fade", "fade-in");
+    themeIcon.className = ""; // clear all animations
 
     if (dark) {
-      // Fade out + rotate sun, then show moon
-      themeIcon.classList.add("sun-rotate-fade");
+      // Sun to Moon
+      themeIcon.classList.add("sun-rotate-fade-out");
 
       setTimeout(() => {
         themePath.setAttribute("d", moonPath);
-        themeIcon.classList.remove("sun-rotate-fade");
-        themeIcon.classList.add("fade-in");
+        themeIcon.className = "moon-fade-spin-in";
 
         setTimeout(() => {
-          themeIcon.classList.remove("fade-in");
-          isAnimating = false;
-        }, 400);
-      }, 600);
-    } else {
-      // Fade out moon, fade in + rotate sun
-      themeIcon.classList.add("fade-in");
-      themePath.setAttribute("d", sunPath);
-
-      // Small delay before spin starts
-      setTimeout(() => {
-        themeIcon.classList.remove("fade-in");
-        themeIcon.classList.add("sun-rotate-fade");
-
-        setTimeout(() => {
-          themeIcon.classList.remove("sun-rotate-fade");
+          themeIcon.className = "";
           isAnimating = false;
         }, 600);
-      }, 100); // fade-in before spin
+      }, 600);
+    } else {
+      // Moon to Sun
+      themeIcon.classList.add("moon-fade-out");
+
+      setTimeout(() => {
+        themePath.setAttribute("d", sunPath);
+        themeIcon.className = "sun-fade-spin-in";
+
+        setTimeout(() => {
+          themeIcon.className = "";
+          isAnimating = false;
+        }, 600);
+      }, 400);
     }
   });
 </script>
