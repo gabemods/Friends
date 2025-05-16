@@ -1069,10 +1069,16 @@ body.dark-mode a.info-button svg circle:last-child {
   }
 
   function closePopup() {
-    if (!originImg) return;
+  if (!originImg) return;
 
-    originRect = originImg.getBoundingClientRect(); // refresh in case layout changed
-    popupImg.style.transition = 'all 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
+  originRect = originImg.getBoundingClientRect(); // Refresh in case of scroll
+
+  popupImg.style.transition = 'transform 0s';
+  popupImg.style.transform = 'none';
+
+  // Wait for the transform to reset
+  requestAnimationFrame(() => {
+    popupImg.style.transition = 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
     popupImg.style.width = originRect.width + 'px';
     popupImg.style.height = originRect.height + 'px';
     popupImg.style.top = originRect.top + 'px';
@@ -1088,7 +1094,8 @@ body.dark-mode a.info-button svg circle:last-child {
       overlay.style.transition = '';
       overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     }, { once: true });
-  }
+  });
+}
 
   popupImg.addEventListener('pointerdown', e => {
     isDragging = true;
@@ -1114,11 +1121,9 @@ body.dark-mode a.info-button svg circle:last-child {
   const deltaY = e.clientY - startY;
 
   if (deltaY > window.innerHeight * 0.25) {
-    // ⬇️ Use closePopup() so it animates back to origin
-    closePopup();
+    closePopup(); // ⬅️ Now animates back to origin
   } else {
-    // ⬆️ Cancelled swipe — animate back to center
-    popupImg.style.transition = 'transform 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
+    popupImg.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
     popupImg.style.transform = 'translateY(0) scale(1)';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.addEventListener('transitionend', () => {
