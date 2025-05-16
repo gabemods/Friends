@@ -3,28 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Friends</title>
+  <title>Friends | Profiles</title>
 
-  <meta name="description" content="A collection of friends' pages.">
-  <meta name="keywords" content="friends, profiles">
-  <meta name="author" content="Gabe Mods">
-  <meta property="og:title" content="Friends">
-  <meta property="og:description" content="A collection of friends' pages.">
-  <meta property="og:image" content="URL_TO_YOUR_DEFAULT_IMAGE">
-  <meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Profiles and photos of friends including Gabe Mods, Michael Taylor Woods, Josh Lebrun, Tommy Dossett, Charlie Mathieson, and more.">
+<meta name="keywords" content="Gabe Mods, Michael Taylor Woods, Charlie Mathieson, Tommy Dossett, Jayden Worth, James Lessiter, Adam Van Vurren, Josh Lebrun">
+<meta name="author" content="Gabe Mods">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/x-icon" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/x-icon" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="assets/favicon/site.webmanifest">
+<meta property="og:title" content="Friends">
+<meta property="og:description" content="Profiles and photos of friends made by Gabe Mods.">
+<meta property="og:image" content="URL_TO_YOUR_DEFAULT_IMAGE">
+<meta name="twitter:card" content="summary_large_image">
+
+  <link rel="apple-touch-icon" sizes="152x152" href"assets/favicon/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="assets/favicon/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
+<link rel="manifest" href="assets/favicon/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff"/>
 
   <style>
     @font-face {
-      font-family: 'OneUISans';
-      src: url('https://raw.githubusercontent.com/gabemods/gabemods.github.io/main/assets/fonts/(Regular)%20One%20UI%20Sans.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
+  font-family: 'OneUISans';
+  src: url('assets/fonts/OneUISans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
     html, body {
       margin: 0;
@@ -32,27 +39,18 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background: linear-gradient(
-        to bottom,
-        #e0f2f7 0%,
-        #b2ebf2 20%,
-        #80deea 40%,
-        rgba(178, 223, 238, 0.7) 45%,
-        rgba(178, 223, 238, 0.7) 55%,
-        #80deea 60%,
-        #b2ebf2 80%,
-        #e0f2f7 100%
-      );
+      background: linear-gradient(to bottom, #007FFF 0%, #00FFFF 100%);
       background-size: cover;
       background-repeat: no-repeat;
       font-family: 'OneUISans', sans-serif;
-      color: black;
+      color: white;
     }
 
     .scroll-container {
       display: flex;
       flex-direction: row;
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       width: 100%;
@@ -70,11 +68,27 @@
       flex-direction: column;
     }
 
-.page:nth-child(3) .card {
+.page:nth-child(4) .card {
     background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
     }
-    
+
+    @keyframes cardBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}
+
     .card {
+      position: relative;
       background: rgba(211, 211, 211, 0.3);
       border-radius: 25px;
       padding: 24px 16px;
@@ -85,20 +99,26 @@
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: transform 0.3s ease;
-      margin-top: -170px;
+      margin-top: -100px;
       margin-bottom: 20px;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: transform 0.3s ease;
     }
-
+   .card.animate-in {
+  animation: cardBounceIn 0.6s ease forwards;
+}
     @media (max-width: 768px) and (orientation: landscape) {
       .card {
         transform: scale(0.75);
       }
     }
 
-    .card h1 {
-      font-size: 24px;
-      margin: 10px 0 5px;
-    }
+   .card h1 {
+  font-size: 28px;
+  font-weight: 1000; /* Makes header bolder */
+  margin: 0 0 2px;  /* Top = 0 (closer to logo), bottom = 12px (more space from <p>) */
+}
 
     .card p {
       margin-top: 10px;
@@ -160,28 +180,32 @@
       z-index: 1000;
     }
 
-    .fullscreen-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(5px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
+ .landscape-warning {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 15000;
+  text-align: center;
+  padding: 20px;
+}
 
-    .fullscreen-overlay img {
-      max-width: 90vw;
-      max-height: 90vh;
-      border-radius: 20px;
-      transition: transform 0.3s ease;
-    }
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .landscape-warning {
+    display: flex;
+  }
+  .scroll-container {
+    display: none;
+  }
+}
 
-    @keyframes buttonExpand {
+@keyframes buttonExpand {
   0% {
     transform: scale(1);
   }
@@ -198,16 +222,20 @@
 }
 
     body.dark-mode {
-  background: linear-gradient(to right,
-  #000000,
-  #000033, /* dark blue */
-  #000066, /* blue */
-  #000099, /* lighter blue */
-  #0000CC, /* bright blue */
-  #0033CC, /* deep blue */
-  #0066CC, /* vibrant blue */
-  #0099FF); /* light blue */
-  color: white; /* Ensure all text is white in dark mode */
+  background: linear-gradient(
+    to right,
+    #000000 0%,
+    #000033 14%,
+    #000066 28%,
+    #000099 42%,
+    #0000CC 57%,
+    #0033CC 71%,
+    #0066CC 85%,
+    #0099FF 100%
+  );
+  background-size: 200% 100%; /* Makes the gradient smoother on wide screens */
+  background-attachment: fixed; /* Optional: keeps the gradient still on scroll */
+  color: white;
 }
 
 body.dark-mode .card {
@@ -222,16 +250,49 @@ body.dark-mode .dot {
 body.dark-mode .copyright {
 color: rgba(255, 255, 255, 0.7);
 } 
-#themeIcon {
-  transition: transform 0.5s ease;
+
+.theme-icon {
+  transition: transform 0.6s ease, opacity 0.6s ease;
 }
-#themeIcon.spin {
+
+.theme-icon.sun-exit {
   transform: rotate(180deg);
+  opacity: 0;
+}
+
+.theme-icon.moon-enter {
+  transform: rotate(-15deg) scale(0.95);
+  opacity: 0;
+}
+
+.theme-icon.moon-active {
+  animation: moonEnter 0.6s ease forwards;
+}
+
+.theme-icon.moon-exit {
+  opacity: 0;
+}
+
+.theme-icon.sun-enter {
+  transform: rotate(180deg);
+  opacity: 0;
+  animation: sunEnter 0.6s ease forwards;
+}
+
+@keyframes moonEnter {
+  0%   { transform: rotate(-15deg) scale(0.95); opacity: 0; }
+  50%  { transform: rotate(-5deg) scale(1.05); opacity: 0.5; }
+  100% { transform: rotate(0deg) scale(1); opacity: 1; }
+}
+
+@keyframes sunEnter {
+  0%   { transform: rotate(180deg); opacity: 0; }
+  100% { transform: rotate(360deg); opacity: 1; }
 }
 
 /* colour inheritance */
 #themeToggle {
-  color: black;
+  color: white;
 }
 body.dark-mode #themeToggle {
   color: white;
@@ -240,11 +301,7 @@ body.dark-mode #themeToggle {
 body.dark-mode header {
   color: white; /* Ensure header text is white */
 }
-
-/* Button text styling in dark mode */
-body.dark-mode button {
-  color: black; /* Make button text black */
-}
+    
     .buttons {
       display: flex;
       justify-content: center;
@@ -284,14 +341,17 @@ body.dark-mode button {
 
 /* Socials Button */
 .dropbtn {
+  position: absolute;
+  z-index: 900;
   background: linear-gradient(90deg, #00c6ff, #0072ff);
   color: white;
   border: none;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
-  top: 30px;
-  left: 5px;
-  padding: 10px 20px;
+  top: 15px;
+  left: -10px;
+  padding: 0px 0px;
   border-radius: 25px;
   position: relative;
   transition: transform 0.3s ease;
@@ -316,6 +376,8 @@ body.dark-mode button {
   -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
+  top: 50px;
+  left: 70px;
   gap: 8px;
   padding: 10px;
   border-radius: 8px;
@@ -334,6 +396,9 @@ body.dark-mode button {
   width: 24px;
   height: 24px;
 }
+    body.dark-mode .dropbtn {
+  color: black;
+}
 body.dark-mode .arrow {
   color: black;
 }
@@ -345,7 +410,7 @@ body.dark-mode .arrow {
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --dropdown-bg: rgba(0, 0, 0, 0.1);
+    --dropdown-bg: rgba(0, 0, 0, 0.0);
   }
 }
 
@@ -360,65 +425,437 @@ body.dark-mode .arrow {
   transform: translateY(0);
   pointer-events: auto;
 }
-    /* Container for the buttons */
-.menu-container {
-  display: flex;
+   .copyright-box {
+  position: fixed;
+    bottom: env(safe-area-inset-bottom, 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  padding: 5px 10px;
+  height: 20px;
+  width: 100vw;
+  font-size: 12px;
+  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  text-align: center;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 9999;
+  line-height: 20px;
+}
+/* Dark mode override */
+body.dark-mode .copyright-box {
+  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+    /* Dark mode Socials button text */
+body.dark-mode .dropbtn,
+body.dark-mode .arrow {
+  color: black !important;
+  font-weight: 430 !important;
+}
+
+/* Dark mode Profiles button */
+body.dark-mode .profiles-button {
+  background-color: #1c1fba !important;
+  color: #d3d3d3 !important;
+}
+
+/* Dark mode Photos button */
+body.dark-mode .photos-button {
+  background-color: #7d7e80 !important;
+  color: #d3d3d3 !important;
+}
+    
+.ios-popup-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.0); /* lighter overlay */
+  display: none;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between; /* Ensures buttons are spaced evenly */
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.5); /* Keep background with transparency */
-  backdrop-filter: blur(10px); /* Keep the blur effect */
-  z-index: 999; /* Ensure it stays above other content */
-  padding: 10px 20px; /* Adjust padding as needed */
+  z-index: 10001;
+  transition: background-color 0.3s ease;
 }
 
-/* Socials Button */
-.socials-button {
-  margin-right: 20px; /* Adds space between socials and other buttons */
-  position: relative;
-  z-index: 1; /* Make sure it’s on top */
+.ios-popup {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: black;
+  padding: 8px 17px;
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  text-align: center;
+  width: 60%;
+  max-width: 300px;
+  word-break: break-word;
+  white-space: normal;
 }
 
-/* Other buttons */
-.menu-button {
-  margin-left: 20px; /* Adds spacing between buttons */
+.ios-popup.show {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease-in;
 }
 
-/* Optional: Make sure the other buttons are centered */
-.menu-container button {
-  margin: 0 10px; /* Adds equal spacing between all buttons */
+.ios-popup.hide {
+  transform: scale(0.85);
+  opacity: 0;
+  transition: transform 0.3s ease-in, opacity 0.2s ease-out;
+}
+
+.ios-popup button {
+  margin-top: 0px !important;
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: #007aff; /* iOS blue */
+  cursor: pointer;
+  transition: color 0.2s ease;
+  width: 100%;
+}
+
+.ios-popup button.destructive {
+  color: #ff3b30; /* iOS red for destructive actions */
+}
+
+.ios-popup button.destructive:active {
+  color: #ff3b30; /* prevent color change on press */
+}
+
+.ios-popup button:hover:not(.destructive) {
+  color: #0051cc;
+}
+
+.ios-divider {
+  height: 1px;
+  background: rgba(60, 60, 67, 0.07); /* softer and more iOS-like */
+  margin: 0 -17px;
+}
+    
+    a.info-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.3); /* translucent white */
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+a.info-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Dark mode */
+body.dark-mode a.info-button {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+
+body.dark-mode a.info-button svg circle,
+body.dark-mode a.info-button svg rect,
+body.dark-mode a.info-button svg circle:last-child {
+  stroke: grey;
+  fill: none;
+}
+    .toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly grey with opacity */
+  color: white;
+  padding: 8px 16px; /* Smaller padding */
+  border-radius: 20px;
+  font-size: 14px; /* Smaller text size */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  z-index: 10000; /* High z-index to ensure it's on top */
+  white-space: nowrap; /* Ensure it's a single line */
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+}
+  /* General Styles for the Notification */
+  .notification {
+  position: fixed;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(-100%);
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'OneUISans', sans-serif;
+  color: #333;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+.notification.hide {
+  opacity: 0;
+  transform: translate(-50%, -50%) translateY(-100%);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.notification-content {
+  width: 100%; /* Ensures left-aligned text takes up full width */
+}
+
+.notification-content h4 {
+  margin: 0 0 -1px 0; /* Very small space between title and paragraph */
+  font-size: 20px;
+  font-weight: 750;
+}
+
+.notification-content p {
+  margin: 0;
+  font-size: 16px;
+}
+    @keyframes fadeBounceIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card h1,
+.card h2,
+.card h3,
+.card p {
+  animation: fadeBounceIn 0.6s ease forwards;
 }
   </style>
 </head>
 <body>
-  <div style="display: flex; justify-content: center; gap: 10px; padding: 15px; background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;">
-  <a href="https://gabemods.github.io/Friends/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
-  <a href="photos/index.html" class="nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
-  <button class="dropbtn" id="socialToggle" style="background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; border: none; font-size: 1rem; cursor: pointer; top: 30px; left: 5px; padding: 10px 20px; border-radius: 25px; transform: translateY(-15px);">
-    Socials <span class="arrow" id="arrowIcon">▼</span>
-  </button>
+<div class="ios-popup-overlay" id="popupOverlay">
+  <div class="ios-popup" id="popup">
+    <p>All content on this website is copyrighted and not permitted for reuse.</p>
+    <div class="ios-divider"></div>
+    <button id="popupOkButton">Okay</button>
+    <div class="ios-divider"></div>
+    <button class="destructive" id="popupDisagreeButton">I Disagree</button>
+  </div>
 </div>
-  <div class="scroll-container">
-<div class="page">
+  <div class="landscape-warning">
+  Please rotate your device to portrait mode for the best experience.
+</div>
+  <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
+  <!-- Left side: Nav links -->
+  <div style="display: flex; gap: 10px; padding-left: 15px;">
+    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
+    <a href="photos/index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+
+        <div class="dropdown" style="position: relative;">
+      <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
+        Socials <span class="arrow" id="arrowIcon">▼</span>
+      </button>
+      <div class="dropdown-content" id="socialLinks">
+        <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
+        </a>
+        <a href="https://github.com/gabemods" class="button" title="GitHub" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12c0 5.092 3.292 9.398 7.86 10.925.574.103.785-.25.785-.557 0-.274-.01-1.004-.016-1.97-3.197.695-3.87-1.54-3.87-1.54-.522-1.328-1.276-1.683-1.276-1.683-1.044-.714.08-.7.08-.7 1.154.082 1.761 1.185 1.761 1.185 1.027 1.76 2.695 1.252 3.35.957.104-.744.402-1.252.73-1.54-2.553-.29-5.238-1.276-5.238-5.682 0-1.255.448-2.28 1.183-3.082-.118-.29-.512-1.458.113-3.04 0 0 .964-.31 3.158 1.18.916-.254 1.9-.382 2.88-.387.98.005 1.964.133 2.88.387 2.193-1.49 3.156-1.18 3.156-1.18.627 1.582.233 2.75.115 3.04.736.802 1.183 1.827 1.183 3.082 0 4.416-2.688 5.39-5.25 5.675.41.35.776 1.037.776 2.09 0 1.51-.014 2.725-.014 3.096 0 .31.21.665.79.552C20.21 21.394 23.5 17.09 23.5 12c0-6.352-5.148-11.5-11.5-11.5z"/></svg>
+        </a>
+        <a href="https://www.snapchat.com/add/gabe_mods?share_id=1AxCc8C2wmk&locale=en-GB" class="button" title="Snapchat" target="_blank">
+          <img src="assets/images/snapchat-outline-svgrepo-com.svg" alt="Snapchat" style="height: 24px;" />
+        </a>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right side: Theme toggle -->
+  <button id="themeToggle" aria-label="Toggle theme"
+    style="background: none; border: none; cursor: pointer;">
+    <svg id="themeIcon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="28" height="28"
+      fill="none" stroke-width="2" stroke="currentColor">
+      <path d="M12 3v2m0 14v2m9-9h-2M5 12H3
+               m15.364-6.364l-1.414 1.414
+               M6.05 17.95l-1.414 1.414
+               M17.95 17.95l1.414-1.414
+               M6.05 6.05L4.636 7.464
+               M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+    </svg>
+  </button>
+</header>
+    <div class="copyright-box">
+  &copy; 2025 Gabe Mods | All rights reserved
+</div>
+</div>
+  <div class="scroll-container" id="cardScroller">
+    <div class="page">
       <div class="card">
-        <img src="assets/images/IMG_7790.jpeg" alt="Gabriel" />
-        <h1>Gabriel</h1>
+        <img src="assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" alt="Ollie Beaumonty" />
+        <h1>Ollie Beaumont</h1>
+        <p>I work at McDonalds.</p>
+         <p class="wave-text">
+  Note: This is just for fun. Job employers hiring this guy, dont use it against him.
+</p>
+
+<style>
+  .wave-text {
+  color: grey;
+  font-size: 20px;
+  font-family: 'OneUISans', sans-serif;
+  line-height: 1.6;
+  display: inline;
+}
+
+.wave-text span {
+  display: inline-block;
+  opacity: 0;
+  transform: scale(1);
+}
+
+.wave-text.animate span {
+  animation: wave 1.5s forwards;
+}
+
+@keyframes wave {
+  0% { opacity: 0; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 1; transform: scale(1); }
+}
+</style>
+
+<script>
+  // Wrap each word in a span
+  document.querySelectorAll('.wave-text').forEach(function(p) {
+    const words = p.innerText.split(' ');
+    p.innerHTML = words.map((word, i) => `<span style="animation-delay: ${i * 0.1}s">${word}</span>`).join(' ');
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const el = entry.target;
+      if (entry.isIntersecting) {
+        el.classList.add('animate');
+      } else {
+        el.classList.remove('animate'); // Reset animation when out of view
+      }
+    });
+  }, {
+    threshold: 0.5 // adjust as needed
+  });
+
+  document.querySelectorAll('.wave-text').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+      </div>
+    </div>
+    
+    <div class="page" id="main-profile">
+      <div class="card">
+        <span id="secretEmoji" style="position: absolute; top: 5px; left: 5px; font-size: 1em; cursor: pointer; transition: transform 0.2s ease-in-out; width: 2.5em; height: 2.5em; display: flex; align-items: center; justify-content: center; border-radius: 50%; /* Make it a circle */ background-color: transparent;">
+  <span style="width: 80%; height: 80%; border-radius: 50%; background-image: url('assets/images/IMG_0151.jpeg'); background-size: cover; background-position: center; filter: blur(3px); position: absolute; z-index: -1;"></span>
+  <span style="position: relative; z-index: 1;">🤫</span>
+</span>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const secretEmoji = document.getElementById('secretEmoji');
+
+    if (secretEmoji) {
+      secretEmoji.addEventListener('click', () => {
+        secretEmoji.classList.add('expand-emoji');
+        setTimeout(() => {
+          secretEmoji.classList.remove('expand-emoji'); // Remove the class after 0.5 seconds
+          window.location.href = 'secret/index.html';
+        }, 500); // Set timeout to 500ms (0.5 seconds)
+      });
+    }
+  });
+</script>
+
+<style>
+.expand-emoji {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out; /* Ensure smooth transition back */
+}
+</style>
+     <a href="info/index.html" class="info-button" title="Info">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none" />
+    <rect x="11" y="10" width="2" height="6" fill="white" />
+    <circle cx="12" cy="7" r="1" fill="white" />
+  </svg>
+</a>
+        <img src="assets/images/gabriel/20250509_223705.jpg" alt="Gabriel" />
+        <h1>
+  Gabriel
+  <a href="ice/index.html" id="ice-link">
+    <img src="assets/images/IMG_0298.png" alt="Ice Cube" 
+         style="vertical-align: middle; margin-left: 5px; width: 25px; height: auto; margin-top: 3px;" 
+         onclick="window.location='ice/index.html'; return false;">
+  </a>
+</h1>
         <p>Jesus is King of Kings and Lord of Lords! </p>
         <p>Romans 8:28 -  And we know that all things work together for good to those who love God, to those who are the called according to His purpose.</p>
         <p>I like to code websites and stuff and mod games and apps. I created this website.</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
 </div>
+   <div class="page">
+      <div class="card">
+        <img src="assets/images/josh/IMG_0310.jpeg" alt="Josh" />
+        <h1>Josh</h1>
+        <p>I like smelling rabbits ears on the weekends.</p>
+      </div>
+    </div>
     <div class="page">
       <div class="card">
         <img src="assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
         <h1>Charlie</h1>
         <p>I support Chelsea. I also like Cars and Music.</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -426,23 +863,20 @@ body.dark-mode .arrow {
         <h1>Michael</h1>
         <p>I support Everton and I like Guitar</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
-        <img src="URL_TO_TOMMY_IMAGE" alt="Tommy" />
+        <img src="assets/images/tommy/IMG_0363.jpeg" alt="Tommy" />
         <h1>Tommy</h1>
         <p>I think Basketball is cool and I also shred Guitar 🎸</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
-        <img src="URL_TO_Harry_IMAGE" alt="Lewis" />
+        <img src="assets/images/harry/IMG_0458.jpeg" alt="Harry" />
         <h1>Harry</h1>
         <p> My Favourite Football team is Liverpool. I also go to the gym 💪</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -450,7 +884,6 @@ body.dark-mode .arrow {
         <h1>James</h1>
         <p>Hi, I'm James and I support Port Vale. </p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
      <div class="page">
       <div class="card">
@@ -458,7 +891,6 @@ body.dark-mode .arrow {
         <h1>Adam</h1>
         <p>I like Guitar</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
     <div class="page">
       <div class="card">
@@ -466,19 +898,12 @@ body.dark-mode .arrow {
         <h1>Jayden</h1>
         <p>I support man united and Michael is a retard👍</p>
       </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
-    </div>
-    <div class="page">
-      <div class="card">
-        <img src="URL_TO_LEWIS_IMAGE" alt="Lewis" />
-        <h1>Lewis</h1>
-      </div>
-      <p class="copyright">&copy; Gabe Mods 2025</p>
     </div>
 
     <div class="indicator-wrapper">
       <div class="indicators">
         <div class="dot active"></div>
+        <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
@@ -494,7 +919,27 @@ body.dark-mode .arrow {
   <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="hideFullscreen()">
     <img id="fullscreenImage" src="" alt="Full Image" />
   </div>
-
+  <div id="toast" class="toast">🤫 Have you found the secret page yet?</div>
+  <div id="toast2" class="toast">I bet you haven't seen the Ice Cube secret either 🧊</div>
+  <div class="notification">
+  <div class="notification-content">
+    <h4>Special Guest</h4>
+    <p>Scroll left to see their card</p>
+  </div>
+</div>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
+    buttons.forEach(btn => {
+      if (btn) {
+        btn.classList.add('nav-button-animate');
+        setTimeout(() => {
+          btn.classList.remove('nav-button-animate');
+        }, 800); // Match the animation duration
+      }
+    });
+  });
+</script>
   <script>
     // Scroll indicators
     const container = document.querySelector('.scroll-container');
@@ -522,7 +967,28 @@ body.dark-mode .arrow {
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
   </script>
+  <script>
+  window.addEventListener('load', () => {
+    const scroller = document.getElementById('cardScroller');
+    const defaultPage = document.getElementById('main-profile');
 
+    if (scroller && defaultPage) {
+      // Get the horizontal position of your card relative to the container
+      const leftOffset = defaultPage.offsetLeft;
+      scroller.scrollLeft = leftOffset;
+    }
+  });
+</script>
+  <script>
+  const scroller = document.getElementById('cardScroller');
+
+  if (scroller) {
+    scroller.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      scroller.scrollLeft += e.deltaY;
+    }, { passive: false });
+  }
+</script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const profileImages = document.querySelectorAll('.card img');
@@ -544,34 +1010,55 @@ body.dark-mode .arrow {
   </script>
   <script>
   const themeToggle = document.getElementById("themeToggle");
-  const themeIcon   = document.getElementById("themeIcon");
+  const themeIcon = document.getElementById("themeIcon");
+  const themePath = document.getElementById("themePath");
 
-  // Sun and Moon outline paths from Heroicons
-  const sunPath  = "M12 3v2m0 14v2m9-9h-2M5 12H3"
-                 + "m15.364-6.364l-1.414 1.414"
-                 + "M6.05 17.95l-1.414 1.414"
-                 + "M17.95 17.95l1.414-1.414"
-                 + "M6.05 6.05L4.636 7.464"
-                 + "M12 8a4 4 0 100 8 4 4 0 000-8z";
+  const sunPath = "M12 3v2m0 14v2m9-9h-2M5 12H3"
+                + "m15.364-6.364l-1.414 1.414"
+                + "M6.05 17.95l-1.414 1.414"
+                + "M17.95 17.95l1.414-1.414"
+                + "M6.05 6.05L4.636 7.464"
+                + "M12 8a4 4 0 100 8 4 4 0 000-8z";
 
   const moonPath = "M21 12.79A9 9 0 1111.21 3"
                  + "a7 7 0 009.79 9.79z";
 
   let dark = false;
+  let isAnimating = false;
 
   themeToggle.addEventListener("click", () => {
+    if (isAnimating) return;
+    isAnimating = true;
+
+    if (!dark) {
+      // Sun to Moon
+      themeIcon.classList.add("sun-exit");
+      setTimeout(() => {
+        themePath.setAttribute("d", moonPath);
+        themeIcon.className = "theme-icon moon-enter moon-active";
+        document.body.classList.add("dark-mode");
+
+        setTimeout(() => {
+          themeIcon.className = "theme-icon";
+          isAnimating = false;
+        }, 600);
+      }, 600);
+    } else {
+      // Moon to Sun
+      themeIcon.classList.add("moon-exit");
+      setTimeout(() => {
+        themePath.setAttribute("d", sunPath);
+        themeIcon.className = "theme-icon sun-enter";
+        document.body.classList.remove("dark-mode");
+
+        setTimeout(() => {
+          themeIcon.className = "theme-icon";
+          isAnimating = false;
+        }, 600);
+      }, 400);
+    }
+
     dark = !dark;
-    document.body.classList.toggle("dark-mode", dark);
-
-    // spin
-    themeIcon.classList.add("spin");
-
-    // swap path
-    themeIcon.querySelector("path")
-             .setAttribute("d", dark ? moonPath : sunPath);
-
-    // remove spin after it finishes
-    setTimeout(() => themeIcon.classList.remove("spin"), 500);
   });
 </script>
   <script>
@@ -591,6 +1078,146 @@ body.dark-mode .arrow {
       arrow.classList.remove('rotate');
     }
   });
+</script>
+  <script>
+  window.addEventListener("load", () => {
+    const overlay = document.getElementById("popupOverlay");
+    const popup = document.getElementById("popup");
+    const button = document.getElementById("popupOkButton");
+
+    // Show popup
+    overlay.style.display = "flex";
+    requestAnimationFrame(() => popup.classList.add("show"));
+
+    // Hide popup on OK button press
+    button.addEventListener("click", () => {
+      popup.classList.remove("show");
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 300);
+    });
+
+    // Handle "I Disagree" destructive button
+const disagreeBtn = document.getElementById("popupDisagreeButton");
+if (disagreeBtn) {
+  disagreeBtn.addEventListener("click", () => {
+    window.location.href = "https://raw.githubusercontent.com/gabemods/Friends/main/assets/images/IMG_0318.jpg"; // Replace with your URL
+  });
+    }
+  });
+</script>
+  <script>
+  document.getElementById("ice-link").addEventListener("click", function(event) {
+    event.preventDefault(); // Stop default behavior (like opening image in new tab)
+    window.location.href = this.href; // Manually navigate to the link in the same tab
+  });
+</script>
+  <script>
+  console.log("Welcome to my simple website project where you can find me and my friends' profiles and photos!");
+</script>
+  <script>
+window.addEventListener('load', () => {
+  // Show the first toast after 1.5 seconds
+  setTimeout(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+
+    // Hide the first toast after 4 seconds
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3500); // 4 seconds for the first toast to disappear
+  }, 1500); // 1.5 seconds delay for the first toast
+
+  // Show the second toast after an additional 3 seconds (4.5 seconds from page load)
+  setTimeout(() => {
+    const toast2 = document.getElementById('toast2');
+    toast2.classList.add('show');
+
+    // Hide the second toast after 4 seconds
+    setTimeout(() => {
+      toast2.classList.remove('show');
+    }, 3500); // 4 seconds for the second toast to disappear
+  }, 7500); // 7.5 seconds delay for the second toast (4 seconds after the first)
+});
+</script>
+  <script>
+  // Show the notification after a slight delay
+  window.addEventListener('DOMContentLoaded', () => {
+    const notification = document.querySelector('.notification');
+    
+    // Show the notification
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 500); // Delay for 0.5 seconds after page load
+    
+    // Hide the notification after 3 seconds
+    setTimeout(() => {
+      notification.classList.add('hide');
+    }, 3500); // Hide after 3 seconds (3500ms for full 3-second visibility)
+  });
+</script>
+<script>
+  window.addEventListener('load', () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add('animate-in');
+      }, i * 100); // optional stagger
+    });
+  });
+</script>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const notification = document.querySelector('.notification');
+    let hideTimeout;
+
+    // Show the notification
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 500);
+
+    // Automatically hide after 3 seconds
+    hideTimeout = setTimeout(() => {
+      notification.classList.add('hide');
+    }, 3500);
+
+    // Swipe up detection
+    let startY = 0;
+    notification.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+    });
+
+    notification.addEventListener('touchmove', (e) => {
+      const currentY = e.touches[0].clientY;
+      const deltaY = startY - currentY;
+
+      if (deltaY > 30) { // User swiped up
+        notification.classList.add('hide');
+        clearTimeout(hideTimeout); // Prevent double hiding
+      }
+    });
+  });
+</script>
+  <script>
+window.addEventListener("orientationchange", () => {
+  const cards = document.querySelectorAll('.card');
+  const texts = document.querySelectorAll('.card h1, .card h2, .card h3, .card p');
+
+  // Reset and re-trigger card animations
+  cards.forEach(card => {
+    card.style.animation = 'none';
+    card.offsetHeight; // Trigger reflow
+    card.style.animation = 'cardBounceIn 0.6s ease forwards';
+  });
+
+  // Reset and re-trigger text animations
+  texts.forEach((text, index) => {
+    text.style.animation = 'none';
+    text.offsetHeight; // Trigger reflow
+    text.style.animation = `fadeBounceIn 0.6s ease forwards`;
+    text.style.animationDelay = `${0.1 + index * 0.05}s`; // Slight stagger
+  });
+});
 </script>
 </body>
 </html>
