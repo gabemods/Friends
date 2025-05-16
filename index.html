@@ -250,9 +250,10 @@ body.dark-mode .dot {
 body.dark-mode .copyright {
 color: rgba(255, 255, 255, 0.7);
 } 
-@keyframes rotateSun {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(180deg); }
+
+@keyframes rotateFadeOut {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  100% { transform: rotate(180deg); opacity: 0; }
 }
 
 @keyframes fadeIn {
@@ -260,21 +261,12 @@ color: rgba(255, 255, 255, 0.7);
   to   { opacity: 1; }
 }
 
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-.sun-rotate {
-  animation: rotateSun 0.6s ease forwards;
+.sun-rotate-fade {
+  animation: rotateFadeOut 0.6s ease forwards;
 }
 
 .fade-in {
   animation: fadeIn 0.4s ease forwards;
-}
-
-.fade-out {
-  animation: fadeOut 0.4s ease forwards;
 }
 
 /* colour inheritance */
@@ -1014,42 +1006,42 @@ body.dark-mode a.info-button svg circle:last-child {
   let isAnimating = false;
 
   themeToggle.addEventListener("click", () => {
-    if (isAnimating) return; // Prevent rapid clicking
+    if (isAnimating) return;
     isAnimating = true;
     dark = !dark;
 
     document.body.classList.toggle("dark-mode", dark);
-
-    // Remove any previous animations
-    themeIcon.classList.remove("sun-rotate", "fade-in", "fade-out");
+    themeIcon.classList.remove("sun-rotate-fade", "fade-in");
 
     if (dark) {
-      // Going to dark mode (sun spins, then moon fades in)
-      themeIcon.classList.add("sun-rotate");
+      // Fade out + rotate sun, then show moon
+      themeIcon.classList.add("sun-rotate-fade");
 
       setTimeout(() => {
         themePath.setAttribute("d", moonPath);
-        themeIcon.classList.remove("sun-rotate");
+        themeIcon.classList.remove("sun-rotate-fade");
         themeIcon.classList.add("fade-in");
+
         setTimeout(() => {
           themeIcon.classList.remove("fade-in");
           isAnimating = false;
         }, 400);
-      }, 600); // Wait for sun to finish spinning
+      }, 600);
     } else {
-      // Going to light mode (moon fades out, then sun fades in + spins)
-      themeIcon.classList.add("fade-out");
+      // Fade out moon, fade in + rotate sun
+      themeIcon.classList.add("fade-in");
+      themePath.setAttribute("d", sunPath);
 
+      // Small delay before spin starts
       setTimeout(() => {
-        themePath.setAttribute("d", sunPath);
-        themeIcon.classList.remove("fade-out");
-        themeIcon.classList.add("fade-in", "sun-rotate");
+        themeIcon.classList.remove("fade-in");
+        themeIcon.classList.add("sun-rotate-fade");
 
         setTimeout(() => {
-          themeIcon.classList.remove("fade-in", "sun-rotate");
+          themeIcon.classList.remove("sun-rotate-fade");
           isAnimating = false;
-        }, 600); // Allow both fade and rotate to finish
-      }, 400); // Wait for moon to fully fade out
+        }, 600);
+      }, 100); // fade-in before spin
     }
   });
 </script>
