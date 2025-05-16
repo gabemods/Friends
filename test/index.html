@@ -1108,21 +1108,24 @@ body.dark-mode a.info-button svg circle:last-child {
   });
 
   window.addEventListener('pointerup', e => {
-    if (!isDragging) return;
-    isDragging = false;
-    popupImg.style.cursor = 'grab';
-    const deltaY = e.clientY - startY;
-    if (deltaY > window.innerHeight * 0.25) {
-      closePopup();
-    } else {
-      popupImg.style.transition = 'transform 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
-      popupImg.style.transform = 'translateY(0) scale(1)';
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      popupImg.addEventListener('transitionend', () => {
-        popupImg.style.transition = '';
-      }, { once: true });
-    }
-  });
+  if (!isDragging) return;
+  isDragging = false;
+  popupImg.style.cursor = 'grab';
+  const deltaY = e.clientY - startY;
+
+  if (deltaY > window.innerHeight * 0.25) {
+    // ⬇️ Use closePopup() so it animates back to origin
+    closePopup();
+  } else {
+    // ⬆️ Cancelled swipe — animate back to center
+    popupImg.style.transition = 'transform 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
+    popupImg.style.transform = 'translateY(0) scale(1)';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.addEventListener('transitionend', () => {
+      popupImg.style.transition = '';
+    }, { once: true });
+  }
+});
 
   overlay.addEventListener('click', e => {
     if (e.target === overlay) closePopup();
