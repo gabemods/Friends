@@ -250,11 +250,31 @@ body.dark-mode .dot {
 body.dark-mode .copyright {
 color: rgba(255, 255, 255, 0.7);
 } 
-#themeIcon {
-  transition: transform 0.5s ease;
+@keyframes rotateSun {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
 }
-#themeIcon.spin {
-  transform: rotate(180deg);
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.sun-rotate {
+  animation: rotateSun 0.5s ease forwards;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
 }
 
 /* colour inheritance */
@@ -267,39 +287,6 @@ body.dark-mode #themeToggle {
     /* Header styling */
 body.dark-mode header {
   color: white; /* Ensure header text is white */
-}
-
-  /* Only animate once on each toggle */
-@keyframes spinOnce {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes rotate180 {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(180deg); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.spin-once {
-  animation: spinOnce 0.5s ease forwards;
-}
-
-.rotate-180 {
-  animation: rotate180 0.5s ease forwards;
-}
-
-.fade-in {
-  animation: fadeIn 0.4s ease forwards;
-}
-
-/* Optional: ensure icon doesn’t keep rotating */
-#themeIcon {
-  transition: transform 0.5s ease;
 }
     
     .buttons {
@@ -1029,19 +1016,23 @@ body.dark-mode a.info-button svg circle:last-child {
     dark = !dark;
     document.body.classList.toggle("dark-mode", dark);
 
-    // Remove any previous animation classes
-    themeIcon.classList.remove("spin-once", "rotate-180", "fade-in");
+    // Remove all animation classes first
+    themeIcon.classList.remove("sun-rotate", "fade-in", "fade-out");
 
-    // Set the new icon path
-    themePath.setAttribute("d", dark ? moonPath : sunPath);
-
-    // Apply the animation based on toggle direction
     if (dark) {
-      // Going to dark: sun spins 360°
-      themeIcon.classList.add("spin-once");
+      // Transition to moon
+      themeIcon.classList.add("sun-rotate"); // spin current sun icon
+      setTimeout(() => {
+        themePath.setAttribute("d", moonPath);
+        themeIcon.classList.add("fade-in"); // fade in moon
+      }, 250); // wait for partial rotation before fading in moon
     } else {
-      // Going to light: sun rotates 180°, moon fades in
-      themeIcon.classList.add("rotate-180", "fade-in");
+      // Transition to sun
+      themeIcon.classList.add("fade-out"); // fade out moon
+      setTimeout(() => {
+        themePath.setAttribute("d", sunPath);
+        themeIcon.classList.add("fade-in", "sun-rotate"); // fade in sun & spin
+      }, 250);
     }
   });
 </script>
