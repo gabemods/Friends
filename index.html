@@ -224,15 +224,17 @@
     body.dark-mode {
   background: linear-gradient(
     to right,
-    #000000 0%,     /* pure black */
-    #000022 20%,    /* very dark navy blue */
-    #000055 40%,    /* dark blue */
-    #000099 60%,    /* bright dark blue */
-    #0000cc 80%,    /* vivid blue */
-    #0033ff 100%    /* bright blue */
+    #000000 0%,
+    #000033 14%,
+    #000066 28%,
+    #000099 42%,
+    #0000CC 57%,
+    #0033CC 71%,
+    #0066CC 85%,
+    #0099FF 100%
   );
-  background-size: 200% 100%;
-  background-attachment: fixed;
+  background-size: 200% 100%; /* Makes the gradient smoother on wide screens */
+  background-attachment: fixed; /* Optional: keeps the gradient still on scroll */
   color: white;
 }
 
