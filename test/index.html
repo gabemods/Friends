@@ -251,43 +251,29 @@ body.dark-mode .copyright {
 color: rgba(255, 255, 255, 0.7);
 } 
 
-.theme-icon {
+#themeIcon {
   transition: transform 0.6s ease, opacity 0.6s ease;
+  opacity: 1;
+  transform-origin: center;
 }
 
-.theme-icon.sun-exit {
+#themeIcon.fade-out {
+  opacity: 0;
   transform: rotate(180deg);
-  opacity: 0;
 }
 
-.theme-icon.moon-enter {
-  transform: rotate(-15deg) scale(0.95);
-  opacity: 0;
+#themeIcon.fade-in {
+  opacity: 1;
 }
 
-.theme-icon.moon-active {
-  animation: moonEnter 0.6s ease forwards;
+#themeIcon.tilt-in {
+  animation: moonTiltFadeIn 0.6s ease forwards;
 }
 
-.theme-icon.moon-exit {
-  opacity: 0;
-}
-
-.theme-icon.sun-enter {
-  transform: rotate(180deg);
-  opacity: 0;
-  animation: sunEnter 0.6s ease forwards;
-}
-
-@keyframes moonEnter {
+@keyframes moonTiltFadeIn {
   0%   { transform: rotate(-15deg) scale(0.95); opacity: 0; }
   50%  { transform: rotate(-5deg) scale(1.05); opacity: 0.5; }
   100% { transform: rotate(0deg) scale(1); opacity: 1; }
-}
-
-@keyframes sunEnter {
-  0%   { transform: rotate(180deg); opacity: 0; }
-  100% { transform: rotate(360deg); opacity: 1; }
 }
 
 /* colour inheritance */
@@ -1011,7 +997,7 @@ body.dark-mode a.info-button svg circle:last-child {
   <script>
   const themeToggle = document.getElementById("themeToggle");
   const themeIcon = document.getElementById("themeIcon");
-  const themePath = document.getElementById("themePath");
+  const themePath = themeIcon.querySelector("path");
 
   const sunPath = "M12 3v2m0 14v2m9-9h-2M5 12H3"
                 + "m15.364-6.364l-1.414 1.414"
@@ -1020,45 +1006,46 @@ body.dark-mode a.info-button svg circle:last-child {
                 + "M6.05 6.05L4.636 7.464"
                 + "M12 8a4 4 0 100 8 4 4 0 000-8z";
 
-  const moonPath = "M21 12.79A9 9 0 1111.21 3"
-                 + "a7 7 0 009.79 9.79z";
+  const moonPath = "M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z";
 
   let dark = false;
-  let isAnimating = false;
+  let animating = false;
 
   themeToggle.addEventListener("click", () => {
-    if (isAnimating) return;
-    isAnimating = true;
+    if (animating) return;
+    animating = true;
 
-    if (!dark) {
-      // Sun to Moon
-      themeIcon.classList.add("sun-exit");
+    // Step 1: fade out current icon with rotation if switching to moon
+    themeIcon.classList.remove("tilt-in", "fade-in");
+    themeIcon.classList.add("fade-out");
+
+    setTimeout(() => {
+      // Step 2: switch icon path
+      themePath.setAttribute("d", dark ? sunPath : moonPath);
+
+      // Step 3: toggle theme class on <body>
+      document.body.classList.toggle("dark-mode", !dark);
+
+      // Step 4: prepare and show the new icon
+      themeIcon.classList.remove("fade-out");
+
+      if (dark) {
+        // switching from dark → light
+        themeIcon.classList.add("fade-in");
+        themeIcon.style.transform = "rotate(0deg)";
+      } else {
+        // switching from light → dark
+        themeIcon.classList.add("tilt-in");
+      }
+
+      // Reset after animation
       setTimeout(() => {
-        themePath.setAttribute("d", moonPath);
-        themeIcon.className = "theme-icon moon-enter moon-active";
-        document.body.classList.add("dark-mode");
-
-        setTimeout(() => {
-          themeIcon.className = "theme-icon";
-          isAnimating = false;
-        }, 600);
+        themeIcon.classList.remove("fade-in", "tilt-in");
+        animating = false;
       }, 600);
-    } else {
-      // Moon to Sun
-      themeIcon.classList.add("moon-exit");
-      setTimeout(() => {
-        themePath.setAttribute("d", sunPath);
-        themeIcon.className = "theme-icon sun-enter";
-        document.body.classList.remove("dark-mode");
 
-        setTimeout(() => {
-          themeIcon.className = "theme-icon";
-          isAnimating = false;
-        }, 600);
-      }, 400);
-    }
-
-    dark = !dark;
+      dark = !dark;
+    }, 600);
   });
 </script>
   <script>
