@@ -256,17 +256,35 @@ color: rgba(255, 255, 255, 0.7);
   100% { transform: rotate(180deg); opacity: 0; }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+@keyframes moonFadeInTilt {
+  0%   { transform: rotate(-15deg); opacity: 0; }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes sunFadeInSpin {
+  0%   { opacity: 0; transform: rotate(180deg); }
+  100% { opacity: 1; transform: rotate(0deg); }
 }
 
 .sun-rotate-fade {
   animation: rotateFadeOut 0.6s ease forwards;
 }
 
-.fade-in {
-  animation: fadeIn 0.4s ease forwards;
+.moon-fade-in-tilt {
+  animation: moonFadeInTilt 0.5s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.sun-fade-in-spin {
+  animation: sunFadeInSpin 0.6s ease forwards;
 }
 
 /* colour inheritance */
@@ -1011,37 +1029,36 @@ body.dark-mode a.info-button svg circle:last-child {
     dark = !dark;
 
     document.body.classList.toggle("dark-mode", dark);
-    themeIcon.classList.remove("sun-rotate-fade", "fade-in");
+    themeIcon.classList.remove("sun-rotate-fade", "fade-out", "sun-fade-in-spin", "moon-fade-in-tilt");
 
     if (dark) {
-      // Fade out + rotate sun, then show moon
+      // Light → Dark
       themeIcon.classList.add("sun-rotate-fade");
 
       setTimeout(() => {
         themePath.setAttribute("d", moonPath);
         themeIcon.classList.remove("sun-rotate-fade");
-        themeIcon.classList.add("fade-in");
+        themeIcon.classList.add("moon-fade-in-tilt");
 
         setTimeout(() => {
-          themeIcon.classList.remove("fade-in");
+          themeIcon.classList.remove("moon-fade-in-tilt");
           isAnimating = false;
-        }, 400);
+        }, 500);
       }, 600);
     } else {
-      // Fade out moon, fade in + rotate sun
-      themeIcon.classList.add("fade-in");
-      themePath.setAttribute("d", sunPath);
+      // Dark → Light
+      themeIcon.classList.add("fade-out");
 
-      // Small delay before spin starts
       setTimeout(() => {
-        themeIcon.classList.remove("fade-in");
-        themeIcon.classList.add("sun-rotate-fade");
+        themePath.setAttribute("d", sunPath);
+        themeIcon.classList.remove("fade-out");
+        themeIcon.classList.add("sun-fade-in-spin");
 
         setTimeout(() => {
-          themeIcon.classList.remove("sun-rotate-fade");
+          themeIcon.classList.remove("sun-fade-in-spin");
           isAnimating = false;
         }, 600);
-      }, 100); // fade-in before spin
+      }, 400);
     }
   });
 </script>
