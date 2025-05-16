@@ -252,27 +252,28 @@ color: rgba(255, 255, 255, 0.7);
 } 
 
 #themeIcon {
-  transition: transform 0.6s ease, opacity 0.6s ease;
-  opacity: 1;
+  transition: transform 0.5s ease, opacity 0.5s ease;
   transform-origin: center;
 }
 
 #themeIcon.fade-out {
   opacity: 0;
-  transform: rotate(180deg);
 }
 
 #themeIcon.fade-in {
   opacity: 1;
 }
 
-#themeIcon.tilt-in {
-  animation: moonTiltFadeIn 0.6s ease forwards;
+#themeIcon.rotate-in {
+  transform: rotate(180deg);
 }
 
-@keyframes moonTiltFadeIn {
-  0%   { transform: rotate(-15deg) scale(0.95); opacity: 0; }
-  50%  { transform: rotate(-5deg) scale(1.05); opacity: 0.5; }
+#themeIcon.tilt-moon {
+  animation: moonEnter 0.6s ease forwards;
+}
+
+@keyframes moonEnter {
+  0%   { transform: rotate(-5deg) scale(0.95); opacity: 0; }
   100% { transform: rotate(0deg) scale(1); opacity: 1; }
 }
 
@@ -1015,37 +1016,33 @@ body.dark-mode a.info-button svg circle:last-child {
     if (animating) return;
     animating = true;
 
-    // Step 1: fade out current icon with rotation if switching to moon
-    themeIcon.classList.remove("tilt-in", "fade-in");
+    // Step 1: Fade out current icon
+    themeIcon.classList.remove("rotate-in", "fade-in", "tilt-moon");
     themeIcon.classList.add("fade-out");
 
     setTimeout(() => {
-      // Step 2: switch icon path
-      themePath.setAttribute("d", dark ? sunPath : moonPath);
+      // Step 2: Switch icon and theme
+      dark = !dark;
+      document.body.classList.toggle("dark-mode", dark);
+      themePath.setAttribute("d", dark ? moonPath : sunPath);
 
-      // Step 3: toggle theme class on <body>
-      document.body.classList.toggle("dark-mode", !dark);
-
-      // Step 4: prepare and show the new icon
+      // Step 3: Reset transform for moon or add rotation for sun
       themeIcon.classList.remove("fade-out");
 
       if (dark) {
-        // switching from dark → light
-        themeIcon.classList.add("fade-in");
-        themeIcon.style.transform = "rotate(0deg)";
+        // Entering dark mode (moon icon)
+        themeIcon.classList.add("tilt-moon");
       } else {
-        // switching from light → dark
-        themeIcon.classList.add("tilt-in");
+        // Back to light mode (sun icon)
+        themeIcon.classList.add("fade-in", "rotate-in");
       }
 
-      // Reset after animation
+      // Cleanup after animation
       setTimeout(() => {
-        themeIcon.classList.remove("fade-in", "tilt-in");
+        themeIcon.classList.remove("fade-in", "tilt-moon", "rotate-in");
         animating = false;
       }, 600);
-
-      dark = !dark;
-    }, 600);
+    }, 300);
   });
 </script>
   <script>
