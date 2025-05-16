@@ -688,7 +688,11 @@ body.dark-mode a.info-button svg circle:last-child {
   will-change: transform;
   cursor: grab;
   user-select: none;
-  max-width: none; /* We'll control width & height manually */
+  max-width: none;
+  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.popup-img {
+  cursor: pointer;
 }
   </style>
 </head>
@@ -754,7 +758,7 @@ body.dark-mode a.info-button svg circle:last-child {
   <div class="scroll-container" id="cardScroller">
     <div class="page">
       <div class="card">
-        <img src="assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumonty" />
+        <img src="../assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumonty" />
         <h1>Ollie Beaumont</h1>
         <p>I work at McDonalds.</p>
          <p class="wave-text">
@@ -1010,157 +1014,120 @@ body.dark-mode a.info-button svg circle:last-child {
   }
 </script>
   <script>
-(() => {
-  const overlayId = 'img-popup-overlay';
+const images = document.querySelectorAll('img');
+const overlay = document.createElement('div');
+const popupImg = document.createElement('img');
 
-  // Create popup overlay once
-  let overlay = document.getElementById(overlayId);
-  let popupImg;
+overlay.style.cssText = `
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none;
+  align-items: center; justify-content: center; z-index: 9999;
+  transition: background 0.3s ease;
+`;
+popupImg.style.cssText = `
+  position: fixed; border-radius: 12px;
+  will-change: transform;
+  max-width: 90vw; max-height: 90vh;
+`;
 
-  if (!overlay) {
-    overlay = document.createElement('div');
-    overlay.id = overlayId;
-    overlay.style.display = 'none';
-    overlay.style.alignItems = 'center';
-    overlay.style.justifyContent = 'center';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
-    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    overlay.style.zIndex = '9999';
-    overlay.style.overflow = 'hidden';
-    overlay.style.touchAction = 'none';
-    overlay.style.userSelect = 'none';
+overlay.appendChild(popupImg);
+document.body.appendChild(overlay);
 
-    popupImg = document.createElement('img');
-    popupImg.style.position = 'absolute';
-    popupImg.style.borderRadius = '12px';
-    popupImg.style.willChange = 'transform';
-    popupImg.style.cursor = 'grab';
-    popupImg.style.userSelect = 'none';
-    popupImg.style.maxWidth = 'none';
+let originImg = null;
+let startX = 0, startY = 0;
+let isDragging = false;
 
-    overlay.appendChild(popupImg);
-    document.body.appendChild(overlay);
-  } else {
-    popupImg = overlay.querySelector('img');
-  }
+function getTransforms(fromRect) {
+  const scaleX = fromRect.width / popupImg.offsetWidth;
+  const scaleY = fromRect.height / popupImg.offsetHeight;
+  const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
+  const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
+  return { scaleX, scaleY, translateX, translateY };
+}
 
-  let originRect = null;
-  let isDragging = false;
-  let startY = 0;
-
-  function openPopup(img) {
+images.forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', () => {
+    originImg = img;
     popupImg.src = img.src;
-    originRect = img.getBoundingClientRect();
 
-    overlay.style.display = 'flex';
+    popupImg.onload = () => {
+      const rect = img.getBoundingClientRect();
+      overlay.style.display = 'flex';
+      const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
-    // Set initial size & position to match origin image
-    popupImg.style.width = originRect.width + 'px';
-    popupImg.style.height = originRect.height + 'px';
-    popupImg.style.top = originRect.top + 'px';
-    popupImg.style.left = originRect.left + 'px';
-    popupImg.style.borderRadius = window.getComputedStyle(img).borderRadius || '12px';
-    popupImg.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      popupImg.style.transition = 'none';
+      popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
 
-    // Calculate fullscreen size and position with margin
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
+      // Wait for DOM to update, then animate to center
+      requestAnimationFrame(() => {
+        popupImg.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        popupImg.style.transform = `translate(0, 0) scale(1, 1)`;
+      });
+    };
+  });
+});
 
-    const naturalWidth = img.naturalWidth;
-    const naturalHeight = img.naturalHeight;
-    const scaleX = vw / naturalWidth;
-    const scaleY = vh / naturalHeight;
-    const scale = Math.min(scaleX, scaleY) * 0.9; // 90% of viewport
+function closePopup() {
+  if (!originImg) return;
+  const rect = originImg.getBoundingClientRect();
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
-    const finalWidth = naturalWidth * scale;
-    const finalHeight = naturalHeight * scale;
-    const finalLeft = (vw - finalWidth) / 2;
-    const finalTop = (vh - finalHeight) / 2;
+  popupImg.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
+  overlay.style.transition = 'background-color 0.25s ease';
+  popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+  overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
-    requestAnimationFrame(() => {
-      popupImg.style.width = finalWidth + 'px';
-      popupImg.style.height = finalHeight + 'px';
-      popupImg.style.top = finalTop + 'px';
-      popupImg.style.left = finalLeft + 'px';
-      popupImg.style.borderRadius = '12px';
-      popupImg.style.transform = '';
-    });
-  }
-
-  function closePopup() {
-    if (!originRect) return;
-
-    popupImg.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-    popupImg.style.width = originRect.width + 'px';
-    popupImg.style.height = originRect.height + 'px';
-    popupImg.style.top = originRect.top + 'px';
-    popupImg.style.left = originRect.left + 'px';
-    popupImg.style.borderRadius = window.getComputedStyle(document.elementFromPoint(originRect.left, originRect.top)).borderRadius || '12px';
+  popupImg.addEventListener('transitionend', () => {
+    overlay.style.display = 'none';
     popupImg.style.transform = '';
+    popupImg.style.transition = '';
+    overlay.style.transition = '';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+  }, { once: true });
+}
 
+overlay.addEventListener('click', e => {
+  if (e.target === overlay) closePopup();
+});
+
+popupImg.addEventListener('pointerdown', e => {
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  popupImg.setPointerCapture(e.pointerId);
+});
+
+popupImg.addEventListener('pointermove', e => {
+  if (!isDragging) return;
+  const deltaX = e.clientX - startX;
+  const deltaY = e.clientY - startY;
+
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  const scale = 1 - Math.min(0.4, distance / window.innerHeight);
+  popupImg.style.transition = 'none';
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
+});
+
+popupImg.addEventListener('pointerup', e => {
+  if (!isDragging) return;
+  isDragging = false;
+  const deltaX = e.clientX - startX;
+  const deltaY = e.clientY - startY;
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+  if (distance > 100) {
+    closePopup();
+  } else {
+    popupImg.style.transition = 'transform 0.25s ease';
+    popupImg.style.transform = `translate(0,0) scale(1)`;
+    overlay.style.transition = 'background 0.25s ease';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.addEventListener('transitionend', () => {
-      overlay.style.display = 'none';
-      originRect = null;
       popupImg.style.transition = '';
-      popupImg.style.transform = '';
     }, { once: true });
   }
-
-  // Drag to swipe down to close
-  popupImg.addEventListener('pointerdown', e => {
-    isDragging = true;
-    startY = e.clientY;
-    popupImg.style.transition = ''; // stop any transition during drag
-    popupImg.style.cursor = 'grabbing';
-  });
-  window.addEventListener('pointermove', e => {
-    if (!isDragging) return;
-    const deltaY = e.clientY - startY;
-    if (deltaY > 0) {
-      popupImg.style.transform = `translateY(${deltaY}px) scale(${1 - deltaY / window.innerHeight * 0.5})`;
-      overlay.style.backgroundColor = `rgba(0,0,0,${0.8 - deltaY / window.innerHeight})`;
-    }
-  });
-  window.addEventListener('pointerup', e => {
-    if (!isDragging) return;
-    isDragging = false;
-    popupImg.style.cursor = 'grab';
-    const deltaY = e.clientY - startY;
-    if (deltaY > window.innerHeight * 0.25) {
-      closePopup();
-    } else {
-      popupImg.style.transition = 'transform 0.3s ease';
-      popupImg.style.transform = 'translateY(0) scale(1)';
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-      popupImg.addEventListener('transitionend', () => {
-        popupImg.style.transition = '';
-      }, { once: true });
-    }
-  });
-
-  // Close if clicked outside the image
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) closePopup();
-  });
-
-  // Add event listeners to all images with class .popup-img
-  function initPopupImages() {
-    document.querySelectorAll('img.popup-img').forEach(img => {
-      img.style.cursor = 'pointer';
-      img.addEventListener('click', () => openPopup(img));
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPopupImages);
-  } else {
-    initPopupImages();
-  }
-})();
+});
 </script>
   <script>
   const themeToggle = document.getElementById("themeToggle");
