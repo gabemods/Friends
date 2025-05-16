@@ -689,7 +689,7 @@ body.dark-mode a.info-button svg circle:last-child {
   cursor: grab;
   user-select: none;
   max-width: none;
-  transition: all 0.4s cubic-bezier(0.33, 1, 0.68, 1); /* smoother bounce */
+  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
 }
 .popup-img {
   cursor: pointer;
@@ -1018,48 +1018,26 @@ body.dark-mode a.info-button svg circle:last-child {
   const overlayId = 'img-popup-overlay';
   let overlay = document.getElementById(overlayId);
   let popupImg;
+  let originImg = null;
+  let originRect = null;
+  let isDragging = false;
+  let startY = 0;
 
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.id = overlayId;
-    overlay.style.display = 'none';
-    overlay.style.alignItems = 'center';
-    overlay.style.justifyContent = 'center';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
-    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    overlay.style.zIndex = '9999';
-    overlay.style.overflow = 'hidden';
-    overlay.style.touchAction = 'none';
-    overlay.style.userSelect = 'none';
-
     popupImg = document.createElement('img');
-    popupImg.style.position = 'absolute';
-    popupImg.style.borderRadius = '12px';
-    popupImg.style.willChange = 'transform';
-    popupImg.style.cursor = 'grab';
-    popupImg.style.userSelect = 'none';
-    popupImg.style.maxWidth = 'none';
-
     overlay.appendChild(popupImg);
     document.body.appendChild(overlay);
   } else {
     popupImg = overlay.querySelector('img');
   }
 
-  let originRect = null;
-  let isDragging = false;
-  let startY = 0;
-
   function openPopup(img) {
-    popupImg.src = img.src;
+    originImg = img;
     originRect = img.getBoundingClientRect();
 
-    overlay.style.display = 'flex';
-    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.src = img.src;
     popupImg.style.transition = 'none';
     popupImg.style.width = originRect.width + 'px';
     popupImg.style.height = originRect.height + 'px';
@@ -1068,13 +1046,13 @@ body.dark-mode a.info-button svg circle:last-child {
     popupImg.style.borderRadius = window.getComputedStyle(img).borderRadius || '12px';
     popupImg.style.transform = 'none';
 
-    void popupImg.offsetWidth; // force reflow
+    overlay.style.display = 'flex';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    void popupImg.offsetWidth;
 
-    popupImg.style.transition = 'all 0.4s cubic-bezier(0.33, 1, 0.68, 1)';
-
+    popupImg.style.transition = 'all 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-
     const scale = Math.min(vw / img.naturalWidth, vh / img.naturalHeight) * 0.9;
     const finalWidth = img.naturalWidth * scale;
     const finalHeight = img.naturalHeight * scale;
@@ -1091,21 +1069,22 @@ body.dark-mode a.info-button svg circle:last-child {
   }
 
   function closePopup() {
-    if (!originRect) return;
+    if (!originImg) return;
 
-    popupImg.style.transition = 'all 0.35s cubic-bezier(0.33, 1, 0.68, 1)';
+    originRect = originImg.getBoundingClientRect(); // refresh in case layout changed
+    popupImg.style.transition = 'all 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
     popupImg.style.width = originRect.width + 'px';
     popupImg.style.height = originRect.height + 'px';
     popupImg.style.top = originRect.top + 'px';
     popupImg.style.left = originRect.left + 'px';
-    popupImg.style.borderRadius = window.getComputedStyle(document.elementFromPoint(originRect.left, originRect.top)).borderRadius || '12px';
-
-    overlay.style.transition = 'background-color 0.35s ease';
+    popupImg.style.borderRadius = window.getComputedStyle(originImg).borderRadius || '12px';
+    overlay.style.transition = 'background-color 0.25s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
     popupImg.addEventListener('transitionend', () => {
       overlay.style.display = 'none';
       popupImg.style.transition = '';
+      popupImg.style.transform = 'none';
       overlay.style.transition = '';
       overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     }, { once: true });
@@ -1136,7 +1115,7 @@ body.dark-mode a.info-button svg circle:last-child {
     if (deltaY > window.innerHeight * 0.25) {
       closePopup();
     } else {
-      popupImg.style.transition = 'transform 0.3s cubic-bezier(0.33, 1, 0.68, 1)';
+      popupImg.style.transition = 'transform 0.25s cubic-bezier(0.33, 1, 0.68, 1)';
       popupImg.style.transform = 'translateY(0) scale(1)';
       overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
       popupImg.addEventListener('transitionend', () => {
