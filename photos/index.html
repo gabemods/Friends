@@ -240,11 +240,40 @@ body.dark-mode .dot {
 body.dark-mode .copyright {
   color: rgba(255, 255, 255, 0.7);
 } 
-#themeIcon {
-  transition: transform 0.5s ease;
+@keyframes rotateFadeOut {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  100% { transform: rotate(180deg); opacity: 0; }
 }
-#themeIcon.spin {
-  transform: rotate(180deg);
+
+@keyframes moonFadeInTilt {
+  0%   { transform: rotate(-15deg); opacity: 0; }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes sunFadeInSpin {
+  0%   { opacity: 0; transform: rotate(180deg); }
+  100% { opacity: 1; transform: rotate(0deg); }
+}
+
+.sun-rotate-fade {
+  animation: rotateFadeOut 0.6s ease forwards;
+}
+
+.moon-fade-in-tilt {
+  animation: moonFadeInTilt 0.5s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.sun-fade-in-spin {
+  animation: sunFadeInSpin 0.6s ease forwards;
 }
 
 /* colour inheritance */
@@ -815,34 +844,59 @@ body.dark-mode a.info-button svg circle:last-child {
 </script>
  <script>
   const themeToggle = document.getElementById("themeToggle");
-  const themeIcon   = document.getElementById("themeIcon");
+  const themeIcon = document.getElementById("themeIcon");
+  const themePath = themeIcon.querySelector("path");
 
-  // Sun and Moon outline paths from Heroicons
-  const sunPath  = "M12 3v2m0 14v2m9-9h-2M5 12H3"
-                 + "m15.364-6.364l-1.414 1.414"
-                 + "M6.05 17.95l-1.414 1.414"
-                 + "M17.95 17.95l1.414-1.414"
-                 + "M6.05 6.05L4.636 7.464"
-                 + "M12 8a4 4 0 100 8 4 4 0 000-8z";
+  const sunPath = "M12 3v2m0 14v2m9-9h-2M5 12H3"
+                + "m15.364-6.364l-1.414 1.414"
+                + "M6.05 17.95l-1.414 1.414"
+                + "M17.95 17.95l1.414-1.414"
+                + "M6.05 6.05L4.636 7.464"
+                + "M12 8a4 4 0 100 8 4 4 0 000-8z";
 
   const moonPath = "M21 12.79A9 9 0 1111.21 3"
                  + "a7 7 0 009.79 9.79z";
 
   let dark = false;
+  let isAnimating = false;
 
   themeToggle.addEventListener("click", () => {
+    if (isAnimating) return;
+    isAnimating = true;
     dark = !dark;
+
     document.body.classList.toggle("dark-mode", dark);
+    themeIcon.classList.remove("sun-rotate-fade", "fade-out", "sun-fade-in-spin", "moon-fade-in-tilt");
 
-    // spin
-    themeIcon.classList.add("spin");
+    if (dark) {
+      // Light → Dark
+      themeIcon.classList.add("sun-rotate-fade");
 
-    // swap path
-    themeIcon.querySelector("path")
-             .setAttribute("d", dark ? moonPath : sunPath);
+      setTimeout(() => {
+        themePath.setAttribute("d", moonPath);
+        themeIcon.classList.remove("sun-rotate-fade");
+        themeIcon.classList.add("moon-fade-in-tilt");
 
-    // remove spin after it finishes
-    setTimeout(() => themeIcon.classList.remove("spin"), 500);
+        setTimeout(() => {
+          themeIcon.classList.remove("moon-fade-in-tilt");
+          isAnimating = false;
+        }, 500);
+      }, 600);
+    } else {
+      // Dark → Light
+      themeIcon.classList.add("fade-out");
+
+      setTimeout(() => {
+        themePath.setAttribute("d", sunPath);
+        themeIcon.classList.remove("fade-out");
+        themeIcon.classList.add("sun-fade-in-spin");
+
+        setTimeout(() => {
+          themeIcon.classList.remove("sun-fade-in-spin");
+          isAnimating = false;
+        }, 600);
+      }, 400);
+    }
   });
 </script>
   <script>
