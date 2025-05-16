@@ -266,7 +266,7 @@ color: rgba(255, 255, 255, 0.7);
 }
 
 .sun-rotate {
-  animation: rotateSun 0.5s ease forwards;
+  animation: rotateSun 0.6s ease forwards;
 }
 
 .fade-in {
@@ -1011,28 +1011,45 @@ body.dark-mode a.info-button svg circle:last-child {
                  + "a7 7 0 009.79 9.79z";
 
   let dark = false;
+  let isAnimating = false;
 
   themeToggle.addEventListener("click", () => {
+    if (isAnimating) return; // Prevent rapid clicking
+    isAnimating = true;
     dark = !dark;
+
     document.body.classList.toggle("dark-mode", dark);
 
-    // Remove all animation classes first
+    // Remove any previous animations
     themeIcon.classList.remove("sun-rotate", "fade-in", "fade-out");
 
     if (dark) {
-      // Transition to moon
-      themeIcon.classList.add("sun-rotate"); // spin current sun icon
+      // Going to dark mode (sun spins, then moon fades in)
+      themeIcon.classList.add("sun-rotate");
+
       setTimeout(() => {
         themePath.setAttribute("d", moonPath);
-        themeIcon.classList.add("fade-in"); // fade in moon
-      }, 250); // wait for partial rotation before fading in moon
+        themeIcon.classList.remove("sun-rotate");
+        themeIcon.classList.add("fade-in");
+        setTimeout(() => {
+          themeIcon.classList.remove("fade-in");
+          isAnimating = false;
+        }, 400);
+      }, 600); // Wait for sun to finish spinning
     } else {
-      // Transition to sun
-      themeIcon.classList.add("fade-out"); // fade out moon
+      // Going to light mode (moon fades out, then sun fades in + spins)
+      themeIcon.classList.add("fade-out");
+
       setTimeout(() => {
         themePath.setAttribute("d", sunPath);
-        themeIcon.classList.add("fade-in", "sun-rotate"); // fade in sun & spin
-      }, 250);
+        themeIcon.classList.remove("fade-out");
+        themeIcon.classList.add("fade-in", "sun-rotate");
+
+        setTimeout(() => {
+          themeIcon.classList.remove("fade-in", "sun-rotate");
+          isAnimating = false;
+        }, 600); // Allow both fade and rotate to finish
+      }, 400); // Wait for moon to fully fade out
     }
   });
 </script>
