@@ -688,7 +688,11 @@ body.dark-mode a.info-button svg circle:last-child {
   will-change: transform;
   cursor: grab;
   user-select: none;
-  max-width: none; /* We'll control width & height manually */
+  max-width: none;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* bouncy spring */
+}
+.popup-img {
+  cursor: pointer;
 }
   </style>
 </head>
@@ -849,7 +853,7 @@ body.dark-mode a.info-button svg circle:last-child {
     <circle cx="12" cy="7" r="1" fill="white" />
   </svg>
 </a>
-        <img src="assets/images/gabriel/20250509_223705.jpg" alt="Gabriel" />
+        <img src="assets/images/gabriel/20250509_223705.jpg" class="popup-img" alt="Gabriel" />
         <h1>
   Gabriel
   <a href="ice/index.html" id="ice-link">
@@ -865,56 +869,56 @@ body.dark-mode a.info-button svg circle:last-child {
 </div>
    <div class="page">
       <div class="card">
-        <img src="assets/images/josh/IMG_0310.jpeg" alt="Josh" />
+        <img src="assets/images/josh/IMG_0310.jpeg" class="popup-img" alt="Josh" />
         <h1>Josh</h1>
         <p>I like smelling rabbits ears on the weekends.</p>
       </div>
     </div>
     <div class="page">
       <div class="card">
-        <img src="assets/images/charlie/IMG_0227.jpeg" alt="Charlie" />
+        <img src="assets/images/charlie/IMG_0227.jpeg" class="popup-img" alt="Charlie" />
         <h1>Charlie</h1>
         <p>I support Chelsea. I also like Cars and Music.</p>
       </div>
     </div>
     <div class="page">
       <div class="card">
-         <img src="assets/images/michael/IMG_0229.jpeg" alt="Michael" />
+         <img src="assets/images/michael/IMG_0229.jpeg" class="popup-img" alt="Michael" />
         <h1>Michael</h1>
         <p>I support Everton and I like Guitar</p>
       </div>
     </div>
     <div class="page">
       <div class="card">
-        <img src="assets/images/tommy/IMG_0363.jpeg" alt="Tommy" />
+        <img src="assets/images/tommy/IMG_0363.jpeg" class="popup-img" alt="Tommy" />
         <h1>Tommy</h1>
         <p>I think Basketball is cool and I also shred Guitar 🎸</p>
       </div>
     </div>
     <div class="page">
       <div class="card">
-        <img src="assets/images/harry/IMG_0458.jpeg" alt="Harry" />
+        <img src="assets/images/harry/IMG_0458.jpeg" class="popup-img" alt="Harry" />
         <h1>Harry</h1>
         <p> My Favourite Football team is Liverpool. I also go to the gym 💪</p>
       </div>
     </div>
     <div class="page">
       <div class="card">
-        <img src="assets/images/james/IMG_0252.jpeg" alt="James" />
+        <img src="assets/images/james/IMG_0252.jpeg" class="popup-img" alt="James" />
         <h1>James</h1>
         <p>Hi, I'm James and I support Port Vale. </p>
       </div>
     </div>
      <div class="page">
       <div class="card">
-        <img src="assets/images/adam/IMG_0226.jpeg" alt="Adam" />
+        <img src="assets/images/adam/IMG_0226.jpeg" class="popup-img" alt="Adam" />
         <h1>Adam</h1>
         <p>I like Guitar</p>
       </div>
     </div>
     <div class="page">
       <div class="card">
-        <img src="assets/images/jayden/IMG_0225.jpeg" alt="Jayden" />
+        <img src="assets/images/jayden/IMG_0225.jpeg" class="popup-img" alt="Jayden" />
         <h1>Jayden</h1>
         <p>I support man united and Michael is a retard👍</p>
       </div>
@@ -1056,17 +1060,24 @@ body.dark-mode a.info-button svg circle:last-child {
     popupImg.src = img.src;
     originRect = img.getBoundingClientRect();
 
+    // Reset styles for overlay & popupImg
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     overlay.style.display = 'flex';
 
-    // Set initial size & position to match origin image
+    popupImg.style.transition = 'none';
     popupImg.style.width = originRect.width + 'px';
     popupImg.style.height = originRect.height + 'px';
     popupImg.style.top = originRect.top + 'px';
     popupImg.style.left = originRect.left + 'px';
     popupImg.style.borderRadius = window.getComputedStyle(img).borderRadius || '12px';
-    popupImg.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+    popupImg.style.transform = 'none';
 
-    // Calculate fullscreen size and position with margin
+    // Force reflow before animating to ensure reset styles take effect
+    void popupImg.offsetWidth;
+
+    // Animate to fullscreen with bounce easing
+    popupImg.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
@@ -1074,7 +1085,7 @@ body.dark-mode a.info-button svg circle:last-child {
     const naturalHeight = img.naturalHeight;
     const scaleX = vw / naturalWidth;
     const scaleY = vh / naturalHeight;
-    const scale = Math.min(scaleX, scaleY) * 0.9; // 90% of viewport
+    const scale = Math.min(scaleX, scaleY) * 0.9; // 90% viewport
 
     const finalWidth = naturalWidth * scale;
     const finalHeight = naturalHeight * scale;
@@ -1087,26 +1098,31 @@ body.dark-mode a.info-button svg circle:last-child {
       popupImg.style.top = finalTop + 'px';
       popupImg.style.left = finalLeft + 'px';
       popupImg.style.borderRadius = '12px';
-      popupImg.style.transform = '';
+      popupImg.style.transform = 'none';
     });
   }
 
   function closePopup() {
     if (!originRect) return;
 
-    popupImg.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    popupImg.style.transition = 'all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
     popupImg.style.width = originRect.width + 'px';
     popupImg.style.height = originRect.height + 'px';
     popupImg.style.top = originRect.top + 'px';
     popupImg.style.left = originRect.left + 'px';
     popupImg.style.borderRadius = window.getComputedStyle(document.elementFromPoint(originRect.left, originRect.top)).borderRadius || '12px';
-    popupImg.style.transform = '';
+    popupImg.style.transform = 'none';
+
+    overlay.style.transition = 'background-color 0.4s ease';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
     popupImg.addEventListener('transitionend', () => {
       overlay.style.display = 'none';
+      overlay.style.transition = '';
       originRect = null;
       popupImg.style.transition = '';
       popupImg.style.transform = '';
+      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)'; // Reset for next open
     }, { once: true });
   }
 
@@ -1114,8 +1130,9 @@ body.dark-mode a.info-button svg circle:last-child {
   popupImg.addEventListener('pointerdown', e => {
     isDragging = true;
     startY = e.clientY;
-    popupImg.style.transition = ''; // stop any transition during drag
+    popupImg.style.transition = ''; // disable transition during drag
     popupImg.style.cursor = 'grabbing';
+    e.preventDefault();
   });
   window.addEventListener('pointermove', e => {
     if (!isDragging) return;
@@ -1133,7 +1150,7 @@ body.dark-mode a.info-button svg circle:last-child {
     if (deltaY > window.innerHeight * 0.25) {
       closePopup();
     } else {
-      popupImg.style.transition = 'transform 0.3s ease';
+      popupImg.style.transition = 'transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
       popupImg.style.transform = 'translateY(0) scale(1)';
       overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
       popupImg.addEventListener('transitionend', () => {
@@ -1147,7 +1164,7 @@ body.dark-mode a.info-button svg circle:last-child {
     if (e.target === overlay) closePopup();
   });
 
-  // Add event listeners to all images with class .popup-img
+  // Initialize popup on images with class 'popup-img'
   function initPopupImages() {
     document.querySelectorAll('img.popup-img').forEach(img => {
       img.style.cursor = 'pointer';
