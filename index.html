@@ -257,8 +257,8 @@ color: rgba(255, 255, 255, 0.7);
 }
 
 @keyframes moonFadeSpinIn {
-  0%   { transform: rotate(-10deg) scale(0.95); opacity: 0; }
-  50%  { transform: rotate(0deg) scale(1.02); opacity: 0.5; }
+  0%   { transform: rotate(-15deg) scale(0.95); opacity: 0; }
+  50%  { transform: rotate(-5deg) scale(1.05); opacity: 0.5; }
   100% { transform: rotate(0deg) scale(1); opacity: 1; }
 }
 
@@ -272,19 +272,23 @@ color: rgba(255, 255, 255, 0.7);
   100% { transform: rotate(360deg); opacity: 1; }
 }
 
-.sun-rotate-fade-out {
+.theme-icon path {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.sun-rotate-fade-out path {
   animation: sunRotateFadeOut 0.6s ease forwards;
 }
 
-.moon-fade-spin-in {
+.moon-fade-spin-in path {
   animation: moonFadeSpinIn 0.6s ease forwards;
 }
 
-.moon-fade-out {
+.moon-fade-out path {
   animation: moonFadeOut 0.4s ease forwards;
 }
 
-.sun-fade-spin-in {
+.sun-fade-spin-in path {
   animation: sunFadeSpinIn 0.6s ease forwards;
 }
 
@@ -1009,7 +1013,7 @@ body.dark-mode a.info-button svg circle:last-child {
   <script>
   const themeToggle = document.getElementById("themeToggle");
   const themeIcon = document.getElementById("themeIcon");
-  const themePath = themeIcon.querySelector("path");
+  const path = themeIcon.querySelector("path");
 
   const sunPath = "M12 3v2m0 14v2m9-9h-2M5 12H3"
                 + "m15.364-6.364l-1.414 1.414"
@@ -1030,31 +1034,30 @@ body.dark-mode a.info-button svg circle:last-child {
 
     dark = !dark;
     document.body.classList.toggle("dark-mode", dark);
-    themeIcon.className = ""; // clear all animations
+
+    themeIcon.className = "theme-icon"; // reset
 
     if (dark) {
-      // Sun to Moon
       themeIcon.classList.add("sun-rotate-fade-out");
 
       setTimeout(() => {
-        themePath.setAttribute("d", moonPath);
-        themeIcon.className = "moon-fade-spin-in";
+        path.setAttribute("d", moonPath);
+        themeIcon.className = "theme-icon moon-fade-spin-in";
 
         setTimeout(() => {
-          themeIcon.className = "";
+          themeIcon.className = "theme-icon";
           isAnimating = false;
         }, 600);
       }, 600);
     } else {
-      // Moon to Sun
       themeIcon.classList.add("moon-fade-out");
 
       setTimeout(() => {
-        themePath.setAttribute("d", sunPath);
-        themeIcon.className = "sun-fade-spin-in";
+        path.setAttribute("d", sunPath);
+        themeIcon.className = "theme-icon sun-fade-spin-in";
 
         setTimeout(() => {
-          themeIcon.className = "";
+          themeIcon.className = "theme-icon";
           isAnimating = false;
         }, 600);
       }, 400);
