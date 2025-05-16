@@ -1114,6 +1114,38 @@ window.addEventListener('load', () => {
   });
 </script>
   <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const notification = document.querySelector('.notification');
+    let hideTimeout;
+
+    // Show the notification
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 500);
+
+    // Automatically hide after 3 seconds
+    hideTimeout = setTimeout(() => {
+      notification.classList.add('hide');
+    }, 3500);
+
+    // Swipe up detection
+    let startY = 0;
+    notification.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+    });
+
+    notification.addEventListener('touchmove', (e) => {
+      const currentY = e.touches[0].clientY;
+      const deltaY = startY - currentY;
+
+      if (deltaY > 30) { // User swiped up
+        notification.classList.add('hide');
+        clearTimeout(hideTimeout); // Prevent double hiding
+      }
+    });
+  });
+</script>
+  <script>
 window.addEventListener("orientationchange", () => {
   const cards = document.querySelectorAll('.card');
   const texts = document.querySelectorAll('.card h1, .card h2, .card h3, .card p');
