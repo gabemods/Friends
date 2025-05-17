@@ -624,23 +624,23 @@ body.dark-mode a.info-button svg circle:last-child {
 
 #resetGame, #closeGame {
   font-size: 18px;
-  background: rgba(255, 255, 255, 0.3); /* translucent white */
+  background: rgba(255, 255, 255, 0.0); /* translucent white */
   color: white;
   border: none;
   cursor: pointer;
-  padding: 5px 20px;
+  padding: 10px 20px;
   user-select: none;
-
   border-radius: 30px;           /* rounded corners */
   backdrop-filter: blur(8px);    /* blur background behind button */
   -webkit-backdrop-filter: blur(8px); /* Safari support */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* subtle shadow */
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: transform 1s ease, background 0.3s ease, color 0.3s ease;
+  transform: scale(1);
 }
 
 #resetGame:hover, #closeGame:hover {
-  background: rgba(255, 255, 255, 0.5);
-  color: black;
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
   </style>
 </head>
