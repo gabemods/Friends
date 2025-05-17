@@ -681,15 +681,15 @@ body.dark-mode a.info-button svg circle:last-child {
   user-select: none;
 }
 
-/* The popup image */
 #img-popup-overlay img {
   position: absolute;
   border-radius: 12px;
-  will-change: transform;
+  will-change: transform, border-radius;
   cursor: grab;
   user-select: none;
   max-width: none;
   transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  touch-action: none;
 }
 .popup-img {
   cursor: pointer;
@@ -1025,8 +1025,9 @@ overlay.style.cssText = `
 `;
 popupImg.style.cssText = `
   position: fixed; border-radius: 12px;
-  will-change: transform;
+  will-change: transform, border-radius;
   max-width: 90vw; max-height: 90vh;
+  touch-action: none;
 `;
 
 overlay.appendChild(popupImg);
@@ -1035,6 +1036,7 @@ document.body.appendChild(overlay);
 let originImg = null;
 let startX = 0, startY = 0;
 let isDragging = false;
+let dragScale = 1;
 
 function getTransforms(fromRect) {
   const scaleX = fromRect.width / popupImg.offsetWidth;
@@ -1049,6 +1051,7 @@ images.forEach(img => {
   img.addEventListener('click', () => {
     originImg = img;
     popupImg.src = img.src;
+    popupImg.style.borderRadius = getComputedStyle(img).borderRadius || '12px';
 
     popupImg.onload = () => {
       const rect = img.getBoundingClientRect();
@@ -1057,11 +1060,12 @@ images.forEach(img => {
 
       popupImg.style.transition = 'none';
       popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+      popupImg.style.borderRadius = getComputedStyle(img).borderRadius || '12px';
 
-      // Wait for DOM to update, then animate to center
       requestAnimationFrame(() => {
-        popupImg.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-        popupImg.style.transform = `translate(0, 0) scale(1, 1)`;
+        popupImg.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.35s ease';
+        popupImg.style.transform = `translate(0, 0) scale(1)`;
+        popupImg.style.borderRadius = '12px';
       });
     };
   });
@@ -1072,9 +1076,10 @@ function closePopup() {
   const rect = originImg.getBoundingClientRect();
   const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
-  popupImg.style.transition = 'transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
-  overlay.style.transition = 'background-color 0.25s ease';
+  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+  popupImg.style.borderRadius = '50%';
+  overlay.style.transition = 'background-color 0.25s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
   popupImg.addEventListener('transitionend', () => {
@@ -1083,6 +1088,7 @@ function closePopup() {
     popupImg.style.transition = '';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.style.borderRadius = '12px';
   }, { once: true });
 }
 
@@ -1103,10 +1109,14 @@ popupImg.addEventListener('pointermove', e => {
   const deltaY = e.clientY - startY;
 
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  const scale = 1 - Math.min(0.4, distance / window.innerHeight);
+  dragScale = 1 - Math.min(0.4, distance / window.innerHeight);
   popupImg.style.transition = 'none';
-  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
-  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
+
+  // Round the image more as it's dragged
+  const radius = 12 + (1 - dragScale) * 100;
+  popupImg.style.borderRadius = `${radius}px`;
 });
 
 popupImg.addEventListener('pointerup', e => {
@@ -1119,8 +1129,9 @@ popupImg.addEventListener('pointerup', e => {
   if (distance > 100) {
     closePopup();
   } else {
-    popupImg.style.transition = 'transform 0.25s ease';
+    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
+    popupImg.style.borderRadius = '12px';
     overlay.style.transition = 'background 0.25s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.addEventListener('transitionend', () => {
