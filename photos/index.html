@@ -1013,12 +1013,21 @@ images.forEach(img => {
 
 function closePopup() {
   if (!originImg) return;
+
   const rect = originImg.getBoundingClientRect();
-  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
+
+  // Freeze the popup image size to avoid layout shift
+  popupImg.style.width = `${popupImg.offsetWidth}px`;
+  popupImg.style.height = `${popupImg.offsetHeight}px`;
+
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
   popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-  popupImg.style.borderRadius = originalRadius;
+
+  // Instead of 50%, return to a consistent mild rounding
+  popupImg.style.borderRadius = '15px';
+
   overlay.style.transition = 'background-color 0.25s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
@@ -1028,7 +1037,9 @@ function closePopup() {
     popupImg.style.transition = '';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    popupImg.style.pointerEvents = 'none';
+    popupImg.style.borderRadius = '15px';
+    popupImg.style.width = '';
+    popupImg.style.height = '';
   }, { once: true });
 }
 
