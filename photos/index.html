@@ -829,10 +829,6 @@ body.dark-mode a.info-button svg circle:last-child {
     fixHeight();
     updateDots();
 
-    function openFullscreen(imgSrc) {
-      window.open(imgSrc, '_blank');
-    }
-
     cardImages.forEach(img => {
       img.addEventListener('mousedown', function() {
         this.classList.add('active');
