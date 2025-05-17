@@ -853,6 +853,9 @@ body.dark-mode a.info-button svg circle:last-child {
   const ctx = canvas.getContext("2d");
   const cursor = document.getElementById("iceCubeCursor");
 
+  let iceTexture = new Image();
+  iceTexture.src = "../assets/images/ice-texture.png";
+
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -871,42 +874,34 @@ body.dark-mode a.info-button svg circle:last-child {
     }
   }
 
-  function draw(e) {
-    if (!drawing) return;
+  function drawTexture(x, y) {
+    const size = 80; // Texture stamp size
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(iceTexture, x - size / 2, y - size / 2, size, size);
+    ctx.restore();
+  }
 
+  function draw(e) {
     const x = e.clientX || (e.touches && e.touches[0].clientX);
     const y = e.clientY || (e.touches && e.touches[0].clientY);
     if (!x || !y) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const drawX = x - rect.left;
-    const drawY = y - rect.top;
-    const radius = 30;
-
-    const gradient = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, radius);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
-    gradient.addColorStop(0.5, 'rgba(173, 216, 230, 0.5)');
-    gradient.addColorStop(1, 'rgba(173, 216, 230, 0)');
-
-    ctx.fillStyle = gradient;
-    ctx.shadowColor = 'rgba(173, 216, 230, 0.3)';
-    ctx.shadowBlur = 10;
-    ctx.beginPath();
-    ctx.arc(drawX, drawY, radius, 0, Math.PI * 2);
-    ctx.fill();
+    updateCursor(e);
+    drawTexture(x, y);
   }
 
-  // Mouse support
+  // Mouse
   canvas.addEventListener("mousedown", (e) => {
     drawing = true;
     cursor.style.display = "block";
-    updateCursor(e);
     draw(e);
   });
 
   canvas.addEventListener("mousemove", (e) => {
     if (drawing) draw(e);
-    if (drawing) updateCursor(e);
   });
 
   canvas.addEventListener("mouseup", () => {
@@ -914,26 +909,21 @@ body.dark-mode a.info-button svg circle:last-child {
     cursor.style.display = "none";
   });
 
-  canvas.addEventListener("mouseout", () => {
+  canvas.addEventListener("mouseleave", () => {
     drawing = false;
     cursor.style.display = "none";
   });
 
-  // Touch support
+  // Touch
   canvas.addEventListener("touchstart", (e) => {
     drawing = true;
-    const touch = e.touches[0];
     cursor.style.display = "block";
-    updateCursor(touch);
-    draw(touch);
+    draw(e);
     e.preventDefault();
   }, { passive: false });
 
   canvas.addEventListener("touchmove", (e) => {
-    if (!drawing) return;
-    const touch = e.touches[0];
-    updateCursor(touch);
-    draw(touch);
+    if (drawing) draw(e);
     e.preventDefault();
   }, { passive: false });
 
@@ -942,7 +932,7 @@ body.dark-mode a.info-button svg circle:last-child {
     cursor.style.display = "none";
   });
 
-  // Show game
+  // Logo click opens game
   document.getElementById("iceCubeLogo").addEventListener("click", () => {
     game.style.display = "block";
     requestAnimationFrame(() => {
@@ -950,12 +940,12 @@ body.dark-mode a.info-button svg circle:last-child {
     });
   });
 
-  // Reset canvas
+  // Reset button
   document.getElementById("resetGame").addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   });
 
-  // Close game
+  // Close button
   document.getElementById("closeGame").addEventListener("click", () => {
     game.classList.remove("active");
     setTimeout(() => {
