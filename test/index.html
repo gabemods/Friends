@@ -681,19 +681,29 @@ body.dark-mode a.info-button svg circle:last-child {
   user-select: none;
 }
 
-/* The popup image */
-#img-popup-overlay img {
-  position: absolute;
-  border-radius: 12px;
-  will-change: transform;
-  cursor: grab;
-  user-select: none;
-  max-width: none;
-  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
-}
-.popup-img {
-  cursor: pointer;
-}
+<style>
+  .img-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: background 0.3s ease;
+    touch-action: none;
+  }
+
+  .popup-img {
+    position: fixed;
+    border-radius: 12px;
+    max-width: 90vw;
+    max-height: 90vh;
+    will-change: transform, border-radius;
+    transition: border-radius 0.3s ease;
+    cursor: grab;
+  }
+</style>
   </style>
 </head>
 <body>
@@ -1166,6 +1176,7 @@ popupImg.addEventListener('pointerup', e => {
     img.addEventListener('click', () => {
       originImg = img;
       popupImg.src = img.src;
+      popupImg.style.borderRadius = '12px'; // reset
 
       popupImg.onload = () => {
         const rect = img.getBoundingClientRect();
@@ -1175,10 +1186,12 @@ popupImg.addEventListener('pointerup', e => {
 
         popupImg.style.transition = 'none';
         popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+        popupImg.style.borderRadius = '50%'; // start round
 
         requestAnimationFrame(() => {
-          popupImg.style.transition = 'transform 0.35s cubic-bezier(0.33, 1, 0.68, 1)';
+          popupImg.style.transition = 'transform 0.35s cubic-bezier(0.33, 1, 0.68, 1), border-radius 0.35s ease';
           popupImg.style.transform = `translate(0, 0) scale(1)`;
+          popupImg.style.borderRadius = '12px';
         });
       };
     });
@@ -1189,7 +1202,8 @@ popupImg.addEventListener('pointerup', e => {
     const rect = originImg.getBoundingClientRect();
     const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
-    popupImg.style.transition = 'transform 0.25s ease';
+    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+    popupImg.style.borderRadius = '50%';
     overlay.style.transition = 'background-color 0.25s ease';
     popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
     overlay.style.backgroundColor = 'rgba(0,0,0,0)';
@@ -1198,48 +1212,48 @@ popupImg.addEventListener('pointerup', e => {
       overlay.style.display = 'none';
       popupImg.style.transition = '';
       popupImg.style.transform = '';
+      popupImg.style.borderRadius = '12px';
       overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     }, { once: true });
   }
 
   function resetPopup() {
-    popupImg.style.transition = 'transform 0.25s ease';
+    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
+    popupImg.style.borderRadius = '12px';
     overlay.style.transition = 'background 0.25s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    popupImg.addEventListener('transitionend', () => {
-      popupImg.style.transition = '';
-    }, { once: true });
   }
 
-  function onDown(e) {
+  function onPointerDown(e) {
     isDragging = true;
     hasMoved = false;
-    const point = e.touches ? e.touches[0] : e;
-    startX = point.clientX;
-    startY = point.clientY;
+    startX = e.clientX;
+    startY = e.clientY;
+    popupImg.setPointerCapture(e.pointerId);
   }
 
-  function onMove(e) {
+  function onPointerMove(e) {
     if (!isDragging) return;
-    const point = e.touches ? e.touches[0] : e;
-    const dx = point.clientX - startX;
-    const dy = point.clientY - startY;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
     const dist = Math.sqrt(dx * dx + dy * dy);
     if (dist > 5) hasMoved = true;
 
     const scale = 1 - Math.min(0.4, dist / window.innerHeight);
     popupImg.style.transition = 'none';
     popupImg.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+    popupImg.style.borderRadius = '50%';
     overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
   }
 
-  function onUp(e) {
+  function onPointerUp(e) {
     if (!isDragging) return;
     isDragging = false;
-    const point = e.changedTouches ? e.changedTouches[0] : e;
-    const dx = point.clientX - startX;
-    const dy = point.clientY - startY;
+    popupImg.releasePointerCapture(e.pointerId);
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
     if (dist > 100) {
@@ -1249,16 +1263,10 @@ popupImg.addEventListener('pointerup', e => {
     }
   }
 
-  // Support both mouse and touch
-  popupImg.addEventListener('mousedown', onDown);
-  popupImg.addEventListener('mousemove', onMove);
-  popupImg.addEventListener('mouseup', onUp);
-  popupImg.addEventListener('mouseleave', onUp);
-
-  popupImg.addEventListener('touchstart', onDown, { passive: true });
-  popupImg.addEventListener('touchmove', onMove, { passive: false });
-  popupImg.addEventListener('touchend', onUp);
-  popupImg.addEventListener('touchcancel', onUp);
+  popupImg.addEventListener('pointerdown', onPointerDown);
+  popupImg.addEventListener('pointermove', onPointerMove);
+  popupImg.addEventListener('pointerup', onPointerUp);
+  popupImg.addEventListener('pointercancel', onPointerUp);
 
   overlay.addEventListener('click', e => {
     if (e.target === overlay && !hasMoved) closePopup();
