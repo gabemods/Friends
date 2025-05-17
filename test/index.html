@@ -1112,33 +1112,29 @@ images.forEach(img => {
   });
 });
 
-function closePopupWithAnimation() {
+function closePopup() {
   if (!originImg) return;
   const rect = originImg.getBoundingClientRect();
   const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
 
-  popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease';
+  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
   popupImg.style.borderRadius = originalRadius;
-  overlay.style.transition = 'background-color 0.3s ease';
+  overlay.style.transition = 'background-color 0.25s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
-  // Wait for end of transform
-  const cleanup = () => {
+  popupImg.addEventListener('transitionend', () => {
     overlay.style.display = 'none';
     popupImg.style.transform = '';
     popupImg.style.transition = '';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.style.pointerEvents = 'none';
-    popupImg.removeEventListener('transitionend', cleanup);
-  };
-
-  popupImg.addEventListener('transitionend', cleanup);
+  }, { once: true });
 }
 
 overlay.addEventListener('click', e => {
-  if (e.target === overlay) closePopupWithAnimation();
+  if (e.target === overlay) closePopup();
 });
 
 popupImg.addEventListener('pointerdown', e => {
@@ -1152,36 +1148,28 @@ popupImg.addEventListener('pointermove', e => {
   if (!isDragging) return;
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-  dragScale = 1 - Math.min(0.5, distance / window.innerHeight);
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  dragScale = 1 - Math.min(0.6, distance / (window.innerHeight / 1.5)); // quicker shrink
   popupImg.style.transition = 'none';
+
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
 
-  // Morph into a circle
-  const radiusProgress = Math.min(1, (1 - dragScale) * 2); // full morph at 0.5 scale
-  popupImg.style.borderRadius = `${radiusProgress * 50}%`;
+  // Animate to a perfect circle by increasing border-radius and using clip-path
+  const circleSize = `${Math.min(popupImg.clientWidth, popupImg.clientHeight) * dragScale}px`;
+  popupImg.style.borderRadius = '50%';
 });
 
 popupImg.addEventListener('pointerup', e => {
   if (!isDragging) return;
   isDragging = false;
-
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
   if (distance > 100) {
-    popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease';
-    popupImg.style.transform = `scale(0.3) translate(${deltaX}px, ${deltaY}px)`;
-    popupImg.style.borderRadius = `50%`;
-    overlay.style.transition = 'background-color 0.3s ease';
-    overlay.style.backgroundColor = 'rgba(0,0,0,0)';
-
-    popupImg.addEventListener('transitionend', () => {
-      closePopupWithAnimation();
-    }, { once: true });
+    closePopup();
   } else {
     popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
