@@ -643,9 +643,9 @@ body.dark-mode a.info-button svg circle:last-child {
   Please rotate your device to portrait mode for the best experience.
 </div>
   <div id="iceGame">
-    <img id="backgroundImage" src="assets/images/background.jpg" alt="Background" />
+    <img id="backgroundImage" src="../assets/images/IMG_0151.jpeg" alt="Background" />
     <canvas id="iceCanvas"></canvas>
-    <img id="iceCubeCursor" src="assets/images/IMG_0298.png" alt="ice cube cursor" />
+    <img id="iceCubeCursor" src="../assets/images/IMG_0298.png" alt="ice cube cursor" />
     <button id="resetGame">Reset</button>
     <button id="closeGame">Close</button>
   </div>
@@ -739,26 +739,6 @@ body.dark-mode a.info-button svg circle:last-child {
     window.addEventListener('resize', fixHeight);
     window.addEventListener('orientationchange', fixHeight);
     fixHeight();
-  </script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const profileImages = document.querySelectorAll('.card img');
-      const overlay = document.getElementById('fullscreenOverlay');
-      const fullscreenImg = document.getElementById('fullscreenImage');
-
-      profileImages.forEach(img => {
-        img.addEventListener('click', (e) => {
-          e.stopPropagation();
-          window.open(img.src, '_blank');
-        });
-      });
-
-      window.hideFullscreen = function () {
-        overlay.style.display = 'none';
-        fullscreenImg.style.transform = 'scale(1)';
-      }
-    });
   </script>
   <script>
   const themeToggle = document.getElementById("themeToggle");
