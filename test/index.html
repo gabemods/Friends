@@ -68,7 +68,7 @@
       flex-direction: column;
     }
 
-.page:nth-child(4) .card {
+.page:nth-child(5) .card {
     background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
     }
 
@@ -667,28 +667,33 @@ body.dark-mode a.info-button svg circle:last-child {
 .card p {
   animation: fadeBounceIn 0.6s ease forwards;
 }
-  
-  .img-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: background 0.3s ease;
-    touch-action: none;
-  }
+    /* Popup overlay */
+#img-popup-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
 
-  .popup-img {
-    position: fixed;
-    border-radius: 12px;
-    max-width: 90vw;
-    max-height: 90vh;
-    will-change: transform, border-radius;
-    transition: border-radius 0.3s ease;
-    cursor: grab;
-  }
+/* The popup image */
+#img-popup-overlay img {
+  position: absolute;
+  border-radius: 12px;
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  max-width: none;
+  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+.popup-img {
+  cursor: pointer;
+}
   </style>
 </head>
 <body>
@@ -753,7 +758,7 @@ body.dark-mode a.info-button svg circle:last-child {
   <div class="scroll-container" id="cardScroller">
     <div class="page">
       <div class="card">
-        <img src="../assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumonty" />
+        <img src="assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumonty" />
         <h1>Ollie Beaumont</h1>
         <p>I work at McDonalds.</p>
          <p class="wave-text">
@@ -1109,154 +1114,20 @@ popupImg.addEventListener('pointerup', e => {
   isDragging = false;
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-<style>
-  .img-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    transition: background 0.3s ease;
-    touch-action: none;
-  }
-  .popup-img {
-    position: fixed;
-    border-radius: 12px;
-    max-width: 90vw;
-    max-height: 90vh;
-    will-change: transform;
-    cursor: grab;
-  }
-</style>
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-<script>
-(function () {
-  const images = document.querySelectorAll('img');
-  const overlay = document.createElement('div');
-  overlay.className = 'img-overlay';
-
-  const popupImg = document.createElement('img');
-  popupImg.className = 'popup-img';
-
-  overlay.appendChild(popupImg);
-  document.body.appendChild(overlay);
-
-  let originImg = null;
-  let startX = 0, startY = 0;
-  let isDragging = false;
-  let hasMoved = false;
-
-  function getTransforms(fromRect) {
-    const scaleX = fromRect.width / popupImg.offsetWidth;
-    const scaleY = fromRect.height / popupImg.offsetHeight;
-    const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
-    const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
-    return { scaleX, scaleY, translateX, translateY };
-  }
-
-  images.forEach(img => {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      originImg = img;
-      popupImg.src = img.src;
-      popupImg.style.borderRadius = '12px'; // reset
-
-      popupImg.onload = () => {
-        const rect = img.getBoundingClientRect();
-        overlay.style.display = 'flex';
-
-        const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
-
-        popupImg.style.transition = 'none';
-        popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-        popupImg.style.borderRadius = '50%'; // start round
-
-        requestAnimationFrame(() => {
-          popupImg.style.transition = 'transform 0.35s cubic-bezier(0.33, 1, 0.68, 1), border-radius 0.35s ease';
-          popupImg.style.transform = `translate(0, 0) scale(1)`;
-          popupImg.style.borderRadius = '12px';
-        });
-      };
-    });
-  });
-
-  function closePopup() {
-    if (!originImg) return;
-    const rect = originImg.getBoundingClientRect();
-    const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
-
-    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
-    popupImg.style.borderRadius = '50%';
-    overlay.style.transition = 'background-color 0.25s ease';
-    popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-    overlay.style.backgroundColor = 'rgba(0,0,0,0)';
-
-    popupImg.addEventListener('transitionend', () => {
-      overlay.style.display = 'none';
-      popupImg.style.transition = '';
-      popupImg.style.transform = '';
-      popupImg.style.borderRadius = '12px';
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    }, { once: true });
-  }
-
-  function resetPopup() {
-    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+  if (distance > 100) {
+    closePopup();
+  } else {
+    popupImg.style.transition = 'transform 0.25s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
-    popupImg.style.borderRadius = '12px';
     overlay.style.transition = 'background 0.25s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.addEventListener('transitionend', () => {
+      popupImg.style.transition = '';
+    }, { once: true });
   }
-
-  function onPointerDown(e) {
-    isDragging = true;
-    hasMoved = false;
-    startX = e.clientX;
-    startY = e.clientY;
-    popupImg.setPointerCapture(e.pointerId);
-  }
-
-  function onPointerMove(e) {
-    if (!isDragging) return;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    if (dist > 5) hasMoved = true;
-
-    const scale = 1 - Math.min(0.4, dist / window.innerHeight);
-    popupImg.style.transition = 'none';
-    popupImg.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
-    popupImg.style.borderRadius = '50%';
-    overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
-  }
-
-  function onPointerUp(e) {
-    if (!isDragging) return;
-    isDragging = false;
-    popupImg.releasePointerCapture(e.pointerId);
-
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist > 100) {
-      closePopup();
-    } else {
-      resetPopup();
-    }
-  }
-
-  popupImg.addEventListener('pointerdown', onPointerDown);
-  popupImg.addEventListener('pointermove', onPointerMove);
-  popupImg.addEventListener('pointerup', onPointerUp);
-  popupImg.addEventListener('pointercancel', onPointerUp);
-
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay && !hasMoved) closePopup();
-  });
-})();
+});
 </script>
   <script>
   const themeToggle = document.getElementById("themeToggle");
