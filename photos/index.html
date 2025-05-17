@@ -801,26 +801,6 @@ body.dark-mode a.info-button svg circle:last-child {
     </div>
   </div>
   <script>
-  const spacer = document.querySelector('.photo-spacer');
-
-  let ticking = false;
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        if (window.scrollY > 10) {
-          spacer.classList.add('shrink');
-        } else {
-          spacer.classList.remove('shrink');
-        }
-        ticking = false;
-      });
-
-      ticking = true;
-    }
-  });
-</script>
-  <script>
     const container = document.querySelector('.scroll-container');
     const dots = document.querySelectorAll('.dot');
     const cardImages = document.querySelectorAll('.card img, .photo-grid img');
@@ -1176,6 +1156,20 @@ window.addEventListener("orientationchange", () => {
     text.style.animationDelay = `${0.1 + index * 0.05}s`; // Slight stagger
   });
 });
+</script>
+<script>
+  const spacer = document.querySelector('.photo-spacer');
+  const card = document.querySelector('.card');
+
+  if (card && spacer) {
+    card.addEventListener('scroll', () => {
+      if (card.scrollTop > 10) {
+        spacer.classList.add('shrink');
+      } else {
+        spacer.classList.remove('shrink');
+      }
+    });
+  }
 </script>
 </body>
 </html>
