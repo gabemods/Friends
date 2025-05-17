@@ -565,90 +565,91 @@ body.dark-mode a.info-button svg circle:last-child {
   fill: none;
 }
     #iceCubeLogo {
-      cursor: pointer;
-      width: 100px;
-      margin: 30px;
-    }
+  cursor: pointer;
+  width: 100px;
+  margin: 30px;
+}
 
-    #iceGame {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: #000;
-      z-index: 19000;
-      overflow: hidden;
-      display: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
+#iceGame {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: #000;
+  z-index: 19000;
+  overflow: hidden;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-    #iceGame.active {
-      display: block;
-      opacity: 1;
-    }
+#iceGame.active {
+  display: block;
+  opacity: 1;
+}
 
-    #backgroundImage {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-    }
+#backgroundImage {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
 
-    #iceCanvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-      filter: blur(0.3px);
-    }
+#iceCanvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
 
-    #iceCubeCursor {
-      position: absolute;
-      width: 50px;
-      height: 50px;
-      pointer-events: none;
-      z-index: 3;
-      display: none;
-      transform: translate(-50%, -50%);
-    }
+#iceCubeCursor {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  z-index: 3;
+  display: none;
+  transform: translate(-50%, -50%);
+}
 
-    #resetGame, #closeGame {
-      position: fixed;
-      bottom: 20px;
-      font-size: 18px;
-      background: none;
-      color: grey;
-      border: none;
-      cursor: pointer;
-      z-index: 20000;
-      padding: 10px;
-      user-select: none;
-    }
+#buttons {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  z-index: 20000;
+}
 
-    #resetGame {
-      left: 20px;
-    }
-
-    #closeGame {
-      right: 20px;
-    }
- 
+#resetGame, #closeGame {
+  font-size: 18px;
+  background: none;
+  color: grey;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  user-select: none;
+}
   </style>
 </head>
 <body>
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
 </div>
-  <div id="iceGame">
-    <img id="backgroundImage" src="../assets/images/IMG_0151.jpeg" alt="Background" />
-    <canvas id="iceCanvas"></canvas>
-    <img id="iceCubeCursor" src="../assets/images/IMG_0298.png" alt="ice cube cursor" />
+  <img id="iceCubeLogo" src="../assets/images/IMG_0298.png" alt="ice cube" />
+
+<div id="iceGame">
+  <img id="backgroundImage" src="../assets/images/IMG_0151.jpeg" alt="background" />
+  <canvas id="iceCanvas"></canvas>
+  <img id="iceCubeCursor" src="../assets/images/IMG_0298.png" alt="ice cube" />
+  <div id="buttons">
     <button id="resetGame">Reset</button>
     <button id="closeGame">Close</button>
   </div>
+</div>
   <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 10px; padding-left: 15px;">
@@ -853,8 +854,8 @@ body.dark-mode a.info-button svg circle:last-child {
   const ctx = canvas.getContext("2d");
   const cursor = document.getElementById("iceCubeCursor");
 
-  let iceTexture = new Image();
-  iceTexture.src = "../assets/images/ice-texture.PNG";
+  const iceTexture = new Image();
+  iceTexture.src = "../assets/images/cracked-ice.png"; // MAKE SURE filename and path are EXACT
 
   function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -865,17 +866,26 @@ body.dark-mode a.info-button svg circle:last-child {
 
   let drawing = false;
 
-  function updateCursor(e) {
-    const x = e.clientX || (e.touches && e.touches[0].clientX);
-    const y = e.clientY || (e.touches && e.touches[0].clientY);
-    if (x && y) {
-      cursor.style.left = x + "px";
-      cursor.style.top = y + "px";
+  function getPosition(e) {
+    if (e.touches && e.touches.length > 0) {
+      return {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY
+      };
     }
+    return {
+      x: e.clientX,
+      y: e.clientY
+    };
+  }
+
+  function updateCursor(pos) {
+    cursor.style.left = pos.x + "px";
+    cursor.style.top = pos.y + "px";
   }
 
   function drawTexture(x, y) {
-    const size = 80; // Texture stamp size
+    const size = 80;
     ctx.save();
     ctx.beginPath();
     ctx.arc(x, y, size / 2, 0, Math.PI * 2);
@@ -885,22 +895,18 @@ body.dark-mode a.info-button svg circle:last-child {
   }
 
   function draw(e) {
-    const x = e.clientX || (e.touches && e.touches[0].clientX);
-    const y = e.clientY || (e.touches && e.touches[0].clientY);
-    if (!x || !y) return;
-
-    updateCursor(e);
+    const { x, y } = getPosition(e);
+    updateCursor({ x, y });
     drawTexture(x, y);
   }
 
-  // Mouse
-  canvas.addEventListener("mousedown", (e) => {
+  canvas.addEventListener("mousedown", e => {
     drawing = true;
     cursor.style.display = "block";
     draw(e);
   });
 
-  canvas.addEventListener("mousemove", (e) => {
+  canvas.addEventListener("mousemove", e => {
     if (drawing) draw(e);
   });
 
@@ -914,15 +920,14 @@ body.dark-mode a.info-button svg circle:last-child {
     cursor.style.display = "none";
   });
 
-  // Touch
-  canvas.addEventListener("touchstart", (e) => {
+  canvas.addEventListener("touchstart", e => {
     drawing = true;
     cursor.style.display = "block";
     draw(e);
     e.preventDefault();
   }, { passive: false });
 
-  canvas.addEventListener("touchmove", (e) => {
+  canvas.addEventListener("touchmove", e => {
     if (drawing) draw(e);
     e.preventDefault();
   }, { passive: false });
@@ -932,20 +937,15 @@ body.dark-mode a.info-button svg circle:last-child {
     cursor.style.display = "none";
   });
 
-  // Logo click opens game
   document.getElementById("iceCubeLogo").addEventListener("click", () => {
     game.style.display = "block";
-    requestAnimationFrame(() => {
-      game.classList.add("active");
-    });
+    requestAnimationFrame(() => game.classList.add("active"));
   });
 
-  // Reset button
   document.getElementById("resetGame").addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   });
 
-  // Close button
   document.getElementById("closeGame").addEventListener("click", () => {
     game.classList.remove("active");
     setTimeout(() => {
