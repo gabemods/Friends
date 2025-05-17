@@ -548,6 +548,14 @@ body.dark-mode a.info-button svg circle:last-child {
 .popup-img {
   cursor: pointer;
 }
+    .photo-spacer {
+  grid-column: 1 / -1;
+  height: 100px;
+  transition: height 0.6s ease;
+}
+.photo-spacer.shrink {
+  height: 15px; /* normal gap */
+}
   </style>
 </head>
 <body>
@@ -630,6 +638,7 @@ body.dark-mode a.info-button svg circle:last-child {
           <img src="../assets/images/gabriel/20240701_131845.jpg" class="popup-img" alt="Gabriel Photo 2" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/gabriel/20240702_112241.jpg" class="popup-img" alt="Gabriel Photo 3" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/gabriel/20240701_131831.jpg" class="popup-img" alt="Gabriel Photo 4" onclick="openFullscreen(this.src)" />
+          <div class="photo-spacer"></div>
           <img src="../assets/images/gabriel/20240626_132919_Original.jpeg" class="popup-img" alt="Gabriel Photo 5" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/gabriel/20240626_133002_Original.jpeg" class="popup-img" alt="Gabriel Photo 6" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/gabriel/20230628_133100_Original.jpeg" class="popup-img" alt="Gabriel Photo 7" onclick="openFullscreen(this.src)" />
@@ -656,6 +665,7 @@ body.dark-mode a.info-button svg circle:last-child {
         <div class="photo-grid">
           <img src="../assets/images/josh/IMG_0309.jpeg" class="popup-img" alt="Josh Photo 1" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/josh/Snapchat-1225027816_Original.jpeg" class="popup-img" alt="Josh Photo 2" onclick="openFullscreen(this.src)" />
+          <div class="photo-spacer"></div>
           <img src="../assets/images/josh/Snapchat-1942572315_Original.png" class="popup-img" alt="Josh Photo 3" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/josh/20230522_154108_Original.jpeg" class="popup-img" alt="Josh Photo 4" onclick="openFullscreen(this.src)" />
           <img src="../assets/images/josh/IMG_7714.jpeg" class="popup-img" alt="Josh Photo 5" onclick="openFullscreen(this.src)" />
@@ -838,6 +848,17 @@ body.dark-mode a.info-button svg circle:last-child {
       // Get the horizontal position of your card relative to the container
       const leftOffset = defaultPage.offsetLeft;
       scroller.scrollLeft = leftOffset;
+    }
+  });
+</script>
+  <script>
+  const spacer = document.querySelector('.photo-spacer');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      spacer.classList.add('shrink');
+    } else {
+      spacer.classList.remove('shrink');
     }
   });
 </script>
