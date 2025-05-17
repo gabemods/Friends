@@ -758,7 +758,7 @@ body.dark-mode a.info-button svg circle:last-child {
   <div class="scroll-container" id="cardScroller">
     <div class="page">
       <div class="card">
-        <img src="../assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumonty" />
+        <img src="assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumonty" />
         <h1>Ollie Beaumont</h1>
         <p>I work at McDonalds.</p>
          <p class="wave-text">
@@ -853,12 +853,12 @@ body.dark-mode a.info-button svg circle:last-child {
     <circle cx="12" cy="7" r="1" fill="white" />
   </svg>
 </a>
-        <img src="../assets/images/gabriel/20250509_223705.jpg" class="popup-img" alt="Gabriel" />
+        <img src="assets/images/gabriel/20250509_223705.jpg" class="popup-img" alt="Gabriel" />
         <h1>
   Gabriel
   <a href="ice/index.html" id="ice-link">
     <img src="assets/images/IMG_0298.png" alt="Ice Cube" 
-         style="vertical-align: middle; margin-left: 5px; width: 25px; height: auto; margin-top: 3px;" 
+         style="vertical-align: middle; margin-left: 5px; width: 25px; height: auto; margin-top: 3px;"
          onclick="window.location='ice/index.html'; return false;">
   </a>
 </h1>
@@ -1087,7 +1087,6 @@ images.forEach(img => {
     originImg = img;
     popupImg.src = img.src;
 
-    // Keep original border-radius
     originalRadius = getComputedStyle(img).borderRadius || '12px';
     popupImg.style.borderRadius = originalRadius;
 
@@ -1095,7 +1094,6 @@ images.forEach(img => {
       const rect = img.getBoundingClientRect();
       overlay.style.display = 'flex';
 
-      // Ensure DOM renders
       requestAnimationFrame(() => {
         const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
 
@@ -1114,29 +1112,33 @@ images.forEach(img => {
   });
 });
 
-function closePopup() {
+function closePopupWithAnimation() {
   if (!originImg) return;
   const rect = originImg.getBoundingClientRect();
   const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
 
-  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+  popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
   popupImg.style.borderRadius = originalRadius;
-  overlay.style.transition = 'background-color 0.25s ease';
+  overlay.style.transition = 'background-color 0.3s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
-  popupImg.addEventListener('transitionend', () => {
+  // Wait for end of transform
+  const cleanup = () => {
     overlay.style.display = 'none';
     popupImg.style.transform = '';
     popupImg.style.transition = '';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.style.pointerEvents = 'none';
-  }, { once: true });
+    popupImg.removeEventListener('transitionend', cleanup);
+  };
+
+  popupImg.addEventListener('transitionend', cleanup);
 }
 
 overlay.addEventListener('click', e => {
-  if (e.target === overlay) closePopup();
+  if (e.target === overlay) closePopupWithAnimation();
 });
 
 popupImg.addEventListener('pointerdown', e => {
@@ -1150,29 +1152,36 @@ popupImg.addEventListener('pointermove', e => {
   if (!isDragging) return;
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  dragScale = 1 - Math.min(0.4, distance / window.innerHeight);
+
+  dragScale = 1 - Math.min(0.5, distance / window.innerHeight);
   popupImg.style.transition = 'none';
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
 
-  // Round progressively
-  if (originalRadius !== '50%') {
-    const radius = 12 + (1 - dragScale) * 100;
-    popupImg.style.borderRadius = `${radius}px`;
-  }
+  // Morph into a circle
+  const radiusProgress = Math.min(1, (1 - dragScale) * 2); // full morph at 0.5 scale
+  popupImg.style.borderRadius = `${radiusProgress * 50}%`;
 });
 
 popupImg.addEventListener('pointerup', e => {
   if (!isDragging) return;
   isDragging = false;
+
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
   if (distance > 100) {
-    closePopup();
+    popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease';
+    popupImg.style.transform = `scale(0.3) translate(${deltaX}px, ${deltaY}px)`;
+    popupImg.style.borderRadius = `50%`;
+    overlay.style.transition = 'background-color 0.3s ease';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0)';
+
+    popupImg.addEventListener('transitionend', () => {
+      closePopupWithAnimation();
+    }, { once: true });
   } else {
     popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
