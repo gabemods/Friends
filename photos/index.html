@@ -927,9 +927,9 @@ overlay.style.cssText = `
 
 popupImg.style.cssText = `
   position: fixed;
-  will-change: transform, border-radius;
   max-width: 90vw;
   max-height: 90vh;
+  will-change: transform, border-radius;
   touch-action: none;
   pointer-events: none;
 `;
@@ -983,8 +983,6 @@ images.forEach(img => {
   img.addEventListener('click', () => {
     originImg = img;
     popupImg.src = img.src;
-
-    // Keep original border-radius
     originalRadius = getComputedStyle(img).borderRadius || '12px';
     popupImg.style.borderRadius = originalRadius;
 
@@ -992,10 +990,8 @@ images.forEach(img => {
       const rect = img.getBoundingClientRect();
       overlay.style.display = 'flex';
 
-      // Ensure DOM renders
       requestAnimationFrame(() => {
         const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
-
         popupImg.style.transition = 'none';
         popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
         popupImg.style.borderRadius = originalRadius;
@@ -1015,18 +1011,14 @@ function closePopup() {
   if (!originImg) return;
 
   const rect = originImg.getBoundingClientRect();
-
-  // Freeze the popup image size to avoid layout shift
   popupImg.style.width = `${popupImg.offsetWidth}px`;
   popupImg.style.height = `${popupImg.offsetHeight}px`;
 
-  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
 
   popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-
-  // Instead of 50%, return to a consistent mild rounding
-  popupImg.style.borderRadius = '15px';
+  popupImg.style.borderRadius = originalRadius;
 
   overlay.style.transition = 'background-color 0.25s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
@@ -1037,9 +1029,10 @@ function closePopup() {
     popupImg.style.transition = '';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    popupImg.style.borderRadius = '15px';
+    popupImg.style.borderRadius = originalRadius;
     popupImg.style.width = '';
     popupImg.style.height = '';
+    popupImg.style.pointerEvents = 'none';
   }, { once: true });
 }
 
@@ -1065,11 +1058,10 @@ popupImg.addEventListener('pointermove', e => {
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
 
-  // Round progressively
   if (originalRadius !== '50%') {
-  const radius = Math.min(27, 15 + (1 - dragScale) * 50); // max 27%
-  popupImg.style.borderRadius = `${radius}%`;
-}
+    const radius = Math.min(27, 15 + (1 - dragScale) * 50);
+    popupImg.style.borderRadius = `${radius}%`;
+  }
 });
 
 popupImg.addEventListener('pointerup', e => {
