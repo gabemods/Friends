@@ -1055,17 +1055,25 @@ images.forEach(img => {
 
     popupImg.onload = () => {
       const rect = img.getBoundingClientRect();
+
+      // Lock dimensions to avoid ratio stutter
+      popupImg.style.width = rect.width + 'px';
+      popupImg.style.height = rect.height + 'px';
+
       overlay.style.display = 'flex';
       const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
       popupImg.style.transition = 'none';
       popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-      popupImg.style.borderRadius = getComputedStyle(img).borderRadius || '12px';
 
       requestAnimationFrame(() => {
-        popupImg.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.35s ease';
+        popupImg.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-radius 0.35s ease, width 0.35s, height 0.35s';
         popupImg.style.transform = `translate(0, 0) scale(1)`;
         popupImg.style.borderRadius = '12px';
+
+        // Clear dimensions after expand
+        popupImg.style.width = '';
+        popupImg.style.height = '';
       });
     };
   });
@@ -1074,11 +1082,16 @@ images.forEach(img => {
 function closePopup() {
   if (!originImg) return;
   const rect = originImg.getBoundingClientRect();
-  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
 
+  // Lock size before animating back
+  popupImg.style.width = popupImg.offsetWidth + 'px';
+  popupImg.style.height = popupImg.offsetHeight + 'px';
+
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect);
   popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
   popupImg.style.borderRadius = '50%';
+
   overlay.style.transition = 'background-color 0.25s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
@@ -1089,6 +1102,8 @@ function closePopup() {
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.style.borderRadius = '12px';
+    popupImg.style.width = '';
+    popupImg.style.height = '';
   }, { once: true });
 }
 
@@ -1114,7 +1129,6 @@ popupImg.addEventListener('pointermove', e => {
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
 
-  // Round the image more as it's dragged
   const radius = 12 + (1 - dragScale) * 100;
   popupImg.style.borderRadius = `${radius}px`;
 });
