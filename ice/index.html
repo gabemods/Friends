@@ -564,12 +564,91 @@ body.dark-mode a.info-button svg circle:last-child {
   stroke: grey;
   fill: none;
 }
+    #iceCubeLogo {
+      cursor: pointer;
+      width: 100px;
+      margin: 30px;
+    }
+
+    #iceGame {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #000;
+      z-index: 9999;
+      overflow: hidden;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #iceGame.active {
+      display: block;
+      opacity: 1;
+    }
+
+    #backgroundImage {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    #iceCanvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      pointer-events: none;
+      filter: blur(0.3px);
+    }
+
+    #iceCubeCursor {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      pointer-events: none;
+      z-index: 3;
+      display: none;
+      transform: translate(-50%, -50%);
+    }
+
+    #resetGame, #closeGame {
+      position: fixed;
+      bottom: 20px;
+      font-size: 18px;
+      background: none;
+      color: grey;
+      border: none;
+      cursor: pointer;
+      z-index: 10000;
+      padding: 10px;
+      user-select: none;
+    }
+
+    #resetGame {
+      left: 20px;
+    }
+
+    #closeGame {
+      right: 20px;
+    }
+ 
   </style>
 </head>
 <body>
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
 </div>
+  <div id="iceGame">
+    <img id="backgroundImage" src="assets/images/background.jpg" alt="Background" />
+    <canvas id="iceCanvas"></canvas>
+    <img id="iceCubeCursor" src="assets/images/IMG_0298.png" alt="ice cube cursor" />
+    <button id="resetGame">Reset</button>
+    <button id="closeGame">Close</button>
+  </div>
   <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 10px; padding-left: 15px;">
@@ -625,7 +704,7 @@ body.dark-mode a.info-button svg circle:last-child {
     <circle cx="12" cy="7" r="1" fill="white" />
   </svg>
 </a>
-    <img src="../assets/images/IMG_0298.png" alt="Gabriel" />
+    <img src="../assets/images/IMG_0298.png" alt="ice cube" id="iceCubeLogo" />
         <h1>Ice Cube 🧊</h1> 
         <p> This page is based of my favourite emoji, the Ice cube from One UI 5 <strong style="background: linear-gradient(90deg, #00F6FF, #00FCFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"> More coming soon! </</p> </div> </div> <div  </div>
   </div>
@@ -788,6 +867,90 @@ body.dark-mode a.info-button svg circle:last-child {
     setTimeout(() => themeIcon.classList.remove("spin"), 500);
   });
 </script>
+  <script>
+    const game = document.getElementById("iceGame");
+    const canvas = document.getElementById("iceCanvas");
+    const ctx = canvas.getContext("2d");
+    const cursor = document.getElementById("iceCubeCursor");
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    let drawing = false;
+
+    function updateCursor(e) {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+    }
+
+    canvas.addEventListener("mousedown", (e) => {
+      drawing = true;
+      cursor.style.display = "block";
+      updateCursor(e);
+      draw(e);
+    });
+
+    canvas.addEventListener("mousemove", (e) => {
+      if (drawing) draw(e);
+      if (drawing) updateCursor(e);
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      drawing = false;
+      cursor.style.display = "none";
+    });
+
+    canvas.addEventListener("mouseout", () => {
+      drawing = false;
+      cursor.style.display = "none";
+    });
+
+    function draw(e) {
+      if (!drawing) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const radius = 30;
+
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+      gradient.addColorStop(0.5, 'rgba(173, 216, 230, 0.5)');
+      gradient.addColorStop(1, 'rgba(173, 216, 230, 0)');
+
+      ctx.fillStyle = gradient;
+      ctx.shadowColor = 'rgba(173, 216, 230, 0.3)';
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Show game
+    document.getElementById("iceCubeLogo").addEventListener("click", () => {
+      game.style.display = "block";
+      requestAnimationFrame(() => {
+        game.classList.add("active");
+      });
+    });
+
+    // Reset canvas
+    document.getElementById("resetGame").addEventListener("click", () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Close game
+    document.getElementById("closeGame").addEventListener("click", () => {
+      game.classList.remove("active");
+      setTimeout(() => {
+        game.style.display = "none";
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // optional: clear when closing
+      }, 300);
+    });
+  </script>
   <script>
   window.addEventListener("load", () => {
     const overlay = document.getElementById("popupOverlay");
