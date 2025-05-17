@@ -1158,10 +1158,10 @@ window.addEventListener("orientationchange", () => {
 });
 </script>
 <script>
-  const spacer = document.querySelector('.photo-spacer');
-  const card = document.querySelector('.card');
+  document.querySelectorAll('.card').forEach(card => {
+    const spacer = card.querySelector('.photo-spacer');
+    if (!spacer) return;
 
-  if (card && spacer) {
     card.addEventListener('scroll', () => {
       if (card.scrollTop > 10) {
         spacer.classList.add('shrink');
@@ -1169,7 +1169,7 @@ window.addEventListener("orientationchange", () => {
         spacer.classList.remove('shrink');
       }
     });
-  }
+  });
 </script>
 </body>
 </html>
