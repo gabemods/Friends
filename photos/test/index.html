@@ -514,21 +514,1176 @@ body.fade-in {
     // Wait for the fade-out to complete
     setTimeout(() => {
       // Toggle theme
-      document.body.classList.toggle('dark-mode');
-      themeIcon.classList.toggle('spin');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Friends | Photos</title>
 
-      // Trigger fade-in
-      requestAnimationFrame(() => {
-        document.body.classList.remove('fade');
+  <meta name="description" content="A collection of friends' photos.">
+  <meta name="keywords" content="friends, photos">
+  <meta name="author" content="Gabe Mods">
+  <meta property="og:title" content="Photos">
+  <meta property="og:description" content="A collection of friends' photos.">
+  <meta property="og:image" content="URL_TO_YOUR_DEFAULT_IMAGE">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="apple-touch-icon" sizes="152x152" href"../assets/favicon/apple-icon-152x152.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-icon-180x180.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/android-icon-192x192.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="../assets/favicon/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="../assets/favicon/favicon-16x16.png" />
+<link rel="manifest" href="../assets/favicon/manifest.json" />
+<meta name="msapplication-TileColor" content="#ffffff" />
+<meta name="msapplication-TileImage" content="../assets/favicon/ms-icon-144x144.png" />
+<meta name="theme-color" content="#ffffff"/>
+
+  <style>
+    @font-face {
+  font-family: 'OneUISans';
+  src: url('../assets/fonts/OneUISans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+    }
+    h1 {
+      font-weight: 500;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #e0f7fa, #80deea, #26c6da);
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: 'OneUISans', sans-serif;
+      color: white;
+    }
+    
+    .scroll-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      width: 100%;
+      height: 100dvh;
+    }
+
+   .page {
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.page:nth-child(5) .card {
+    background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
+}
+@keyframes cardBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}
+.card {
+  background: rgba(211, 211, 211, 0.3);
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: 285px;
+  max-height: 59vh; /* Set a max height */
+  overflow-y: auto;  /* Allow vertical scroll */
+  padding-top: 1px;
+  padding-bottom: 0px;
+  margin-top: -100px;
+  opacity: 0;
+}
+    .card.animate-in {
+  animation: cardBounceIn 0.6s ease forwards;
+}
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+.card::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.3);
+  border-radius: 3px;
+}
+.card:nth-child(3) {
+  max-height: 110vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+    .card h1 {
+      padding-left: 20px; /* Added left padding */
+      margin-top: 1px; /* Reduced top margin */
+      margin-bottom: -25px; /* Reduced bottom margin */
+      font-weight: 900;
+    }
+
+    .card > img { /* Target only the direct img child of .card (the logo) */
+      width: 60px;
+      height: 60px;
+      border-radius: 27%;
+      object-fit: cover;
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+      margin-left: 20px; /* Move the logo to the left */
+      margin-right: auto; /* Allows the card to determine right margin */
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 10px;
+      margin-bottom: -10px;
+      padding: 20px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* Ensure images are perfect squares */
+      border-radius: 15px;
+      object-fit: cover;
+    }
+
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    @keyframes buttonExpand {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nav-button-animate {
+  animation: buttonExpand 1.0s ease;
+}
+   body.dark-mode {
+  background: linear-gradient(
+    to right,
+    #000000 0%,
+    #000033 14%,
+    #000066 28%,
+    #000099 42%,
+    #0000CC 57%,
+    #0033CC 71%,
+    #0066CC 85%,
+    #0099FF 100%
+  );
+  background-size: 200% 100%; /* Makes the gradient smoother on wide screens */
+  background-attachment: fixed; /* Optional: keeps the gradient still on scroll */
+  color: white;
+}
+
+body.dark-mode .card {
+  background: rgba(50, 50, 50, 0.4);
+  box-shadow: 0 0 25px rgba(255,255, 255, 0.3);
+}
+
+body.dark-mode .dot {
+  background-color: white;
+}
+
+body.dark-mode .copyright {
+  color: rgba(255, 255, 255, 0.7);
+} 
+@keyframes rotateFadeOut {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  100% { transform: rotate(180deg); opacity: 0; }
+}
+
+@keyframes moonFadeInTilt {
+  0%   { transform: rotate(-15deg); opacity: 0; }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes sunFadeInSpin {
+  0%   { opacity: 0; transform: rotate(180deg); }
+  100% { opacity: 1; transform: rotate(0deg); }
+}
+
+.sun-rotate-fade {
+  animation: rotateFadeOut 0.6s ease forwards;
+}
+
+.moon-fade-in-tilt {
+  animation: moonFadeInTilt 0.5s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.sun-fade-in-spin {
+  animation: sunFadeInSpin 0.6s ease forwards;
+}
+
+/* colour inheritance */
+#themeToggle {
+  color: grey;
+}
+body.dark-mode #themeToggle {
+  color: white;
+}
+    /* Header styling */
+body.dark-mode header {
+  color: white; /* Ensure header text is white */
+}
+body.dark-mode .card h1 {
+  color: white; /* Make the title white in dark mode */
+}
+/* Button text styling in dark mode */
+body.dark-mode button {
+  color: black; /* Make button text black */
+}
+    @keyframes imageExpand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.expand-animation {
+  animation: imageExpand 0.4s ease;
+}
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+    /* Socials Button */
+.dropbtn {
+  position: absolute;
+  z-index: 900;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  top: 15px;
+  left: -5px;
+  padding: 0px 0px;
+  border-radius: 25px;
+  position: relative;
+  transition: transform 0.3s ease;
+  transform: translateY(-15px);
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  background-color: var(--dropdown-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  top: 50px;
+  left: 70px;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  position: absolute;
+  z-index: 1;
+  color: white;
+}
+
+.dropdown-content svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+    body.dark-mode .dropbtn a {
+  color: black;
+}
+body.dark-mode .arrow {
+  color: black;
+}
+/* Light Mode */
+:root {
+  --dropdown-bg: rgba(255, 255, 255, 0.0);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dropdown-bg: rgba(0, 0, 0, 0.0);
+  }
+}
+
+/* Apply theme-based background */
+.dropdown-content {
+  background-color: var(--dropdown-bg);
+}
+
+/* Show dropdown when active */
+.dropdown.active .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+    .copyright-box {
+  position: fixed;
+    bottom: env(safe-area-inset-bottom, 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  padding: 5px 10px;
+  height: 20px;
+  width: 100vw;
+  font-size: 12px;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+  line-height: 20px;
+}
+/* Dark mode override */
+body.dark-mode .copyright-box {
+  color: white;
+  background: rgba(0, 0, 0, 0.0); /* transparent black */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+     .landscape-warning {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  text-align: center;
+  padding: 20px;
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .landscape-warning {
+    display: flex;
+  }
+  .scroll-container {
+    display: none;
+  }
+}
+    /* Dark mode Socials button text */
+body.dark-mode .dropbtn,
+body.dark-mode .arrow {
+  color: black !important;
+  font-weight: 570 !important;
+}
+
+/* Dark mode Profiles button */
+body.dark-mode .profiles-button {
+  background-color: #3e3f40 !important;
+  color: #d3d3d3 !important;
+}
+
+/* Dark mode Photos button */
+body.dark-mode .photos-button {
+  background-color: #00008B !important;
+  color: #d3d3d3 !important;
+}
+.video-container {
+  width: 85%;
+  aspect-ratio: 16 / 9; /* or 4 / 3, etc. */
+  border-radius: 22px;
+  overflow: hidden;
+  margin: -10px auto -20px auto;
+  margin-top: 30px;
+}
+
+.video-container video {
+  display: block;
+  width: 100%; /* Make the video fill the width of its container */
+  aspect-ratio: 16 / 9; /* Set a common landscape aspect ratio */
+  border-radius: 0px;
+  object-fit: cover; /* Ensure the video covers the area without distortion */
+}
+ a.info-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.3); /* translucent white */
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+a.info-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Dark mode */
+body.dark-mode a.info-button {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+
+body.dark-mode a.info-button svg circle,
+body.dark-mode a.info-button svg rect,
+body.dark-mode a.info-button svg circle:last-child {
+  stroke: grey;
+  fill: none;
+}
+    /* Popup overlay */
+#img-popup-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+#img-popup-overlay img {
+  position: absolute;
+  border-radius: 12px;
+  will-change: transform, border-radius;
+  cursor: grab;
+  user-select: none;
+  max-width: none;
+  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  touch-action: none;
+}
+.popup-img {
+  cursor: pointer;
+}
+    .photo-spacer {
+  grid-column: 1 / -1;
+  height: 10px; /* Big initial space */
+  transition: height 0.6s ease;
+  pointer-events: none;
+}
+.photo-spacer.shrink {
+  height: 0px;
+  margin: 0;
+  padding-top: -10px;
+}
+  </style>
+</head>
+<body>
+    <div class="landscape-warning">
+  Please rotate your device to portrait mode for the best experience.
+</div>
+  <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
+  <!-- Left side: Nav links -->
+  <div style="display: flex; gap: 10px; padding-left: 15px;">
+    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
+    <a href="index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
+
+        <div class="dropdown" style="position: relative;">
+      <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
+        Socials <span class="arrow" id="arrowIcon">▼</span>
+      </button>
+      <div class="dropdown-content" id="socialLinks">
+        <a href="https://t.me/Gabriel_Mods_Channel" class="button" title="Telegram" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M9.036 16.572l-.376 3.94c.537 0 .768-.231 1.05-.508l2.526-2.375 5.244 3.828c.963.529 1.651.25 1.886-.89l3.42-16.13c.298-1.394-.504-1.94-1.404-1.612L1.188 9.117C-.155 9.615-.144 10.392.963 10.733l5.203 1.622L19.04 4.732c.475-.288.909-.13.553.158l-11.34 9.125z"/></svg>
+        </a>
+        <a href="https://github.com/gabemods" class="button" title="GitHub" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 .5C5.648.5.5 5.648.5 12c0 5.092 3.292 9.398 7.86 10.925.574.103.785-.25.785-.557 0-.274-.01-1.004-.016-1.97-3.197.695-3.87-1.54-3.87-1.54-.522-1.328-1.276-1.683-1.276-1.683-1.044-.714.08-.7.08-.7 1.154.082 1.761 1.185 1.761 1.185 1.027 1.76 2.695 1.252 3.35.957.104-.744.402-1.252.73-1.54-2.553-.29-5.238-1.276-5.238-5.682 0-1.255.448-2.28 1.183-3.082-.118-.29-.512-1.458.113-3.04 0 0 .964-.31 3.158 1.18.916-.254 1.9-.382 2.88-.387.98.005 1.964.133 2.88.387 2.193-1.49 3.156-1.18 3.156-1.18.627 1.582.233 2.75.115 3.04.736.802 1.183 1.827 1.183 3.082 0 4.416-2.688 5.39-5.25 5.675.41.35.776 1.037.776 2.09 0 1.51-.014 2.725-.014 3.096 0 .31.21.665.79.552C20.21 21.394 23.5 17.09 23.5 12c0-6.352-5.148-11.5-11.5-11.5z"/></svg>
+        </a>
+        <a href="https://www.snapchat.com/add/gabe_mods?share_id=1AxCc8C2wmk&locale=en-GB" class="button" title="Snapchat" target="_blank">
+          <img src="../assets/images/snapchat-outline-svgrepo-com.svg" alt="Snapchat" style="height: 24px;" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right side: Theme toggle -->
+  <button id="themeToggle" aria-label="Toggle theme"
+    style="background: none; border: none; cursor: pointer;">
+    <svg id="themeIcon"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="28" height="28"
+      fill="none" stroke-width="2" stroke="currentColor">
+      <path d="M12 3v2m0 14v2m9-9h-2M5 12H3
+               m15.364-6.364l-1.414 1.414
+               M6.05 17.95l-1.414 1.414
+               M17.95 17.95l1.414-1.414
+               M6.05 6.05L4.636 7.464
+               M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+    </svg>
+  </button>
+</header>
+    <div class="copyright-box">
+  &copy; 2025 Gabe Mods | All rights reserved
+</div>
+</div>
+  <div class="scroll-container" id="cardScroller">
+   <div class="page">
+      <div class="card">
+        <img src="../assets/images/OllieBeaumonty/SmartSelect_20241207_221104_Instagram_Original.png" class="popup-img" alt="Ollie Beaumont" />
+        <h1>Ollie Beaumont</h1>
+        <div class="photo-grid">
+          <img src="../assets/images/OllieBeaumonty/Snapchat-1715924679_Original.jpeg" class="popup-img" alt="Ollie Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/OllieBeaumonty/Snapchat-239861880_Original.jpeg" class="popup-img" alt="Ollie Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/OllieBeaumonty/.jpg" class="popup-img" alt="Ollie Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/OllieBeaumonty/.jpg" class="popup-img" alt="Ollie Photo 4" onclick="openFullscreen(this.src)" />
+        </div>
+      </div>
+    </div>
+    
+    <div class="page" id="main-profile">
+      <div class="card">
+      <a href="../info/index.html" class="info-button" title="Info">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" fill="none" />
+    <rect x="11" y="10" width="2" height="6" fill="white" />
+    <circle cx="12" cy="7" r="1" fill="white" />
+  </svg>
+</a>
+        <img src="../assets/images/gabriel/20250509_223705.jpg" class="popup-img" alt="Gabriel" onclick="openFullscreen(this.src)" />
+        <h1>Gabriel</h1>
+
+        <div class="photo-grid">
+          <img src="../assets/images/gabriel/20240626_132211.jpg" class="popup-img" alt="Gabriel Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240701_131845.jpg" class="popup-img" alt="Gabriel Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240702_112241.jpg" class="popup-img" alt="Gabriel Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240701_131831.jpg" class="popup-img" alt="Gabriel Photo 4" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240626_132919_Original.jpeg" class="popup-img" alt="Gabriel Photo 5" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240626_133002_Original.jpeg" class="popup-img" alt="Gabriel Photo 6" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20230628_133100_Original.jpeg" class="popup-img" alt="Gabriel Photo 7" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20230628_133102_Original.jpeg" class="popup-img" alt="Gabriel Photo 8" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20230628_161245_Original.jpeg" class="popup-img" alt="Gabriel Photo 9" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20230628_161307_Original.jpeg" class="popup-img" alt="Gabriel Photo 10" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240819_122031_Original.jpeg" class="popup-img" alt="Gabriel Photo 11" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/gabriel/20240818_184306_Original.jpeg" class="popup-img" alt="Gabriel Photo 12" onclick="openFullscreen(this.src)" />
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <img src="../assets/images/josh/IMG_0310.jpeg" class="popup-img" alt="Josh" onclick="openFullscreen(this.src)" />
+        <h1>Josh</h1>
+        <div class="video-container">
+  <video controls poster="../assets/images/josh/20230522_154108_Original.jpeg" style="width: 100%; height: auto; border-radius: 0px; margin-top: 0px;">
+    <source src="../assets/images/josh/20230522_153949.mov" type="video/quicktime">
+    Your browser does not support the video tag.
+  </video>
+</div>
+        <div class="photo-grid">
+          <img src="../assets/images/josh/IMG_0309.jpeg" class="popup-img" alt="Josh Photo 1" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/Snapchat-1225027816_Original.jpeg" class="popup-img" alt="Josh Photo 2" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/Snapchat-1942572315_Original.png" class="popup-img" alt="Josh Photo 3" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/20230522_154108_Original.jpeg" class="popup-img" alt="Josh Photo 4" onclick="openFullscreen(this.src)" />
+          <img src="../assets/images/josh/IMG_7714.jpeg" class="popup-img" alt="Josh Photo 5" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_7974.jpeg" class="popup-img" alt="Josh Photo 6" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_8212.jpeg" class="popup-img" alt="Josh Photo 7" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9729.jpeg" class="popup-img" alt="Josh Photo 8" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9740.png" class="popup-img" alt="Josh Photo 9" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9876.jpeg" class="popup-img" alt="Josh Photo 10" onclick="openFullscreen(this.src)" />
+<img src="../assets/images/josh/IMG_9877.jpeg" class="popup-img" alt="Josh Photo 11" onclick="openFullscreen(this.src)" />
+        </div>
+    </div>
+    </div>
+
+    <div class="page">
+  <div class="card">
+    <img src="../assets/images/charlie/IMG_0227.jpeg" class="popup-img" alt="Charlie" onclick="openFullscreen(this.src)" />
+    <h1>Charlie</h1>
+
+    <div class="photo-grid">
+      <img src="../assets/images/charlie/IMG_0260.jpeg" class="popup-img" alt="Charlie Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/charlie/IMG_0262.jpeg" class="popup-img" alt="Charlie Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/charlie/IMG_0263.jpeg" class="popup-img" alt="Charlie Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/charlie/IMG_0264.jpeg" class="popup-img" alt="Charlie Photo 4" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/charlie/IMG_0326.jpeg" class="popup-img" alt="Charlie Photo 5" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/charlie/IMG_0327.jpeg" class="popup-img" alt="Charlie Photo 6" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/charlie/IMG_0328.jpeg" class="popup-img" alt="Charlie Photo 7" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card">
+    <img src="../assets/images/michael/IMG_0229.jpeg" class="popup-img" alt="Michael" onclick="openFullscreen(this.src)" />
+    <h1>Michael</h1>
+    <div class="video-container">
+      <video controls poster="../assets/images/michael/IMG_0216.jpeg" style="width: 100%; height: auto; border-radius: 0px; margin-top: 0px;">
+        <source src="../assets/images/michael/A58387D0-CD02-4BA1-ABC1-C2946C6167D6.mov" type="video/quicktime">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="photo-grid">
+      <img src="../assets/images/michael/IMG_0243.jpeg" class="popup-img" alt="Michael Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_0244.jpeg" class="popup-img" alt="Michael Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_0245.jpeg" class="popup-img" alt="Michael Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_0246.jpeg" class="popup-img" alt="Michael Photo 4" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_9795.jpeg" class="popup-img" alt="Michael Photo 5" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_0030.jpeg" class="popup-img" alt="Michael Photo 6" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_9801.jpeg" class="popup-img" alt="Michael Photo 6" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/michael/IMG_9798.jpeg" class="popup-img" alt="Michael Photo 6" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+    <div class="page">
+  <div class="card">
+    <img src="../assets/images/tommy/IMG_0363.jpeg" class="popup-img" alt="Tommy" onclick="openFullscreen(this.src)" />
+    <h1>Tommy</h1>
+    <div class="photo-grid">
+      <img src="../assets/images/tommy/1.jpg" class="popup-img" alt="Tommy Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/tommy/2.jpg" class="popup-img" alt="Tommy Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/tommy/3.jpg" class="popup-img" alt="Tommy Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/tommy/4.jpg" class="popup-img" alt="Tommy Photo 4" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card">
+    <img src="../assets/images/harry/IMG_0458.jpeg" class="popup-img" alt="Harry" onclick="openFullscreen(this.src)" />
+    <h1>Harry</h1>
+    <div class="photo-grid">
+      <img src="../assets/images/harry/IMG_0456.jpeg" class="popup-img" alt="Harry Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/harry/IMG_0459.jpeg" class="popup-img" alt="Harry Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/harry/Snapchat-1444615651_Original.jpeg" class="popup-img" alt="Harry Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/harry/IMG_0457.jpeg" class="popup-img" alt="Harry Photo 4" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card">
+    <img src="../assets/images/james/IMG_0252.jpeg" class="popup-img" alt="James" onclick="openFullscreen(this.src)" />
+    <h1>James</h1>
+    <div class="photo-grid">
+      <img src="../assets/images/james/IMG_0248.jpeg" class="popup-img" alt="James Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/james/3.jpg" class="popup-img" alt="James Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/james/4.jpg" class="popup-img" alt="James Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/james/1.jpg" class="popup-img" alt="James Photo 4" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card">
+    <img src="../assets/images/adam/IMG_0226.jpeg" class="popup-img" alt="Adam" onclick="openFullscreen(this.src)" />
+    <h1>Adam</h1>
+    <div class="photo-grid">
+      <img src="../assets/images/adam/IMG_0319.jpeg" class="popup-img" alt="Adam Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/adam/2.jpg" class="popup-img" alt="Adam Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/adam/3.jpg" class="popup-img" alt="Adam Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/adam/4.jpg" class="popup-img" alt="Adam Photo 4" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card">
+    <img src="../assets/images/jayden/IMG_0225.jpeg" class="popup-img" alt="Jayden" onclick="openFullscreen(this.src)" />
+    <h1>Jayden</h1>
+    <div class="photo-grid">
+      <img src="../assets/images/jayden/IMG_0265.jpeg" class="popup-img" alt="Jayden Photo 1" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/jayden/IMG_0266.jpeg" class="popup-img" alt="Jayden Photo 2" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/jayden/IMG_0267.jpeg" class="popup-img" alt="Jayden Photo 3" onclick="openFullscreen(this.src)" />
+      <img src="../assets/images/jayden/IMG_0460.jpeg" class="popup-img" alt="Jayden Photo 4" onclick="openFullscreen(this.src)" />
+    </div>
+  </div>
+</div>
+
+    <div class="indicator-wrapper">
+      <div class="indicators">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const container = document.querySelector('.scroll-container');
+    const dots = document.querySelectorAll('.dot');
+    const cardImages = document.querySelectorAll('.card img, .photo-grid img');
+
+    function updateDots() {
+      const index = Math.round(container.scrollLeft / container.offsetWidth);
+      dots.forEach(dot => dot.classList.remove('active'));
+      if (dots[index]) dots[index].classList.add('active');
+    }
+
+    container.addEventListener('scroll', updateDots);
+
+    function fixHeight() {
+      document.querySelector('.scroll-container').style.height = window.innerHeight + 'px';
+      document.querySelectorAll('.page').forEach(p => {
+        p.style.height = window.innerHeight + 'px';
+        p.style.display = 'flex';
+        p.style.flexDirection = 'column';
+        p.style.justifyContent = 'center';
       });
-    }, 200); // matches the CSS transition duration
+    }
+
+    window.addEventListener('resize', fixHeight);
+    window.addEventListener('orientationchange', fixHeight);
+    fixHeight();
+    updateDots();
+
+    cardImages.forEach(img => {
+      img.addEventListener('mousedown', function() {
+        this.classList.add('active');
+      });
+      img.addEventListener('mouseup', function() {
+        this.classList.remove('active');
+      });
+      img.addEventListener('mouseleave', function() {
+        this.classList.remove('active');
+      });
+    });
+  </script>
+  <script>
+  window.addEventListener('load', () => {
+    const scroller = document.getElementById('cardScroller');
+    const defaultPage = document.getElementById('main-profile');
+
+    if (scroller && defaultPage) {
+      // Get the horizontal position of your card relative to the container
+      const leftOffset = defaultPage.offsetLeft;
+      scroller.scrollLeft = leftOffset;
+    }
+  });
+</script>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
+    buttons.forEach(btn => {
+      if (btn) {
+        btn.classList.add('nav-button-animate');
+        setTimeout(() => {
+          btn.classList.remove('nav-button-animate');
+        }, 800); // Match the animation duration
+      }
+    });
+  });
+</script>
+ <script>
+  const themeToggle = document.getElementById("themeToggle");
+  const themeIcon = document.getElementById("themeIcon");
+  const themePath = themeIcon.querySelector("path");
+
+  const sunPath = "M12 3v2m0 14v2m9-9h-2M5 12H3"
+                + "m15.364-6.364l-1.414 1.414"
+                + "M6.05 17.95l-1.414 1.414"
+                + "M17.95 17.95l1.414-1.414"
+                + "M6.05 6.05L4.636 7.464"
+                + "M12 8a4 4 0 100 8 4 4 0 000-8z";
+
+  const moonPath = "M21 12.79A9 9 0 1111.21 3"
+                 + "a7 7 0 009.79 9.79z";
+
+  let dark = false;
+  let isAnimating = false;
+
+  themeToggle.addEventListener("click", () => {
+    if (isAnimating) return;
+    isAnimating = true;
+    dark = !dark;
+
+    document.body.classList.toggle("dark-mode", dark);
+    themeIcon.classList.remove("sun-rotate-fade", "fade-out", "sun-fade-in-spin", "moon-fade-in-tilt");
+
+    if (dark) {
+      // Light → Dark
+      themeIcon.classList.add("sun-rotate-fade");
+
+      setTimeout(() => {
+        themePath.setAttribute("d", moonPath);
+        themeIcon.classList.remove("sun-rotate-fade");
+        themeIcon.classList.add("moon-fade-in-tilt");
+
+        setTimeout(() => {
+          themeIcon.classList.remove("moon-fade-in-tilt");
+          isAnimating = false;
+        }, 500);
+      }, 600);
+    } else {
+      // Dark → Light
+      themeIcon.classList.add("fade-out");
+
+      setTimeout(() => {
+        themePath.setAttribute("d", sunPath);
+        themeIcon.classList.remove("fade-out");
+        themeIcon.classList.add("sun-fade-in-spin");
+
+        setTimeout(() => {
+          themeIcon.classList.remove("sun-fade-in-spin");
+          isAnimating = false;
+        }, 600);
+      }, 400);
+    }
+  });
+</script>
+  <script>
+const images = document.querySelectorAll('img');
+const overlay = document.createElement('div');
+const popupImg = document.createElement('img');
+
+overlay.style.cssText = `
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: background 0.3s ease;
+`;
+
+popupImg.style.cssText = `
+  position: fixed;
+  max-width: 90vw;
+  max-height: 90vh;
+  will-change: transform, border-radius;
+  touch-action: none;
+  pointer-events: none;
+`;
+
+overlay.appendChild(popupImg);
+document.body.appendChild(overlay);
+
+let originImg = null;
+let startX = 0, startY = 0;
+let isDragging = false;
+let dragScale = 1;
+let originalRadius = '12px';
+
+function getTransforms(fromRect, img) {
+  const temp = document.createElement('img');
+  temp.src = img.src;
+  temp.style.position = 'fixed';
+  temp.style.visibility = 'hidden';
+  temp.style.maxWidth = '90vw';
+  temp.style.maxHeight = '90vh';
+  document.body.appendChild(temp);
+
+  const naturalW = temp.naturalWidth || img.naturalWidth;
+  const naturalH = temp.naturalHeight || img.naturalHeight;
+  const aspectRatio = naturalW / naturalH;
+
+  const viewportW = window.innerWidth * 0.9;
+  const viewportH = window.innerHeight * 0.9;
+  let finalW, finalH;
+
+  if (viewportW / viewportH > aspectRatio) {
+    finalH = viewportH;
+    finalW = finalH * aspectRatio;
+  } else {
+    finalW = viewportW;
+    finalH = finalW / aspectRatio;
+  }
+
+  document.body.removeChild(temp);
+
+  const scaleX = fromRect.width / finalW;
+  const scaleY = fromRect.height / finalH;
+  const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
+  const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
+
+  return { scaleX, scaleY, translateX, translateY };
+}
+
+images.forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', () => {
+    originImg = img;
+    popupImg.src = img.src;
+    originalRadius = getComputedStyle(img).borderRadius || '12px';
+    popupImg.style.borderRadius = originalRadius;
+
+    popupImg.onload = () => {
+      const rect = img.getBoundingClientRect();
+      overlay.style.display = 'flex';
+
+      requestAnimationFrame(() => {
+        const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
+        popupImg.style.transition = 'none';
+        popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+        popupImg.style.borderRadius = originalRadius;
+
+        requestAnimationFrame(() => {
+          popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease';
+          popupImg.style.transform = `translate(0, 0) scale(1)`;
+          popupImg.style.borderRadius = '12px';
+          popupImg.style.pointerEvents = 'auto';
+        });
+      });
+    };
+  });
+});
+
+function closePopup() {
+  if (!originImg) return;
+
+  const rect = originImg.getBoundingClientRect();
+  popupImg.style.width = `${popupImg.offsetWidth}px`;
+  popupImg.style.height = `${popupImg.offsetHeight}px`;
+
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
+
+  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+  popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+  popupImg.style.borderRadius = originalRadius;
+
+  overlay.style.transition = 'background-color 0.25s ease';
+  overlay.style.backgroundColor = 'rgba(0,0,0,0)';
+
+  popupImg.addEventListener('transitionend', () => {
+    overlay.style.display = 'none';
+    popupImg.style.transform = '';
+    popupImg.style.transition = '';
+    overlay.style.transition = '';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.style.borderRadius = originalRadius;
+    popupImg.style.width = '';
+    popupImg.style.height = '';
+    popupImg.style.pointerEvents = 'none';
+  }, { once: true });
+}
+
+overlay.addEventListener('click', e => {
+  if (e.target === overlay) closePopup();
+});
+
+popupImg.addEventListener('pointerdown', e => {
+  isDragging = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  popupImg.setPointerCapture(e.pointerId);
+});
+
+popupImg.addEventListener('pointermove', e => {
+  if (!isDragging) return;
+  const deltaX = e.clientX - startX;
+  const deltaY = e.clientY - startY;
+
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  dragScale = 1 - Math.min(0.4, distance / window.innerHeight);
+  popupImg.style.transition = 'none';
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
+
+  if (originalRadius !== '50%') {
+    const radius = Math.min(27, 15 + (1 - dragScale) * 50);
+    popupImg.style.borderRadius = `${radius}%`;
+  }
+});
+
+popupImg.addEventListener('pointerup', e => {
+  if (!isDragging) return;
+  isDragging = false;
+  const deltaX = e.clientX - startX;
+  const deltaY = e.clientY - startY;
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+  if (distance > 100) {
+    closePopup();
+  } else {
+    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+    popupImg.style.transform = `translate(0,0) scale(1)`;
+    popupImg.style.borderRadius = '12px';
+    overlay.style.transition = 'background 0.25s ease';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.addEventListener('transitionend', () => {
+      popupImg.style.transition = '';
+    }, { once: true });
+  }
+});
+</script>
+  <script>
+  const dropdown = document.querySelector('.dropdown');
+  const arrow = document.getElementById('arrowIcon');
+  const toggle = document.getElementById('socialToggle');
+
+  toggle.addEventListener('click', () => {
+    dropdown.classList.toggle('active');
+    arrow.classList.toggle('rotate');
   });
 
-  // Optional: Set initial fade-in for page load
-  window.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('fade');
-    requestAnimationFrame(() => {
-      document.body.classList.remove('fade');
+  // Optional: Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      dropdown.classList.remove('active');
+      arrow.classList.remove('rotate');
+    }
+  });
+</script>
+  <script>
+  const scroller = document.getElementById('cardScroller');
+
+  scroller.addEventListener('wheel', function(e) {
+    // Prevent vertical scrolling
+    e.preventDefault();
+
+    // Scroll horizontally instead
+    scroller.scrollLeft += e.deltaY;
+  }, { passive: false });
+</script>
+  <script>
+  window.addEventListener('load', () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card, i) => {
+      setTimeout(() => {
+        card.classList.add('animate-in');
+      }, i * 100); // optional stagger
+    });
+  });
+</script>
+  <script>
+window.addEventListener("orientationchange", () => {
+  const cards = document.querySelectorAll('.card');
+  const texts = document.querySelectorAll('.card h1, .card h2, .card h3, .card p');
+
+  // Reset and re-trigger card animations
+  cards.forEach(card => {
+    card.style.animation = 'none';
+    card.offsetHeight; // Trigger reflow
+    card.style.animation = 'cardBounceIn 0.6s ease forwards';
+  });
+
+  // Reset and re-trigger text animations
+  texts.forEach((text, index) => {
+    text.style.animation = 'none';
+    text.offsetHeight; // Trigger reflow
+    text.style.animation = `fadeBounceIn 0.6s ease forwards`;
+    text.style.animationDelay = `${0.1 + index * 0.05}s`; // Slight stagger
+  });
+});
+</script>
+<script>
+  document.querySelectorAll('.card').forEach(card => {
+    const spacer = card.querySelector('.photo-spacer');
+    if (!spacer) return;
+
+    card.addEventListener('scroll', () => {
+      if (card.scrollTop > 10) {
+        spacer.classList.add('shrink');
+      } else {
+        spacer.classList.remove('shrink');
+      }
     });
   });
 </script>
