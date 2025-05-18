@@ -39,8 +39,7 @@
       padding: 0;
       height: 100%;
       width: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden;
       background: url('../../assets/images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'OneUISans', sans-serif;
@@ -357,28 +356,24 @@ body.dark-mode button {
 
 /* Dropdown Content */
 .dropdown-content {
-  position: absolute;
-  top: 50px;
-  left: 70px;
+  background-color: var(--dropdown-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
+  top: 50px;
+  left: 70px;
   gap: 8px;
   padding: 10px;
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.3); /* translucent for blur */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-sizing: border-box;
-  overflow: hidden;
+  white-space: nowrap;
   opacity: 0;
-  pointer-events: none;
   transform: translateY(-10px);
+  pointer-events: none;
   transition: all 0.3s ease;
-  z-index: 700000;
+  position: absolute;
+  z-index: 1;
   color: white;
-  isolation: isolate;
-  max-width: 280px;
-  height: auto;
 }
 
 .dropdown-content svg {
