@@ -356,9 +356,9 @@ body.dark-mode button {
 
 /* Dropdown Content */
 .dropdown-content {
-  background-color: var(--dropdown-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.0);
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   display: flex;
   flex-direction: column;
   top: 50px;
@@ -381,27 +381,16 @@ body.dark-mode button {
   width: 24px;
   height: 24px;
 }
-    body.dark-mode .dropbtn a {
+
+ body.dark-mode .dropdown-content {
+  background-color: rgba(0, 0, 0, 0.0);
+}   
+    
+body.dark-mode .dropbtn a {
   color: black;
 }
 body.dark-mode .arrow {
   color: black;
-}
-/* Light Mode */
-:root {
-  --dropdown-bg: rgba(255, 255, 255, 0.0);
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --dropdown-bg: rgba(0, 0, 0, 0.0);
-  }
-}
-
-/* Apply theme-based background */
-.dropdown-content {
-  background-color: var(--dropdown-bg);
 }
 
 /* Show dropdown when active */
@@ -579,7 +568,7 @@ body.dark-mode a.info-button svg circle:last-child {
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 15px; padding-left: 15px;">
     <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; font-weight: bold;">Profiles</a>
-    <a href="index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: gray; font-weight: bold;">Photos</a>
+    <a href="index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: rgba(255, 255, 255, 0.7); color: gray; font-weight: bold;">Photos</a>
 
         <div class="dropdown" style="position: relative;">
       <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
