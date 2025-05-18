@@ -363,29 +363,33 @@ body.dark-mode button {
   flex-direction: column;
   gap: 8px;
   padding: 10px;
-  border-radius: 12px;
-  width: max-content;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1000;
 
-  /* Blur */
-  background-color: rgba(255, 255, 255, 0.25);
+  /* Blur and background */
+  background-color: rgba(255, 255, 255, 0.2); /* Or rgba(0, 0, 0, 0.2) for dark mode */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
-  /* Layout Safety */
+  /* Layout-safe */
   box-sizing: border-box;
   overflow: hidden;
   isolation: isolate;
-
-  /* Animation / Visibility */
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-
-  z-index: 700000;
+  width: max-content;
   color: white;
 }
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+    
 .dropdown-content svg {
   fill: white;
   width: 24px;
