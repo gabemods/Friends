@@ -357,24 +357,28 @@ body.dark-mode button {
 
 /* Dropdown Content */
 .dropdown-content {
-  background-color: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  display: flex;
-  flex-direction: column;
+  position: absolute;
   top: 50px;
   left: 70px;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
   padding: 10px;
   border-radius: 8px;
-  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.3); /* translucent for blur */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-sizing: border-box;
+  overflow: hidden;
   opacity: 0;
-  transform: translateY(-10px);
   pointer-events: none;
+  transform: translateY(-10px);
   transition: all 0.3s ease;
-  position: absolute;
   z-index: 700000;
   color: white;
+  isolation: isolate;
+  max-width: 280px;
+  height: auto;
 }
 
 .dropdown-content svg {
