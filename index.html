@@ -463,14 +463,15 @@ body.dark-mode .arrow {
 
 /* Dark mode Profiles button */
 body.dark-mode .profiles-button {
-  background-color: #00008B !important;
+  background-color: #000000 !important;
   color: #d3d3d3 !important;
 }
 
 /* Dark mode Photos button */
 body.dark-mode .photos-button {
-  background-color: #3e3f40 !important;
-  color: #d3d3d3 !important;
+  background-color: #000000 !important;
+  border: 1.5px solid #ffffff !important;
+  color: #ffffff !important;
 }
     
 .ios-popup-overlay {
@@ -714,11 +715,12 @@ body.dark-mode a.info-button svg circle:last-child {
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
 </div>
-  <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
+  <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.0); backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
-  <div style="display: flex; gap: 10px; padding-left: 15px;">
-    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Profiles</a>
-    <a href="photos/index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Photos</a>
+  <div style="display: flex; gap: 15px; padding-left: 15px;">
+    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #fff; color: gray; font-weight: bold;">Profiles</a>
+    <a href="photos/index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; border: 1.5px solid #ffffff !important; color: white; font-weight: bold;">Photos</a>
 
         <div class="dropdown" style="position: relative;">
       <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
