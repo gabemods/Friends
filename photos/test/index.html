@@ -213,6 +213,7 @@
 }
    body.dark-mode {
   background: url('../../assets/images/Canyons.jpeg') no-repeat center center fixed;
+  background-size: cover;
 }
 
 body.dark-mode .card {
@@ -237,7 +238,14 @@ body.dark-mode .copyright {
 body.dark-mode .header {
  background-color: rgba(0, 0, 0, 0.5);
 }
-  
+
+@media screen and (min-width: 1024px) {
+  .body.dark-mode {
+    background: url('../../assets/images/IMG_5154.jpeg') no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+    
 @keyframes rotateFadeOut {
   0%   { transform: rotate(0deg); opacity: 1; }
   100% { transform: rotate(180deg); opacity: 0; }
