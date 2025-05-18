@@ -469,7 +469,9 @@ body.dark-mode .arrow {
 
 /* Dark mode Profiles button */
 body.dark-mode .profiles-button {
-  background-color: #000000 !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);
   color: #d3d3d3 !important;
 }
 
@@ -575,7 +577,7 @@ body.dark-mode a.info-button svg circle:last-child {
   -webkit-backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 15px; padding-left: 15px;">
-    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: white; font-weight: bold;">Profiles</a>
+    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; font-weight: bold;">Profiles</a>
     <a href="index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #fff; border: 1.5px solid #ffffff !important; color: gray; font-weight: bold;">Photos</a>
 
         <div class="dropdown" style="position: relative;">
