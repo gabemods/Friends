@@ -560,6 +560,22 @@ body.dark-mode a.info-button svg circle:last-child {
   margin: 0;
   padding-top: -10px;
 }
+    .dropdown-content {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate; /* creates a new stacking context */
+}
+
+.dropdown-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: inherit;
+}
   </style>
 </head>
 <body>
