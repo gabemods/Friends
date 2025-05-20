@@ -1052,7 +1052,7 @@ let originImg = null;
 let startX = 0, startY = 0;
 let isDragging = false;
 let originalRect = null;
-const MIN_SIZE = 80;
+const MIN_SIZE = 80; // Minimum size in pixels
 
 function getTransforms(fromRect, targetW, targetH) {
   const scaleX = fromRect.width / targetW;
@@ -1071,7 +1071,7 @@ images.forEach(img => {
 
     popupImg.src = img.src;
 
-    // Fully reset styles
+    // Fully reset styles before each open
     popupImg.style.removeProperty('width');
     popupImg.style.removeProperty('height');
     popupImg.style.removeProperty('aspect-ratio');
@@ -1079,10 +1079,9 @@ images.forEach(img => {
     popupImg.style.transform = '';
     popupImg.style.borderRadius = '';
     popupImg.style.pointerEvents = 'none';
-    popupImg.style.opacity = '1';
 
     popupImg.onload = () => {
-      popupImg.offsetWidth;
+      popupImg.offsetWidth; // Force reflow
 
       const naturalW = popupImg.naturalWidth;
       const naturalH = popupImg.naturalHeight;
@@ -1101,6 +1100,7 @@ images.forEach(img => {
 
       const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, finalW, finalH);
 
+      // Set initial size and show
       popupImg.style.width = `${finalW}px`;
       popupImg.style.height = `${finalH}px`;
       overlay.style.display = 'flex';
@@ -1128,36 +1128,27 @@ function closePopup() {
 
   popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-
-  // Rounded square instead of full circle (you can change to '50%' for circle)
-  popupImg.style.borderRadius = '27%';
+  popupImg.style.borderRadius = '50%';
   overlay.style.transition = 'background-color 0.35s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
   popupImg.addEventListener('transitionend', () => {
-    // Fade out smoothly after the move
-    popupImg.style.transition = 'opacity 0.15s ease';
-    popupImg.style.opacity = '0';
+    overlay.style.display = 'none';
 
-    setTimeout(() => {
-      overlay.style.display = 'none';
+    // Clean reset
+    popupImg.removeAttribute('style');
+    popupImg.style.cssText = `
+      position: fixed;
+      max-width: 90vw;
+      max-height: 90vh;
+      touch-action: none;
+      pointer-events: none;
+      will-change: transform, border-radius;
+      object-fit: cover;
+    `;
 
-      // Reset everything fully
-      popupImg.removeAttribute('style');
-      popupImg.style.cssText = `
-        position: fixed;
-        max-width: 90vw;
-        max-height: 90vh;
-        touch-action: none;
-        pointer-events: none;
-        will-change: transform, border-radius;
-        object-fit: cover;
-      `;
-      popupImg.style.opacity = '1';
-
-      overlay.style.transition = '';
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    }, 150);
+    overlay.style.transition = '';
+    overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
   }, { once: true });
 }
 
@@ -1171,6 +1162,7 @@ popupImg.addEventListener('pointerdown', e => {
   startY = e.clientY;
   popupImg.setPointerCapture(e.pointerId);
 
+  // Lock square dimensions for drag
   const side = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
   popupImg.style.width = `${side}px`;
   popupImg.style.height = `${side}px`;
@@ -1191,7 +1183,7 @@ popupImg.addEventListener('pointermove', e => {
 
   popupImg.style.transition = 'none';
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
-  popupImg.style.borderRadius = '27%';
+  popupImg.style.borderRadius = '50%';
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
 });
 
