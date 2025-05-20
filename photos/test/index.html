@@ -980,9 +980,10 @@ popupImg.style.cssText = `
   position: fixed;
   max-width: 90vw;
   max-height: 90vh;
-  will-change: transform, border-radius;
+  will-change: transform, border-radius, width, height;
   touch-action: none;
   pointer-events: none;
+  object-fit: cover;
 `;
 
 overlay.appendChild(popupImg);
@@ -1036,6 +1037,8 @@ images.forEach(img => {
     popupImg.src = img.src;
     originalRadius = getComputedStyle(img).borderRadius || '12px';
     popupImg.style.borderRadius = originalRadius;
+    popupImg.style.width = '';
+    popupImg.style.height = '';
 
     popupImg.onload = () => {
       const rect = img.getBoundingClientRect();
@@ -1045,7 +1048,6 @@ images.forEach(img => {
         const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
         popupImg.style.transition = 'none';
         popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-        popupImg.style.borderRadius = originalRadius;
 
         requestAnimationFrame(() => {
           popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease';
@@ -1062,28 +1064,26 @@ function closePopup() {
   if (!originImg) return;
 
   const rect = originImg.getBoundingClientRect();
-  popupImg.style.width = `${popupImg.offsetWidth}px`;
-  popupImg.style.height = `${popupImg.offsetHeight}px`;
-
   const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
 
-  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
-  popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-  popupImg.style.borderRadius = originalRadius;
+  // Force perfect square
+  const size = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
+  popupImg.style.width = `${size}px`;
+  popupImg.style.height = `${size}px`;
+  popupImg.style.borderRadius = '50%';
 
-  overlay.style.transition = 'background-color 0.25s ease';
+  popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease, width 0.35s ease, height 0.35s ease';
+  popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+
+  overlay.style.transition = 'background-color 0.35s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
   popupImg.addEventListener('transitionend', () => {
     overlay.style.display = 'none';
-    popupImg.style.transform = '';
-    popupImg.style.transition = '';
+    popupImg.style = '';
+    popupImg.style.pointerEvents = 'none';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    popupImg.style.borderRadius = originalRadius;
-    popupImg.style.width = '';
-    popupImg.style.height = '';
-    popupImg.style.pointerEvents = 'none';
   }, { once: true });
 }
 
@@ -1102,17 +1102,19 @@ popupImg.addEventListener('pointermove', e => {
   if (!isDragging) return;
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  dragScale = 1 - Math.min(0.4, distance / window.innerHeight);
-  popupImg.style.transition = 'none';
-  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
-  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
 
-  if (originalRadius !== '50%') {
-    const radius = Math.min(27, 15 + (1 - dragScale) * 50);
-    popupImg.style.borderRadius = `${radius}%`;
-  }
+  dragScale = 1 - Math.min(0.5, distance / window.innerHeight);
+
+  // Shrink to circle shape
+  const minSide = Math.min(popupImg.offsetWidth, popupImg.offsetHeight) * dragScale;
+  popupImg.style.width = `${minSide}px`;
+  popupImg.style.height = `${minSide}px`;
+  popupImg.style.borderRadius = '50%';
+
+  popupImg.style.transition = 'none';
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1)`;
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
 });
 
 popupImg.addEventListener('pointerup', e => {
@@ -1125,10 +1127,12 @@ popupImg.addEventListener('pointerup', e => {
   if (distance > 100) {
     closePopup();
   } else {
-    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+    popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease, width 0.3s ease, height 0.3s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
     popupImg.style.borderRadius = '12px';
-    overlay.style.transition = 'background 0.25s ease';
+    popupImg.style.width = '';
+    popupImg.style.height = '';
+    overlay.style.transition = 'background 0.3s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.addEventListener('transitionend', () => {
       popupImg.style.transition = '';
