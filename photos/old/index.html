@@ -40,8 +40,9 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background: url('../assets/images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
+      background: linear-gradient(to bottom, #e0f7fa, #80deea, #26c6da);
       background-size: cover;
+      background-repeat: no-repeat;
       font-family: 'OneUISans', sans-serif;
       color: white;
     }
@@ -85,9 +86,9 @@
   }
 }
 .card {
-  background: rgba(211, 211, 211, 0.5);
+  background: rgba(211, 211, 211, 0.3);
   border-radius: 25px;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   max-width: 285px;
@@ -212,8 +213,20 @@
   animation: buttonExpand 1.0s ease;
 }
    body.dark-mode {
-  background: url('../assets/images/Canyons.jpeg') no-repeat center center fixed;
-  background-size: cover;
+  background: linear-gradient(
+    to right,
+    #000000 0%,
+    #000033 14%,
+    #000066 28%,
+    #000099 42%,
+    #0000CC 57%,
+    #0033CC 71%,
+    #0066CC 85%,
+    #0099FF 100%
+  );
+  background-size: 200% 100%; /* Makes the gradient smoother on wide screens */
+  background-attachment: fixed; /* Optional: keeps the gradient still on scroll */
+  color: white;
 }
 
 body.dark-mode .card {
@@ -221,31 +234,13 @@ body.dark-mode .card {
   box-shadow: 0 0 25px rgba(255,255, 255, 0.3);
 }
 
-body.dark-mode .indicator-wrapper {
-  background: rgba(0, 0, 0, 0.2);
-  border: none;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
-}
-  
 body.dark-mode .dot {
   background-color: white;
 }
 
 body.dark-mode .copyright {
   color: rgba(255, 255, 255, 0.7);
-}
-
-body.dark-mode .header {
- background-color: rgba(0, 0, 0, 0.5);
-}
-
-@media screen and (min-width: 1024px) {
-  .body.dark-mode {
-    background: url('../assets/images/IMG_5154.jpeg') no-repeat center center fixed;
-    background-size: cover;
-  }
-}
-    
+} 
 @keyframes rotateFadeOut {
   0%   { transform: rotate(0deg); opacity: 1; }
   100% { transform: rotate(180deg); opacity: 0; }
@@ -284,7 +279,7 @@ body.dark-mode .header {
 
 /* colour inheritance */
 #themeToggle {
-  color: white;
+  color: grey;
 }
 body.dark-mode #themeToggle {
   color: white;
@@ -356,57 +351,52 @@ body.dark-mode button {
 
 /* Dropdown Content */
 .dropdown-content {
-  position: absolute;
-  top: 50px;
-  left: 70px;
+  background-color: var(--dropdown-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
+  top: 50px;
+  left: 70px;
   gap: 8px;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: 8px;
   white-space: nowrap;
   opacity: 0;
   transform: translateY(-10px);
   pointer-events: none;
   transition: all 0.3s ease;
-  z-index: 1000;
-
-  /* Blur and background */
-  background-color: rgba(255, 255, 255, 0.0); /* Or rgba(0, 0, 0, 0.2) for dark mode */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  /* Layout-safe */
-  box-sizing: border-box;
-  overflow: hidden;
-  isolation: isolate;
-  width: max-content;
+  position: absolute;
+  z-index: 1;
   color: white;
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
-  margin-left: 10px;
-}
-    
 .dropdown-content svg {
   fill: white;
   width: 24px;
   height: 24px;
 }
-
- body.dark-mode .dropdown-content {
-  background-color: rgba(0, 0, 0, 0.0);
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-}   
-    
-body.dark-mode .dropbtn a {
+    body.dark-mode .dropbtn a {
   color: black;
 }
 body.dark-mode .arrow {
   color: black;
+}
+/* Light Mode */
+:root {
+  --dropdown-bg: rgba(255, 255, 255, 0.0);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dropdown-bg: rgba(0, 0, 0, 0.0);
+  }
+}
+
+/* Apply theme-based background */
+.dropdown-content {
+  background-color: var(--dropdown-bg);
 }
 
 /* Show dropdown when active */
@@ -415,31 +405,6 @@ body.dark-mode .arrow {
   transform: translateY(0);
   pointer-events: auto;
 }
-    .button {
-  width: 45px;
-  height: 45px;
-  background: rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition: transform 0.2s;
-}
-
-.button:hover {
-  transform: scale(1.1);
-}
-
-.button svg, .button img {
-  width: 25px;
-  height: 25px;
-  fill: white;
-}
-    
     .copyright-box {
   position: fixed;
     bottom: env(safe-area-inset-bottom, 0px);
@@ -452,7 +417,7 @@ body.dark-mode .arrow {
   font-size: 12px;
   color: white;
   background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
   border-radius: 4px;
   text-align: center;
   backdrop-filter: blur(10px);
@@ -499,18 +464,14 @@ body.dark-mode .arrow {
 
 /* Dark mode Profiles button */
 body.dark-mode .profiles-button {
-  background-color: rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: blur(10px);
- -webkit-backdrop-filter: blur(10px);
+  background-color: #3e3f40 !important;
   color: #d3d3d3 !important;
 }
 
 /* Dark mode Photos button */
 body.dark-mode .photos-button {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);  
-  color: #ffffff !important;
+  background-color: #00008B !important;
+  color: #d3d3d3 !important;
 }
 .video-container {
   width: 85%;
@@ -557,7 +518,7 @@ body.dark-mode a.info-button {
 body.dark-mode a.info-button svg circle,
 body.dark-mode a.info-button svg rect,
 body.dark-mode a.info-button svg circle:last-child {
-  stroke: white;
+  stroke: grey;
   fill: none;
 }
     /* Popup overlay */
@@ -604,11 +565,11 @@ body.dark-mode a.info-button svg circle:last-child {
     <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
 </div>
-  <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.0); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
+  <header style="position: sticky; top: 0; z-index: 1000; background-color: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 10px 5px;">
   <!-- Left side: Nav links -->
   <div style="display: flex; gap: 10px; padding-left: 15px;">
-    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: white; font-weight: bold;">Profiles</a>
-    <a href="index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: gray; font-weight: bold;">Photos</a>
+    <a href="https://gabemods.github.io/Friends/index.html" class="profiles-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #cfcfcf; color: gray; font-weight: bold;">Profiles</a>
+    <a href="index.html" class="photos-button nav-button-animate" style="text-decoration: none; padding: 10px 20px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold;">Photos</a>
 
         <div class="dropdown" style="position: relative;">
       <button class="dropbtn" id="socialToggle" style="padding: 10px 10px; border-radius: 25px; background-color: #80deea; color: white; font-weight: bold; border: none; cursor: pointer;">
@@ -635,7 +596,7 @@ body.dark-mode a.info-button svg circle:last-child {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       width="28" height="28"
-      fill="currentColor" stroke-width="2" stroke="currentColor">
+      fill="none" stroke-width="2" stroke="currentColor">
       <path d="M12 3v2m0 14v2m9-9h-2M5 12H3
                m15.364-6.364l-1.414 1.414
                M6.05 17.95l-1.414 1.414
@@ -1064,30 +1025,28 @@ function closePopup() {
   if (!originImg) return;
 
   const rect = originImg.getBoundingClientRect();
+  popupImg.style.width = `${popupImg.offsetWidth}px`;
+  popupImg.style.height = `${popupImg.offsetHeight}px`;
+
   const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
 
-  // Force a square shape (based on current visible height)
-  const size = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
-  popupImg.style.width = `${size}px`;
-  popupImg.style.height = `${size}px`;
-
-  // Make it a circle
-  popupImg.style.borderRadius = '50%';
-
-  // Animate to source position
-  popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease, width 0.35s ease, height 0.35s ease';
+  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+  popupImg.style.borderRadius = originalRadius;
 
-  // Fade out overlay
-  overlay.style.transition = 'background-color 0.35s ease';
+  overlay.style.transition = 'background-color 0.25s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
   popupImg.addEventListener('transitionend', () => {
     overlay.style.display = 'none';
-    popupImg.style = ''; // Reset all styles
-    popupImg.style.pointerEvents = 'none';
+    popupImg.style.transform = '';
+    popupImg.style.transition = '';
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
+    popupImg.style.borderRadius = originalRadius;
+    popupImg.style.width = '';
+    popupImg.style.height = '';
+    popupImg.style.pointerEvents = 'none';
   }, { once: true });
 }
 
@@ -1127,13 +1086,8 @@ popupImg.addEventListener('pointerup', e => {
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
   if (distance > 100) {
-  // Apply circle shape before closing
-  const minSize = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
-  popupImg.style.width = `${minSize}px`;
-  popupImg.style.height = `${minSize}px`;
-  popupImg.style.borderRadius = '50%';
-  closePopup();
-} else {
+    closePopup();
+  } else {
     popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
     popupImg.style.transform = `translate(0,0) scale(1)`;
     popupImg.style.borderRadius = '12px';
