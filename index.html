@@ -1155,21 +1155,20 @@ popupImg.addEventListener('pointerdown', e => {
 
 popupImg.addEventListener('pointermove', e => {
   if (!isDragging) return;
-
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-  const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
-  // Minimum scale: ~80px final size based on original width
-  const fullSize = Math.min(parseFloat(popupImg.style.width), parseFloat(popupImg.style.height));
-  const minScale = 80 / fullSize; // Snapchat-style lower limit
-  const shrinkAmount = Math.min(distance / (window.innerHeight * 0.5), 1); // how much to shrink
-  const scale = Math.max(minScale, 1 - shrinkAmount);
-
+  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  dragScale = 1 - Math.min(0.4, distance / window.innerHeight);
   popupImg.style.transition = 'none';
-  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
-  popupImg.style.borderRadius = '50%';
-  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
+
+  // Round progressively
+  if (originalRadius !== '50%') {
+    const radius = 12 + (1 - dragScale) * 100;
+    popupImg.style.borderRadius = `${radius}px`;
+  }
 });
 
 popupImg.addEventListener('pointerup', e => {
