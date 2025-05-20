@@ -1036,11 +1036,16 @@ images.forEach(img => {
     originImg = img;
     popupImg.src = img.src;
     originalRadius = getComputedStyle(img).borderRadius || '12px';
-    popupImg.style.borderRadius = originalRadius;
+
+    // FULL reset to fix second-open bug
+    popupImg.style.transition = 'none';
+    popupImg.style.transform = '';
     popupImg.style.width = '';
     popupImg.style.height = '';
+    popupImg.style.borderRadius = '';
 
     popupImg.onload = () => {
+      popupImg.offsetWidth; // force reflow
       const rect = img.getBoundingClientRect();
       overlay.style.display = 'flex';
 
@@ -1066,7 +1071,7 @@ function closePopup() {
   const rect = originImg.getBoundingClientRect();
   const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
 
-  // Force perfect square
+  // Shrink to perfect circle
   const size = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
   popupImg.style.width = `${size}px`;
   popupImg.style.height = `${size}px`;
@@ -1104,17 +1109,24 @@ popupImg.addEventListener('pointermove', e => {
   const deltaY = e.clientY - startY;
   const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-  dragScale = 1 - Math.min(0.5, distance / window.innerHeight);
+  // Snapchat-style shrink scaling
+  const minScale = 0.25;
+  const maxShrinkDistance = window.innerHeight * 0.8;
+  const t = Math.min(distance / maxShrinkDistance, 1);
+  const scale = minScale + (1 - minScale) * (1 - t); // 1 → minScale
 
-  // Shrink to circle shape
-  const minSide = Math.min(popupImg.offsetWidth, popupImg.offsetHeight) * dragScale;
-  popupImg.style.width = `${minSide}px`;
-  popupImg.style.height = `${minSide}px`;
-  popupImg.style.borderRadius = '50%';
+  const fullW = popupImg.naturalWidth;
+  const fullH = popupImg.naturalHeight;
+  const isPortrait = fullH > fullW;
+  const dimension = isPortrait ? popupImg.offsetWidth : popupImg.offsetHeight;
+  const squareSize = dimension * scale;
 
   popupImg.style.transition = 'none';
+  popupImg.style.width = `${squareSize}px`;
+  popupImg.style.height = `${squareSize}px`;
+  popupImg.style.borderRadius = '50%';
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1)`;
-  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
 });
 
 popupImg.addEventListener('pointerup', e => {
