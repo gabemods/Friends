@@ -973,7 +973,7 @@ overlay.style.cssText = `
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 `;
 
 popupImg.style.cssText = `
@@ -992,16 +992,13 @@ document.body.appendChild(overlay);
 let originImg = null;
 let startX = 0, startY = 0;
 let isDragging = false;
-let dragScale = 1;
-let originalRadius = '12px';
+let originalRect = null;
+let minSize = 90; // px, snapchat-like minimum
 
 function getTransforms(fromRect, img) {
   const temp = document.createElement('img');
   temp.src = img.src;
-  temp.style.position = 'fixed';
-  temp.style.visibility = 'hidden';
-  temp.style.maxWidth = '90vw';
-  temp.style.maxHeight = '90vh';
+  temp.style.cssText = 'position:fixed;visibility:hidden;max-width:90vw;max-height:90vh;';
   document.body.appendChild(temp);
 
   const naturalW = temp.naturalWidth || img.naturalWidth;
@@ -1027,35 +1024,34 @@ function getTransforms(fromRect, img) {
   const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
   const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
 
-  return { scaleX, scaleY, translateX, translateY };
+  return { scaleX, scaleY, translateX, translateY, finalW, finalH };
 }
 
 images.forEach(img => {
   img.style.cursor = 'zoom-in';
   img.addEventListener('click', () => {
     originImg = img;
-    popupImg.src = img.src;
-    originalRadius = getComputedStyle(img).borderRadius || '12px';
+    const rect = img.getBoundingClientRect();
+    originalRect = rect;
 
-    // FULL reset to fix second-open bug
+    // Reset all styles
+    popupImg.src = img.src;
     popupImg.style.transition = 'none';
     popupImg.style.transform = '';
     popupImg.style.width = '';
     popupImg.style.height = '';
     popupImg.style.borderRadius = '';
+    popupImg.style.pointerEvents = 'none';
 
     popupImg.onload = () => {
-      popupImg.offsetWidth; // force reflow
-      const rect = img.getBoundingClientRect();
+      const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
       overlay.style.display = 'flex';
 
       requestAnimationFrame(() => {
-        const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
-        popupImg.style.transition = 'none';
         popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
 
         requestAnimationFrame(() => {
-          popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease';
+          popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease';
           popupImg.style.transform = `translate(0, 0) scale(1)`;
           popupImg.style.borderRadius = '12px';
           popupImg.style.pointerEvents = 'auto';
@@ -1068,19 +1064,13 @@ images.forEach(img => {
 function closePopup() {
   if (!originImg) return;
 
-  const rect = originImg.getBoundingClientRect();
-  const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, originImg);
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(originalRect, originImg);
 
-  // Shrink to perfect circle
-  const size = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
-  popupImg.style.width = `${size}px`;
-  popupImg.style.height = `${size}px`;
+  popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease, width 0.4s ease, height 0.4s ease';
   popupImg.style.borderRadius = '50%';
-
-  popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease, width 0.35s ease, height 0.35s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
 
-  overlay.style.transition = 'background-color 0.35s ease';
+  overlay.style.transition = 'background-color 0.4s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
   popupImg.addEventListener('transitionend', () => {
@@ -1105,46 +1095,44 @@ popupImg.addEventListener('pointerdown', e => {
 
 popupImg.addEventListener('pointermove', e => {
   if (!isDragging) return;
+
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  const dragDistance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
-  // Snapchat-style shrink scaling
-  const minScale = 0.25;
-  const maxShrinkDistance = window.innerHeight * 0.8;
-  const t = Math.min(distance / maxShrinkDistance, 1);
-  const scale = minScale + (1 - minScale) * (1 - t); // 1 → minScale
-
-  const fullW = popupImg.naturalWidth;
-  const fullH = popupImg.naturalHeight;
-  const isPortrait = fullH > fullW;
-  const dimension = isPortrait ? popupImg.offsetWidth : popupImg.offsetHeight;
-  const squareSize = dimension * scale;
+  const maxShrink = 1;
+  const minShrink = minSize / Math.min(popupImg.naturalWidth, popupImg.naturalHeight);
+  const shrinkFactor = 1 - Math.min(dragDistance / (window.innerHeight * 0.8), 1);
+  const scale = Math.max(minShrink, shrinkFactor);
 
   popupImg.style.transition = 'none';
-  popupImg.style.width = `${squareSize}px`;
-  popupImg.style.height = `${squareSize}px`;
+
+  const baseSize = Math.min(popupImg.naturalWidth, popupImg.naturalHeight) * scale;
+  popupImg.style.width = `${baseSize}px`;
+  popupImg.style.height = `${baseSize}px`;
   popupImg.style.borderRadius = '50%';
-  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1)`;
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
 });
 
 popupImg.addEventListener('pointerup', e => {
   if (!isDragging) return;
   isDragging = false;
+
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
   if (distance > 100) {
     closePopup();
   } else {
     popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease, width 0.3s ease, height 0.3s ease';
-    popupImg.style.transform = `translate(0,0) scale(1)`;
+    popupImg.style.transform = `translate(0,0)`;
     popupImg.style.borderRadius = '12px';
     popupImg.style.width = '';
     popupImg.style.height = '';
-    overlay.style.transition = 'background 0.3s ease';
+    overlay.style.transition = 'background-color 0.3s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.addEventListener('transitionend', () => {
       popupImg.style.transition = '';
