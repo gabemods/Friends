@@ -1094,12 +1094,13 @@ popupImg.addEventListener('pointermove', e => {
 
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-  const dragDistance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+  const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
+  // Minimum scale: ~80px final size based on original width
   const fullSize = Math.min(parseFloat(popupImg.style.width), parseFloat(popupImg.style.height));
-  const minScale = MIN_SIZE / fullSize;
-  const t = Math.min(dragDistance / (window.innerHeight * 0.8), 1);
-  const scale = Math.max(minScale, 1 - t);
+  const minScale = 80 / fullSize; // Snapchat-style lower limit
+  const shrinkAmount = Math.min(distance / (window.innerHeight * 0.5), 1); // how much to shrink
+  const scale = Math.max(minScale, 1 - shrinkAmount);
 
   popupImg.style.transition = 'none';
   popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
