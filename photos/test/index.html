@@ -980,9 +980,9 @@ popupImg.style.cssText = `
   position: fixed;
   max-width: 90vw;
   max-height: 90vh;
-  will-change: transform, border-radius, width, height;
   touch-action: none;
   pointer-events: none;
+  will-change: transform, border-radius;
   object-fit: cover;
 `;
 
@@ -993,38 +993,14 @@ let originImg = null;
 let startX = 0, startY = 0;
 let isDragging = false;
 let originalRect = null;
-let minSize = 90; // px, snapchat-like minimum
+const MIN_SIZE = 80; // px
 
-function getTransforms(fromRect, img) {
-  const temp = document.createElement('img');
-  temp.src = img.src;
-  temp.style.cssText = 'position:fixed;visibility:hidden;max-width:90vw;max-height:90vh;';
-  document.body.appendChild(temp);
-
-  const naturalW = temp.naturalWidth || img.naturalWidth;
-  const naturalH = temp.naturalHeight || img.naturalHeight;
-  const aspectRatio = naturalW / naturalH;
-
-  const viewportW = window.innerWidth * 0.9;
-  const viewportH = window.innerHeight * 0.9;
-  let finalW, finalH;
-
-  if (viewportW / viewportH > aspectRatio) {
-    finalH = viewportH;
-    finalW = finalH * aspectRatio;
-  } else {
-    finalW = viewportW;
-    finalH = finalW / aspectRatio;
-  }
-
-  document.body.removeChild(temp);
-
-  const scaleX = fromRect.width / finalW;
-  const scaleY = fromRect.height / finalH;
+function getTransforms(fromRect, targetW, targetH) {
+  const scaleX = fromRect.width / targetW;
+  const scaleY = fromRect.height / targetH;
   const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
   const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
-
-  return { scaleX, scaleY, translateX, translateY, finalW, finalH };
+  return { scaleX, scaleY, translateX, translateY };
 }
 
 images.forEach(img => {
@@ -1034,7 +1010,7 @@ images.forEach(img => {
     const rect = img.getBoundingClientRect();
     originalRect = rect;
 
-    // Reset all styles
+    // Reset styles
     popupImg.src = img.src;
     popupImg.style.transition = 'none';
     popupImg.style.transform = '';
@@ -1044,14 +1020,33 @@ images.forEach(img => {
     popupImg.style.pointerEvents = 'none';
 
     popupImg.onload = () => {
-      const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, img);
+      popupImg.offsetWidth; // force reflow
+      const naturalW = popupImg.naturalWidth;
+      const naturalH = popupImg.naturalHeight;
+      const aspectRatio = naturalW / naturalH;
+      const maxW = window.innerWidth * 0.9;
+      const maxH = window.innerHeight * 0.9;
+      let finalW, finalH;
+
+      if (maxW / maxH > aspectRatio) {
+        finalH = maxH;
+        finalW = finalH * aspectRatio;
+      } else {
+        finalW = maxW;
+        finalH = finalW / aspectRatio;
+      }
+
+      const { scaleX, scaleY, translateX, translateY } = getTransforms(rect, finalW, finalH);
+
       overlay.style.display = 'flex';
+      popupImg.style.width = `${finalW}px`;
+      popupImg.style.height = `${finalH}px`;
 
       requestAnimationFrame(() => {
         popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
 
         requestAnimationFrame(() => {
-          popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease';
+          popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease';
           popupImg.style.transform = `translate(0, 0) scale(1)`;
           popupImg.style.borderRadius = '12px';
           popupImg.style.pointerEvents = 'auto';
@@ -1062,15 +1057,16 @@ images.forEach(img => {
 });
 
 function closePopup() {
-  if (!originImg) return;
+  if (!originImg || !originalRect) return;
 
-  const { scaleX, scaleY, translateX, translateY } = getTransforms(originalRect, originImg);
+  const finalW = parseFloat(popupImg.style.width);
+  const finalH = parseFloat(popupImg.style.height);
+  const { scaleX, scaleY, translateX, translateY } = getTransforms(originalRect, finalW, finalH);
 
-  popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease, width 0.4s ease, height 0.4s ease';
-  popupImg.style.borderRadius = '50%';
+  popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-
-  overlay.style.transition = 'background-color 0.4s ease';
+  popupImg.style.borderRadius = '50%';
+  overlay.style.transition = 'background-color 0.35s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
   popupImg.addEventListener('transitionend', () => {
@@ -1100,19 +1096,14 @@ popupImg.addEventListener('pointermove', e => {
   const deltaY = e.clientY - startY;
   const dragDistance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
-  const maxShrink = 1;
-  const minShrink = minSize / Math.min(popupImg.naturalWidth, popupImg.naturalHeight);
-  const shrinkFactor = 1 - Math.min(dragDistance / (window.innerHeight * 0.8), 1);
-  const scale = Math.max(minShrink, shrinkFactor);
+  const fullSize = Math.min(parseFloat(popupImg.style.width), parseFloat(popupImg.style.height));
+  const minScale = MIN_SIZE / fullSize;
+  const t = Math.min(dragDistance / (window.innerHeight * 0.8), 1);
+  const scale = Math.max(minScale, 1 - t);
 
   popupImg.style.transition = 'none';
-
-  const baseSize = Math.min(popupImg.naturalWidth, popupImg.naturalHeight) * scale;
-  popupImg.style.width = `${baseSize}px`;
-  popupImg.style.height = `${baseSize}px`;
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
   popupImg.style.borderRadius = '50%';
-  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-
   overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
 });
 
@@ -1127,11 +1118,9 @@ popupImg.addEventListener('pointerup', e => {
   if (distance > 100) {
     closePopup();
   } else {
-    popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease, width 0.3s ease, height 0.3s ease';
-    popupImg.style.transform = `translate(0,0)`;
+    popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease';
+    popupImg.style.transform = 'translate(0, 0) scale(1)';
     popupImg.style.borderRadius = '12px';
-    popupImg.style.width = '';
-    popupImg.style.height = '';
     overlay.style.transition = 'background-color 0.3s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
     popupImg.addEventListener('transitionend', () => {
