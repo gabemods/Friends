@@ -1,0 +1,575 @@
+<style>
+    @font-face {
+  font-family: 'OneUISans';
+  src: url('../assets/fonts/OneUISans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+    }
+    h1 {
+      font-weight: 500;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: url('../assets/images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'OneUISans', sans-serif;
+      color: white;
+    }
+    
+    .scroll-container {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      width: 100%;
+      height: 100dvh;
+    }
+
+   .page {
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.page:nth-child(5) .card {
+    background: linear-gradient(to bottom, darkblue, lightblue, white, lightblue, darkblue) !important;
+}
+@keyframes cardBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}
+.card {
+  background: rgba(211, 211, 211, 0.5);
+  border-radius: 25px;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: 285px;
+  max-height: 59vh; /* Set a max height */
+  overflow-y: auto;  /* Allow vertical scroll */
+  padding-top: 1px;
+  padding-bottom: 0px;
+  margin-top: -100px;
+  opacity: 0;
+}
+    .card.animate-in {
+  animation: cardBounceIn 0.6s ease forwards;
+}
+.card::-webkit-scrollbar {
+  width: 6px;
+}
+.card::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 100, 0.3);
+  border-radius: 3px;
+}
+.card:nth-child(3) {
+  max-height: 110vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+    .card h1 {
+      padding-left: 20px; /* Added left padding */
+      margin-top: 1px; /* Reduced top margin */
+      margin-bottom: -25px; /* Reduced bottom margin */
+      font-weight: 900;
+    }
+
+    .card > img { /* Target only the direct img child of .card (the logo) */
+      width: 60px;
+      height: 60px;
+      border-radius: 27%;
+      object-fit: cover;
+      display: block;
+      margin-top: 20px;
+      margin-bottom: 0;
+      margin-left: 20px; /* Move the logo to the left */
+      margin-right: auto; /* Allows the card to determine right margin */
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 10px;
+      margin-bottom: -10px;
+      padding: 20px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* Ensure images are perfect squares */
+      border-radius: 15px;
+      object-fit: cover;
+    }
+
+    .indicator-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 8px 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .indicators {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background-color: white;
+      opacity: 0.4;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    @keyframes buttonExpand {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.nav-button-animate {
+  animation: buttonExpand 1.0s ease;
+}
+   body.dark-mode {
+  background: url('../assets/images/Canyons.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+body.dark-mode .card {
+  background: rgba(50, 50, 50, 0.4);
+  box-shadow: 0 0 25px rgba(255,255, 255, 0.3);
+}
+
+body.dark-mode .indicator-wrapper {
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+}
+  
+body.dark-mode .dot {
+  background-color: white;
+}
+
+body.dark-mode .copyright {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body.dark-mode .header {
+ background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (min-width: 1024px) {
+  .body.dark-mode {
+    background: url('../assets/images/IMG_5154.jpeg') no-repeat center center fixed;
+    background-size: cover;
+  }
+}
+    
+@keyframes rotateFadeOut {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  100% { transform: rotate(180deg); opacity: 0; }
+}
+
+@keyframes moonFadeInTilt {
+  0%   { transform: rotate(-15deg); opacity: 0; }
+  100% { transform: rotate(0deg); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes sunFadeInSpin {
+  0%   { opacity: 0; transform: rotate(180deg); }
+  100% { opacity: 1; transform: rotate(0deg); }
+}
+
+.sun-rotate-fade {
+  animation: rotateFadeOut 0.6s ease forwards;
+}
+
+.moon-fade-in-tilt {
+  animation: moonFadeInTilt 0.5s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.sun-fade-in-spin {
+  animation: sunFadeInSpin 0.6s ease forwards;
+}
+
+/* colour inheritance */
+#themeToggle {
+  color: white;
+}
+body.dark-mode #themeToggle {
+  color: white;
+}
+    /* Header styling */
+body.dark-mode header {
+  color: white; /* Ensure header text is white */
+}
+body.dark-mode .card h1 {
+  color: white; /* Make the title white in dark mode */
+}
+/* Button text styling in dark mode */
+body.dark-mode button {
+  color: black; /* Make button text black */
+}
+    @keyframes imageExpand {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.expand-animation {
+  animation: imageExpand 0.4s ease;
+}
+    .copyright {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.8em;
+      color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+    /* Socials Button */
+.dropbtn {
+  position: absolute;
+  z-index: 900;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  top: 15px;
+  left: -5px;
+  padding: 0px 0px;
+  border-radius: 25px;
+  position: relative;
+  transition: transform 0.3s ease;
+  transform: translateY(-15px);
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+.arrow.rotate {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Content */
+.dropdown-content {
+  position: absolute;
+  top: 50px;
+  left: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 15px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+  /* Blur and background */
+  background-color: rgba(255, 255, 255, 0.0); /* Or rgba(0, 0, 0, 0.2) for dark mode */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Layout-safe */
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+  width: max-content;
+  color: white;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+    
+.dropdown-content svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+
+ body.dark-mode .dropdown-content {
+  background-color: rgba(0, 0, 0, 0.0);
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}   
+    
+body.dark-mode .dropbtn a {
+  color: black;
+}
+body.dark-mode .arrow {
+  color: black;
+}
+
+/* Show dropdown when active */
+.dropdown.active .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+    .button {
+  width: 45px;
+  height: 45px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+.button:hover {
+  transform: scale(1.1);
+}
+
+.button svg, .button img {
+  width: 25px;
+  height: 25px;
+  fill: white;
+}
+    
+    .copyright-box {
+  position: fixed;
+    bottom: env(safe-area-inset-bottom, 0px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0 auto;
+  padding: 5px 10px;
+  height: 20px;
+  width: 100vw;
+  font-size: 12px;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+  line-height: 20px;
+}
+/* Dark mode override */
+body.dark-mode .copyright-box {
+  color: white;
+  background: rgba(0, 0, 0, 0.0); /* transparent black */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+     .landscape-warning {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 1.2rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  text-align: center;
+  padding: 20px;
+}
+
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .landscape-warning {
+    display: flex;
+  }
+  .scroll-container {
+    display: none;
+  }
+}
+    /* Dark mode Socials button text */
+body.dark-mode .dropbtn,
+body.dark-mode .arrow {
+  color: black !important;
+  font-weight: 570 !important;
+}
+
+/* Dark mode Profiles button */
+body.dark-mode .profiles-button {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+ -webkit-backdrop-filter: blur(10px);
+  color: #d3d3d3 !important;
+}
+
+/* Dark mode Photos button */
+body.dark-mode .photos-button {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);  
+  color: #ffffff !important;
+}
+.video-container {
+  width: 85%;
+  aspect-ratio: 16 / 9; /* or 4 / 3, etc. */
+  border-radius: 22px;
+  overflow: hidden;
+  margin: -10px auto -20px auto;
+  margin-top: 30px;
+}
+
+.video-container video {
+  display: block;
+  width: 100%; /* Make the video fill the width of its container */
+  aspect-ratio: 16 / 9; /* Set a common landscape aspect ratio */
+  border-radius: 0px;
+  object-fit: cover; /* Ensure the video covers the area without distortion */
+}
+ a.info-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.3); /* translucent white */
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+a.info-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Dark mode */
+body.dark-mode a.info-button {
+  background-color: rgba(0, 0, 0, 0.3);
+  transform: scale(1.2);
+}
+
+body.dark-mode a.info-button svg circle,
+body.dark-mode a.info-button svg rect,
+body.dark-mode a.info-button svg circle:last-child {
+  stroke: white;
+  fill: none;
+}
+    /* Popup overlay */
+#img-popup-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+#img-popup-overlay img {
+  position: absolute;
+  border-radius: 12px;
+  will-change: transform, border-radius;
+  cursor: grab;
+  user-select: none;
+  max-width: none;
+  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  touch-action: none;
+}
+.popup-img {
+  cursor: pointer;
+}
+    .photo-spacer {
+  grid-column: 1 / -1;
+  height: 10px; /* Big initial space */
+  transition: height 0.6s ease;
+  pointer-events: none;
+}
+.photo-spacer.shrink {
+  height: 0px;
+  margin: 0;
+  padding-top: -10px;
+}
+  </style>
