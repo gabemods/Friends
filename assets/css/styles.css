@@ -551,7 +551,7 @@ body.dark-mode a.info-button svg circle,
 body.dark-mode a.info-button svg rect,
 body.dark-mode a.info-button svg circle:last-child {
   stroke: white;
-  fill: white;
+  fill: none;
 }
     .toast {
   position: fixed;
