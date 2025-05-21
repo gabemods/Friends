@@ -208,11 +208,10 @@ window.addEventListener('load', () => {
 });
 
 
-// --- Image Lightbox/Zoom Functionality (needs global variables, placed outside DOMContentLoaded) ---
-// This part creates elements and attaches listeners.
-const images = document.querySelectorAll('img'); // Note: This gets ALL <img> elements on the page
-const overlay = document.createElement('div'); // This is the main lightbox overlay
-const popupImg = document.createElement('img'); // This is the image shown in the lightbox
+// Image Lightbox/Zoom Functionality
+const images = document.querySelectorAll('img');
+const overlay = document.createElement('div');
+const popupImg = document.createElement('img');
 
 overlay.style.cssText = `
   position: fixed; inset: 0;
@@ -221,16 +220,17 @@ overlay.style.cssText = `
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 `;
 
 popupImg.style.cssText = `
   position: fixed;
-  will-change: transform, border-radius;
   max-width: 90vw;
   max-height: 90vh;
   touch-action: none;
   pointer-events: none;
+  will-change: transform, border-radius;
+  object-fit: cover;
 `;
 
 overlay.appendChild(popupImg);
@@ -240,104 +240,122 @@ let originImg = null;
 let startX = 0,
   startY = 0;
 let isDragging = false;
-let dragScale = 1;
-let originalRadius = '12px'; // Default value, will be updated from clicked img
+let originalRect = null;
+const MIN_SIZE = 80; // Minimum size in pixels
 
-function getTransforms(fromRect, imgElement) {
-  // Use a temporary image to calculate natural dimensions without displaying
-  const temp = new Image(); // Use new Image() for better preloading/natural dimensions
-  temp.src = imgElement.src;
-
-  // Wait for temp image to load to get accurate natural dimensions
-  return new Promise(resolve => {
-    temp.onload = () => {
-      const naturalW = temp.naturalWidth;
-      const naturalH = temp.naturalHeight;
-      const aspectRatio = naturalW / naturalH;
-
-      const viewportW = window.innerWidth * 0.9;
-      const viewportH = window.innerHeight * 0.9;
-      let finalW, finalH;
-
-      if (viewportW / viewportH > aspectRatio) {
-        finalH = viewportH;
-        finalW = finalH * aspectRatio;
-      } else {
-        finalW = viewportW;
-        finalH = finalW / aspectRatio;
-      }
-
-      const scaleX = fromRect.width / finalW;
-      const scaleY = fromRect.height / finalH;
-      const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
-      const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
-
-      resolve({ scaleX, scaleY, translateX, translateY, finalW, finalH });
-    };
-    // Handle error in case image fails to load for temp
-    temp.onerror = () => {
-        console.error("Failed to load temporary image for transform calculation.");
-        // Provide fallback values if image fails to load
-        resolve({ scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, finalW: 0, finalH: 0 });
-    };
-  });
+function getTransforms(fromRect, targetW, targetH) {
+  const scaleX = fromRect.width / targetW;
+  const scaleY = fromRect.height / targetH;
+  const translateX = fromRect.left + fromRect.width / 2 - window.innerWidth / 2;
+  const translateY = fromRect.top + fromRect.height / 2 - window.innerHeight / 2;
+  return {
+    scaleX,
+    scaleY,
+    translateX,
+    translateY
+  };
 }
 
 images.forEach(img => {
   img.style.cursor = 'zoom-in';
-  img.addEventListener('click', async () => { // Make async to await getTransforms
+  img.addEventListener('click', () => {
     originImg = img;
+    const rect = img.getBoundingClientRect();
+    originalRect = rect;
+
     popupImg.src = img.src;
 
-    originalRadius = getComputedStyle(img).borderRadius || '12px';
-    popupImg.style.borderRadius = originalRadius; // Apply original radius initially
+    // Fully reset styles before each open
+    popupImg.style.removeProperty('width');
+    popupImg.style.removeProperty('height');
+    popupImg.style.removeProperty('aspect-ratio');
+    popupImg.style.transition = 'none';
+    popupImg.style.transform = '';
+    popupImg.style.borderRadius = '';
+    popupImg.style.pointerEvents = 'none';
 
-    // Set src and wait for onload (this can be the popupImg's onload)
-    // Using async/await with getTransforms for more reliable dimension calculation
-    const rect = img.getBoundingClientRect();
-    overlay.style.display = 'flex';
+    popupImg.onload = () => {
+      popupImg.offsetWidth; // Force reflow
 
-    // Ensure DOM renders before calculating initial transform
-    requestAnimationFrame(async () => {
-      const { scaleX, scaleY, translateX, translateY, finalW, finalH } = await getTransforms(rect, img);
+      const naturalW = popupImg.naturalWidth;
+      const naturalH = popupImg.naturalHeight;
+      const aspectRatio = naturalW / naturalH;
+      const maxW = window.innerWidth * 0.9;
+      const maxH = window.innerHeight * 0.9;
+      let finalW, finalH;
 
-      popupImg.style.width = `${finalW}px`; // Set final dimensions based on calculation
+      if (maxW / maxH > aspectRatio) {
+        finalH = maxH;
+        finalW = finalH * aspectRatio;
+      } else {
+        finalW = maxW;
+        finalH = finalW / aspectRatio;
+      }
+
+      const {
+        scaleX,
+        scaleY,
+        translateX,
+        translateY
+      } = getTransforms(rect, finalW, finalH);
+
+      // Set initial size and show
+      popupImg.style.width = `${finalW}px`;
       popupImg.style.height = `${finalH}px`;
-      popupImg.style.transition = 'none';
-      popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-      popupImg.style.borderRadius = originalRadius; // Ensure original radius is applied for start
+      overlay.style.display = 'flex';
 
       requestAnimationFrame(() => {
-        popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease';
-        popupImg.style.transform = `translate(0, 0) scale(1)`;
-        popupImg.style.borderRadius = '12px'; // Final rounded corner for popup
-        popupImg.style.pointerEvents = 'auto';
+        popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+
+        requestAnimationFrame(() => {
+          popupImg.style.transition = 'transform 0.4s ease, border-radius 0.4s ease';
+          popupImg.style.transform = `translate(0, 0) scale(1)`;
+          popupImg.style.borderRadius = '12px';
+          popupImg.style.pointerEvents = 'auto';
+        });
       });
-    });
+    };
   });
 });
 
+function closePopup() {
+  if (!originImg || !originalRect) return;
 
-async function closePopup() { // Make async to await getTransforms
-  if (!originImg) return;
-  const rect = originImg.getBoundingClientRect();
-  const { scaleX, scaleY, translateX, translateY, finalW, finalH } = await getTransforms(rect, originImg);
+  const finalW = parseFloat(popupImg.style.width);
+  const finalH = parseFloat(popupImg.style.height);
+  const {
+    scaleX,
+    scaleY,
+    translateX,
+    translateY
+  } = getTransforms(originalRect, finalW, finalH);
 
-  popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
+  popupImg.style.transition = 'transform 0.35s ease, border-radius 0.35s ease';
   popupImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-  popupImg.style.borderRadius = originalRadius; // Revert to original radius
-  overlay.style.transition = 'background-color 0.25s ease'; // Corrected from 'background'
+  popupImg.style.borderRadius = '50%';
+  overlay.style.transition = 'background-color 0.35s ease';
   overlay.style.backgroundColor = 'rgba(0,0,0,0)';
 
-  popupImg.addEventListener('transitionend', function handler() {
+  popupImg.addEventListener('transitionend', () => {
     overlay.style.display = 'none';
-    popupImg.style.transform = '';
-    popupImg.style.transition = '';
+
+    // Clean reset
+    popupImg.removeAttribute('style');
+    popupImg.style.cssText = `
+      position: fixed;
+      max-width: 90vw;
+      max-height: 90vh;
+      touch-action: none;
+      pointer-events: none;
+      will-change: transform, border-radius;
+      object-fit: cover;
+    `;
+
     overlay.style.transition = '';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    popupImg.style.pointerEvents = 'none';
-    popupImg.removeEventListener('transitionend', handler); // Clean up listener
-  }, { once: true });
+  }, {
+    once: true
+  });
 }
 
 overlay.addEventListener('click', e => {
@@ -349,45 +367,53 @@ popupImg.addEventListener('pointerdown', e => {
   startX = e.clientX;
   startY = e.clientY;
   popupImg.setPointerCapture(e.pointerId);
+
+  // Lock square dimensions for drag
+  const side = Math.min(popupImg.offsetWidth, popupImg.offsetHeight);
+  popupImg.style.width = `${side}px`;
+  popupImg.style.height = `${side}px`;
+  popupImg.style.aspectRatio = '1 / 1';
 });
 
 popupImg.addEventListener('pointermove', e => {
   if (!isDragging) return;
+
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
+  const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
-  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  dragScale = 1 - Math.min(0.4, distance / window.innerHeight);
+  const baseSize = parseFloat(popupImg.style.width);
+  const minScale = MIN_SIZE / baseSize;
+  const shrinkAmount = Math.min(distance / (window.innerHeight * 0.5), 1);
+  const scale = Math.max(minScale, 1 - shrinkAmount);
+
   popupImg.style.transition = 'none';
-  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${dragScale})`;
-  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * dragScale})`;
-
-  // Round progressively
-  if (originalRadius !== '50%') { // Check if original was not a circle
-    const radius = 12 + (1 - dragScale) * 100; // Adjust '100' for desired effect
-    popupImg.style.borderRadius = `${radius}px`;
-  }
+  popupImg.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(${scale})`;
+  popupImg.style.borderRadius = '50%';
+  overlay.style.backgroundColor = `rgba(0,0,0,${0.8 * scale})`;
 });
 
 popupImg.addEventListener('pointerup', e => {
   if (!isDragging) return;
   isDragging = false;
+
   const deltaX = e.clientX - startX;
   const deltaY = e.clientY - startY;
-  const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
 
   if (distance > 100) {
     closePopup();
   } else {
-    popupImg.style.transition = 'transform 0.25s ease, border-radius 0.25s ease';
-    popupImg.style.transform = `translate(0,0) scale(1)`;
+    popupImg.style.transition = 'transform 0.3s ease, border-radius 0.3s ease';
+    popupImg.style.transform = 'translate(0, 0) scale(1)';
     popupImg.style.borderRadius = '12px';
-    overlay.style.transition = 'background-color 0.25s ease'; // Corrected from 'background'
+    overlay.style.transition = 'background-color 0.3s ease';
     overlay.style.backgroundColor = 'rgba(0,0,0,0.8)';
-    popupImg.addEventListener('transitionend', function handler() {
-      popupImg.style.transition = ''; // Remove transition after animation
-      popupImg.removeEventListener('transitionend', handler); // Clean up listener
-    }, { once: true });
+    popupImg.addEventListener('transitionend', () => {
+      popupImg.style.transition = '';
+    }, {
+      once: true
+    });
   }
 });
 
