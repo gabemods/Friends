@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'OneUISans';
-  src: url('../../fonts/OneUISans-Regular.ttf') format('truetype');
+  src: url('../fonts/OneUISans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
     }
@@ -13,7 +13,7 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background: url('../../images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
+      background: url('../images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'OneUISans', sans-serif;
       color: white;
@@ -185,7 +185,7 @@
   animation: buttonExpand 1.0s ease;
 }
    body.dark-mode {
-  background: url('../../images/Canyons.jpeg') no-repeat center center fixed;
+  background: url('../images/Canyons.jpeg') no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -214,7 +214,7 @@ body.dark-mode .header {
 
 @media screen and (min-width: 1024px) {
   .body.dark-mode {
-    background: url('../../images/IMG_5154.jpeg') no-repeat center center fixed;
+    background: url('../images/IMG_5154.jpeg') no-repeat center center fixed;
     background-size: cover;
   }
 }
