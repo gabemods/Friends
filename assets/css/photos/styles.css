@@ -14,7 +14,7 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background: url('../../assets/images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
+      background: url('../../images/gabriel/20240701_131845.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'OneUISans', sans-serif;
       color: white;
@@ -186,7 +186,7 @@
   animation: buttonExpand 1.0s ease;
 }
    body.dark-mode {
-  background: url('../../assets/images/Canyons.jpeg') no-repeat center center fixed;
+  background: url('../../images/Canyons.jpeg') no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -215,7 +215,7 @@ body.dark-mode .header {
 
 @media screen and (min-width: 1024px) {
   .body.dark-mode {
-    background: url('../../assets/images/IMG_5154.jpeg') no-repeat center center fixed;
+    background: url('../../images/IMG_5154.jpeg') no-repeat center center fixed;
     background-size: cover;
   }
 }
