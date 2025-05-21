@@ -1,7 +1,6 @@
-<style>
-    @font-face {
+@font-face {
   font-family: 'OneUISans';
-  src: url('../../assets/fonts/OneUISans-Regular.ttf') format('truetype');
+  src: url('../../fonts/OneUISans-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
     }
@@ -572,4 +571,3 @@ body.dark-mode a.info-button svg circle:last-child {
   margin: 0;
   padding-top: -10px;
 }
-  </style>
