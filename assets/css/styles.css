@@ -756,3 +756,14 @@ body.dark-mode a.info-button svg circle:last-child {
   background: transparent;
   pointer-events: none;
 }
+
+.passcode-overlay.fade-out {
+  animation: fadeOut 0.4s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
