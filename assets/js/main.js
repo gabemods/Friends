@@ -532,19 +532,29 @@ document.addEventListener("DOMContentLoaded", () => {
       if (value === "⌫") {
         currentInput = currentInput.slice(0, -1);
         updateDots();
+      } else if (button.classList.contains("ok")) {
+        // Manually trigger passcode check
+        if (currentInput === correctPasscode) {
+          overlay.classList.add("fade-out");
+          setTimeout(() => {
+            overlay.style.display = "none";
+          }, 400);
+        } else {
+          shakeAndClear();
+        }
       } else if (currentInput.length < 4) {
         currentInput += value;
         updateDots();
 
         if (currentInput.length === 4) {
           if (currentInput === correctPasscode) {
-  overlay.classList.add("fade-out");
-  setTimeout(() => {
-    overlay.style.display = "none";
-  }, 400); // Match animation duration
-} else {
-  shakeAndClear();
-}
+            overlay.classList.add("fade-out");
+            setTimeout(() => {
+              overlay.style.display = "none";
+            }, 400); // Match animation duration
+          } else {
+            shakeAndClear();
+          }
         }
       }
     });
