@@ -493,66 +493,39 @@ window.addEventListener("orientationchange", () => {
   });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
-  const protectedCard = document.getElementById("ollie-card");
+  const input = document.getElementById("passcodeInput");
+  const buttons = overlay.querySelectorAll("button");
 
-  let passcode = "";
-  const correctCode = "1234";
-  let isUnlocked = false;
-
-  function enterDigit(digit) {
-    if (passcode.length < 4) {
-      passcode += digit;
-      updateDots();
-      if (passcode.length === 4) {
-        setTimeout(() => {
-          if (passcode === correctCode) {
-            overlay.style.display = "none";
-            isUnlocked = true;
-          } else {
-            alert("Wrong passcode!");
-            clearAll();
-          }
-        }, 200);
-      }
-    }
-  }
-
-  function clearPasscode() {
-    passcode = passcode.slice(0, -1);
-    updateDots();
-  }
+  let currentInput = "";
+  const correctPasscode = "1723"; // 🔒 Your passcode
 
   function clearAll() {
-    passcode = "";
-    updateDots();
+    currentInput = "";
+    input.value = "";
   }
 
-  function updateDots() {
-    for (let i = 1; i <= 4; i++) {
-      document.getElementById("d" + i).textContent = passcode[i - 1] ? "•" : "•";
-    }
-  }
-
-  function isCardVisible() {
-    const rect = protectedCard.getBoundingClientRect();
-    return rect.top < window.innerHeight && rect.bottom > 0;
-  }
-
-  window.addEventListener("scroll", () => {
-    if (isCardVisible()) {
-      if (!isUnlocked) {
-        overlay.style.display = "flex";
-        clearAll();
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const value = button.textContent;
+      if (value === "←") {
+        currentInput = currentInput.slice(0, -1);
+      } else if (value === "✔") {
+        if (currentInput === correctPasscode) {
+          overlay.style.display = "none";
+        } else {
+          clearAll();
+        }
+      } else {
+        if (currentInput.length < 4) {
+          currentInput += value;
+        }
       }
-    } else {
-      isUnlocked = false;
-    }
+      input.value = "•".repeat(currentInput.length);
+    });
   });
 
-  // Make button functions globally accessible
-  window.enterDigit = enterDigit;
-  window.clearPasscode = clearPasscode;
-  window.clearAll = clearAll;
+  // Show overlay on page load
+  overlay.style.display = "flex";
 });
