@@ -495,11 +495,11 @@ window.addEventListener("orientationchange", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
-  const dots = Array.from(document.querySelectorAll(".dot"));
+  const dots = Array.from(document.querySelectorAll(".passcode-dot"));
   const buttons = overlay.querySelectorAll("button:not(.empty)");
 
   let currentInput = "";
-  const correctPasscode = "1234"; // Set your code here
+  const correctPasscode = "1234"; // Your passcode here
 
   function updateDots() {
     dots.forEach((dot, i) => {
@@ -547,6 +547,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Show overlay on load
   overlay.style.display = "flex";
 });
