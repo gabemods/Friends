@@ -674,111 +674,87 @@ body.dark-mode a.info-button svg circle:last-child {
   cursor: pointer;
 }
 
-/* Full screen overlay with blur */
-.password-overlay {
+.passcode-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(20px);
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* align top, so we can push down */
-  padding-top: 10vh; /* push down from top */
-  z-index: 99999;
+  align-items: center;
+  z-index: 9999;
 }
 
-/* Passcode container: keypad and text */
-.passcode-container {
-  background: rgba(255, 255, 255, 0.12); /* subtle white translucent */
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  padding: 30px 20px 40px;
-  width: 280px; /* smaller width */
-  box-sizing: border-box;
+.passcode-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  justify-content: center;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
 }
 
-/* The instruction text above the keypad */
 .passcode-text {
-  color: #fff;
-  font-family: 'SamsungOne', 'Roboto', sans-serif;
+  color: white;
+  font-size: 18px;
   font-weight: 500;
-  font-size: 14px;
+  font-family: 'Segoe UI', sans-serif;
+  margin-bottom: 20px;
   text-align: center;
-  letter-spacing: 0.05em;
-  user-select: none;
-  line-height: 1.4;
-  margin-bottom: 0;
 }
 
-/* Dots container */
 .passcode-dots {
   display: flex;
   gap: 15px;
-  justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 .passcode-dot {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  transition: background 0.3s ease;
+  background-color: white;
+  opacity: 0.2;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.passcode-dot.filled {
-  background: #00aaff; /* One UI blue accent */
-  box-shadow: 0 0 6px #00aaff;
-  animation: dotFill 0.4s ease forwards;
+.passcode-dot.active {
+  opacity: 1;
+  transform: scale(1.3);
 }
 
-@keyframes dotFill {
-  from { transform: scale(0.6); opacity: 0.3; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* Numpad grid */
 .numpad {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
+  grid-template-columns: repeat(3, 60px);
+  grid-gap: 15px;
+  background: transparent; /* removes unwanted black background */
 }
 
-/* Numpad buttons */
 .numpad button {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #fff;
-  font-size: 24px;
-  font-weight: 600;
-  height: 58px;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
   cursor: pointer;
-  user-select: none;
-  transition: background 0.25s ease, transform 0.2s ease;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.numpad button:hover {
-  background: rgba(0, 170, 255, 0.8);
-  transform: scale(1.1);
-  box-shadow: 0 5px 14px rgba(0, 170, 255, 0.7);
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .numpad button:active {
   transform: scale(0.95);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Remove focus outline */
-.numpad button:focus {
-  outline: none;
+.numpad button.empty {
+  background-color: transparent;
+  cursor: default;
 }
