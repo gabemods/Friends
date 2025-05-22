@@ -767,7 +767,7 @@ numpad button.backspace {
 
 .numpad button.backspace,
 .numpad button.ok {
-  background: none;
+  background: none !important;
   box-shadow: none;
   border: none;
     }
