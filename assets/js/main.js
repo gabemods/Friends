@@ -492,3 +492,60 @@ window.addEventListener("orientationchange", () => {
     text.style.animationDelay = `${0.1 + index * 0.05}s`; // Slight stagger
   });
 });
+
+const overlay = document.getElementById("passcodeOverlay");
+const protectedCard = document.querySelector('.page .card'); // Adjust selector if needed
+
+let passcode = "";
+const correctCode = "1234";
+let isUnlocked = false;
+
+function enterDigit(digit) {
+  if (passcode.length < 4) {
+    passcode += digit;
+    updateDots();
+    if (passcode.length === 4) {
+      setTimeout(() => {
+        if (passcode === correctCode) {
+          overlay.style.display = "none";
+          isUnlocked = true;
+        } else {
+          alert("Wrong passcode!");
+          clearAll();
+        }
+      }, 200);
+    }
+  }
+}
+
+function clearPasscode() {
+  passcode = passcode.slice(0, -1);
+  updateDots();
+}
+
+function clearAll() {
+  passcode = "";
+  updateDots();
+}
+
+function updateDots() {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById("d" + i).textContent = passcode[i - 1] ? "•" : "•";
+  }
+}
+
+function isCardVisible() {
+  const rect = protectedCard.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+window.addEventListener("scroll", () => {
+  if (isCardVisible()) {
+    if (!isUnlocked) {
+      overlay.style.display = "flex";
+      clearAll();
+    }
+  } else {
+    isUnlocked = false;
+  }
+});
