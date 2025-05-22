@@ -674,7 +674,6 @@ body.dark-mode a.info-button svg circle:last-child {
   cursor: pointer;
 }
 
-/* Passcode Overlay Base */
 .passcode-overlay {
   position: fixed;
   inset: 0;
@@ -709,14 +708,14 @@ body.dark-mode a.info-button svg circle:last-child {
   100% { transform: translateX(0); }
 }
 
-.dots {
+.passcode-dots {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-bottom: 25px;
 }
 
-.dot {
+.passcode-dot {
   width: 16px;
   height: 16px;
   background: white;
@@ -725,7 +724,7 @@ body.dark-mode a.info-button svg circle:last-child {
   transition: opacity 0.2s, transform 0.2s;
 }
 
-.dot.filled {
+.passcode-dot.filled {
   opacity: 1;
   transform: scale(1.3);
 }
