@@ -538,10 +538,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (currentInput.length === 4) {
           if (currentInput === correctPasscode) {
-            overlay.style.display = "none";
-          } else {
-            shakeAndClear();
-          }
+  overlay.classList.add("fade-out");
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, 400); // Match animation duration
+} else {
+  shakeAndClear();
+}
         }
       }
     });
