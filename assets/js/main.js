@@ -493,39 +493,86 @@ window.addEventListener("orientationchange", () => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const overlay = document.getElementById("passcodeOverlay");
-  const input = document.getElementById("passcodeInput");
-  const buttons = overlay.querySelectorAll("button");
+/* Passcode Overlay Base */
+.passcode-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  let currentInput = "";
-  const correctPasscode = "1723"; // 🔒 Your passcode
+.passcode-box {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 30px;
+  text-align: center;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
 
-  function clearAll() {
-    currentInput = "";
-    input.value = "";
-  }
+.passcode-box.shake {
+  animation: shake 0.4s;
+}
 
-  buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      const value = button.textContent;
-      if (value === "←") {
-        currentInput = currentInput.slice(0, -1);
-      } else if (value === "✔") {
-        if (currentInput === correctPasscode) {
-          overlay.style.display = "none";
-        } else {
-          clearAll();
-        }
-      } else {
-        if (currentInput.length < 4) {
-          currentInput += value;
-        }
-      }
-      input.value = "•".repeat(currentInput.length);
-    });
-  });
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
 
-  // Show overlay on page load
-  overlay.style.display = "flex";
-});
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.2;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.dot.filled {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.numpad button {
+  width: 70px;
+  height: 70px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: white;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.numpad button:active {
+  transform: scale(0.95);
+}
+
+.numpad .empty {
+  background: transparent;
+  pointer-events: none;
+}
