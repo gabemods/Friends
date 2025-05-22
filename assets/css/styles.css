@@ -765,6 +765,18 @@ numpad button.backspace {
   font-size: 18px;
 }
 
+.numpad button.backspace,
+.numpad button.ok {
+  background: none;
+  box-shadow: none;
+  border: none;
+    }
+
+.numpad button.backspace:hover,
+.numpad button.ok:hover {
+  background: rgba(255, 255, 255, 0.1); /* Optional subtle hover */
+}
+
 .passcode-overlay.fade-out {
   animation: fadeOut 0.4s ease;
 }
