@@ -493,59 +493,66 @@ window.addEventListener("orientationchange", () => {
   });
 });
 
-const overlay = document.getElementById("passcodeOverlay");
-const protectedCard = document.querySelector('.page .card'); // Adjust selector if needed
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById("passcodeOverlay");
+  const protectedCard = document.getElementById('ollie-card'); // Only protect this card
 
-let passcode = "";
-const correctCode = "1234";
-let isUnlocked = false;
+  let passcode = "";
+  const correctCode = "1234";
+  let isUnlocked = false;
 
-function enterDigit(digit) {
-  if (passcode.length < 4) {
-    passcode += digit;
+  function enterDigit(digit) {
+    if (passcode.length < 4) {
+      passcode += digit;
+      updateDots();
+      if (passcode.length === 4) {
+        setTimeout(() => {
+          if (passcode === correctCode) {
+            overlay.style.display = "none";
+            isUnlocked = true;
+          } else {
+            alert("Wrong passcode!");
+            clearAll();
+          }
+        }, 200);
+      }
+    }
+  }
+
+  function clearPasscode() {
+    passcode = passcode.slice(0, -1);
     updateDots();
-    if (passcode.length === 4) {
-      setTimeout(() => {
-        if (passcode === correctCode) {
-          overlay.style.display = "none";
-          isUnlocked = true;
-        } else {
-          alert("Wrong passcode!");
-          clearAll();
-        }
-      }, 200);
+  }
+
+  function clearAll() {
+    passcode = "";
+    updateDots();
+  }
+
+  function updateDots() {
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById("d" + i).textContent = passcode[i - 1] ? "•" : "•";
     }
   }
-}
 
-function clearPasscode() {
-  passcode = passcode.slice(0, -1);
-  updateDots();
-}
-
-function clearAll() {
-  passcode = "";
-  updateDots();
-}
-
-function updateDots() {
-  for (let i = 1; i <= 4; i++) {
-    document.getElementById("d" + i).textContent = passcode[i - 1] ? "•" : "•";
+  function isCardVisible() {
+    const rect = protectedCard.getBoundingClientRect();
+    return rect.top < window.innerHeight && rect.bottom > 0;
   }
-}
 
-function isCardVisible() {
-  const rect = protectedCard.getBoundingClientRect();
-  return rect.top < window.innerHeight && rect.bottom > 0;
-}
-
-window.addEventListener("scroll", () => {
-  if (isCardVisible()) {
-    if (!isUnlocked) {
-      overlay.style.display = "flex";
-      clearAll();
+  window.addEventListener("scroll", () => {
+    if (isCardVisible()) {
+      if (!isUnlocked) {
+        overlay.style.display = "flex";
+        clearAll();
+      }
+    } else {
+      isUnlocked = false;
     }
-  } else {
-    isUnlocked = false;
-  }
+  });
+
+  // Make digit entry functions global so they work from the HTML onclick
+  window.enterDigit = enterDigit;
+  window.clearPasscode = clearPasscode;
+  window.clearAll = clearAll;
 });
