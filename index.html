@@ -293,29 +293,15 @@
   </div>
 </div>
 </body>
-<!-- Passcode Overlay -->
-<div class="passcode-overlay" id="passcodeOverlay">
+<!-- One UI Passcode Overlay -->
+<div id="passcodeOverlay" class="passcode-overlay">
   <div class="passcode-box">
-    <h3>Enter Passcode</h3>
-    <div class="digits" id="digitDisplay">
-      <div class="digit" id="d1">•</div>
-      <div class="digit" id="d2">•</div>
-      <div class="digit" id="d3">•</div>
-      <div class="digit" id="d4">•</div>
-    </div>
-    <div class="number-pad">
-      <button onclick="enterDigit('1')">1</button>
-      <button onclick="enterDigit('2')">2</button>
-      <button onclick="enterDigit('3')">3</button>
-      <button onclick="enterDigit('4')">4</button>
-      <button onclick="enterDigit('5')">5</button>
-      <button onclick="enterDigit('6')">6</button>
-      <button onclick="enterDigit('7')">7</button>
-      <button onclick="enterDigit('8')">8</button>
-      <button onclick="enterDigit('9')">9</button>
-      <button onclick="clearPasscode()">←</button>
-      <button onclick="enterDigit('0')">0</button>
-      <button onclick="clearAll()">C</button>
+    <input type="password" id="passcodeInput" maxlength="4" disabled />
+    <div class="numpad">
+      <button>1</button><button>2</button><button>3</button>
+      <button>4</button><button>5</button><button>6</button>
+      <button>7</button><button>8</button><button>9</button>
+      <button>←</button><button>0</button><button>✔</button>
     </div>
   </div>
 </div>
