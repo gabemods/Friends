@@ -2,7 +2,7 @@
 Simple Friendship group project.
 
 # Notice
-After improving the experience with w mouse on compiter this project will be rarely updated or possibly discontinued
+After optimising the website (such as scrolling horizontally and the ice cube game) for mouse on computers, this project will be rarely updated or possibly discontinued
 **The website will most likely not be deleted even if the project is discontinued**
 
 # License
