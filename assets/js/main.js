@@ -494,53 +494,58 @@ window.addEventListener("orientationchange", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const correctPassword = "1234";
-  const entered = [];
-  const dots = document.querySelectorAll(".passcode-dot");
   const overlay = document.getElementById("passcodeOverlay");
-  const buttons = document.querySelectorAll(".numpad button");
+  const dots = Array.from(document.querySelectorAll(".passcode-dot"));
+  const buttons = overlay.querySelectorAll("button:not(.empty)");
+
+  let currentInput = "";
+  const correctPasscode = "1234"; // Your passcode here
 
   function updateDots() {
     dots.forEach((dot, i) => {
-      if (entered[i]) {
-        dot.classList.add("active");
+      if (i < currentInput.length) {
+        dot.classList.add("filled");
       } else {
-        dot.classList.remove("active");
+        dot.classList.remove("filled");
       }
     });
   }
 
-  function resetDots() {
-    entered.length = 0;
+  function clearInput() {
+    currentInput = "";
     updateDots();
   }
 
-  function handleInput(value) {
-    if (value === "←") {
-      entered.pop();
-      updateDots();
-      return;
-    }
-    if (entered.length < 4 && !isNaN(value)) {
-      entered.push(value);
-      updateDots();
-      if (entered.length === 4) {
-        setTimeout(() => {
-          if (entered.join("") === correctPassword) {
-            overlay.style.display = "none";
-          } else {
-            resetDots();
-          }
-        }, 200);
-      }
-    }
+  function shakeAndClear() {
+    const box = document.querySelector(".passcode-box");
+    box.classList.add("shake");
+    setTimeout(() => {
+      box.classList.remove("shake");
+      clearInput();
+    }, 400);
   }
 
   buttons.forEach(button => {
-    if (!button.classList.contains("empty")) {
-      button.addEventListener("click", () => handleInput(button.textContent));
-    }
+    button.addEventListener("click", () => {
+      const value = button.textContent;
+
+      if (value === "←") {
+        currentInput = currentInput.slice(0, -1);
+        updateDots();
+      } else if (currentInput.length < 4) {
+        currentInput += value;
+        updateDots();
+
+        if (currentInput.length === 4) {
+          if (currentInput === correctPasscode) {
+            overlay.style.display = "none";
+          } else {
+            shakeAndClear();
+          }
+        }
+      }
+    });
   });
 
-  overlay.style.display = "flex"; // Make visible on load
+  overlay.style.display = "flex";
 });
