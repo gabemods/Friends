@@ -571,3 +571,115 @@ body.dark-mode a.info-button svg circle:last-child {
   margin: 0;
   padding-top: -10px;
 }
+
+.passcode-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.0);
+  z-index: 90000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.passcode-box {
+  background: rgba(255, 255, 255, 0.0);
+  border-radius: 25px;
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.passcode-box.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+.passcode-dots {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.passcode-dot {
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.2;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.passcode-dot.filled {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.numpad button {
+  width: 70px;
+  height: 70px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  backdrop-filter: blur(15px);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.numpad button:active {
+  transform: scale(0.95);
+}
+
+.numpad .empty {
+  background: transparent;
+  pointer-events: none;
+}
+
+numpad button.backspace {
+  font-size: 22px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.0) !important;
+  box-shadow: none;
+  border: none;
+}
+
+.numpad button.ok {
+  opacity: 0.5;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.0) !important;
+  box-shadow: none;
+  border: none;
+}
+
+.numpad button.backspace:hover,
+.numpad button.ok:hover {
+  background: rgba(255, 255, 255, 0.1); /* Optional subtle hover */
+}
+
+.passcode-overlay.fade-out {
+  animation: fadeOut 0.4s ease;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+}
