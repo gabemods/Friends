@@ -296,12 +296,17 @@
 <!-- One UI Passcode Overlay -->
 <div id="passcodeOverlay" class="passcode-overlay">
   <div class="passcode-box">
-    <input type="password" id="passcodeInput" maxlength="4" disabled />
+    <div class="dots">
+      <span class="dot" id="dot1"></span>
+      <span class="dot" id="dot2"></span>
+      <span class="dot" id="dot3"></span>
+      <span class="dot" id="dot4"></span>
+    </div>
     <div class="numpad">
       <button>1</button><button>2</button><button>3</button>
       <button>4</button><button>5</button><button>6</button>
       <button>7</button><button>8</button><button>9</button>
-      <button>←</button><button>0</button><button>✔</button>
+      <button class="empty"></button><button>0</button><button>←</button>
     </div>
   </div>
 </div>
