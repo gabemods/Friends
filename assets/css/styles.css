@@ -677,7 +677,7 @@ body.dark-mode a.info-button svg circle:last-child {
 .passcode-overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(100px);
+  backdrop-filter: blur(15px);
   background: rgba(0, 0, 0, 0.0);
   z-index: 90000;
   display: flex;
@@ -758,15 +758,15 @@ body.dark-mode a.info-button svg circle:last-child {
 numpad button.backspace {
   font-size: 22px;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.0) !important;
   box-shadow: none;
   border: none;
 }
 
 .numpad button.ok {
-  opacity: 0.4;
+  opacity: 0.5;
   font-size: 18px;
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.0) !important;
   box-shadow: none;
   border: none;
 }
