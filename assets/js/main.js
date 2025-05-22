@@ -529,7 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       const value = button.textContent;
 
-      if (value === "←") {
+      if (value === "⌫") {
         currentInput = currentInput.slice(0, -1);
         updateDots();
       } else if (currentInput.length < 4) {
