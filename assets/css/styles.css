@@ -654,7 +654,7 @@ body.dark-mode a.info-button svg circle:last-child {
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 99999;
+  z-index: 9999;
   overflow: hidden;
   touch-action: none;
   user-select: none;
@@ -684,7 +684,7 @@ body.dark-mode a.info-button svg circle:last-child {
   justify-content: center;
   align-items: flex-start; /* align top, so we can push down */
   padding-top: 10vh; /* push down from top */
-  z-index: 9999;
+  z-index: 99999;
 }
 
 /* Passcode container: keypad and text */
