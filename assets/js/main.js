@@ -495,7 +495,7 @@ window.addEventListener("orientationchange", () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const overlay = document.getElementById("passcodeOverlay");
-  const protectedCard = document.getElementById('ollie-card'); // Only protect this card
+  const protectedCard = document.getElementById("ollie-card");
 
   let passcode = "";
   const correctCode = "1234";
@@ -551,7 +551,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Make digit entry functions global so they work from the HTML onclick
+  // Make button functions globally accessible
   window.enterDigit = enterDigit;
   window.clearPasscode = clearPasscode;
   window.clearAll = clearAll;
