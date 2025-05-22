@@ -691,7 +691,6 @@ body.dark-mode a.info-button svg circle:last-child {
   padding: 30px;
   text-align: center;
   backdrop-filter: blur(15px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease;
 }
 
