@@ -677,7 +677,7 @@ body.dark-mode a.info-button svg circle:last-child {
 .passcode-overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(30px);
+  backdrop-filter: blur(50px);
   background: rgba(0, 0, 0, 0.1);
   z-index: 90000;
   display: flex;
@@ -738,7 +738,7 @@ body.dark-mode a.info-button svg circle:last-child {
   height: 70px;
   font-size: 1.5rem;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.55);
   border: none;
   color: white;
   backdrop-filter: blur(10px);
@@ -756,7 +756,7 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .passcode-overlay.fade-out {
-  animation: fadeOut 0.4s ease forwards;
+  animation: fadeOut 0.4s ease;
 }
 
 @keyframes fadeOut {
