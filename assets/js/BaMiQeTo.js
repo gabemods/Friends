@@ -434,3 +434,74 @@ window.addEventListener("orientationchange", () => {
     text.style.animationDelay = `${0.1 + index * 0.05}s`; // Slight stagger
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("passcodeOverlay");
+  const dots = Array.from(document.querySelectorAll(".passcode-dot"));
+  const buttons = overlay.querySelectorAll("button:not(.empty)");
+
+  let currentInput = "";
+  const correctPasscode = "7512"; // Your passcode here
+
+  function updateDots() {
+    dots.forEach((dot, i) => {
+      if (i < currentInput.length) {
+        dot.classList.add("filled");
+      } else {
+        dot.classList.remove("filled");
+      }
+    });
+  }
+
+  function clearInput() {
+    currentInput = "";
+    updateDots();
+  }
+
+  function shakeAndClear() {
+    const box = document.querySelector(".passcode-box");
+    box.classList.add("shake");
+    setTimeout(() => {
+      box.classList.remove("shake");
+      clearInput();
+    }, 400);
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const value = button.textContent;
+
+      if (value === "⌫") {
+        currentInput = currentInput.slice(0, -1);
+        updateDots();
+      } else if (button.classList.contains("ok")) {
+        // Manually trigger passcode check
+        if (currentInput === correctPasscode) {
+          overlay.classList.add("fade-out");
+          setTimeout(() => {
+            overlay.style.display = "none";
+          }, 400);
+        } else {
+          shakeAndClear();
+        }
+      } else if (currentInput.length < 4) {
+        currentInput += value;
+        updateDots();
+
+        if (currentInput.length === 4) {
+          if (currentInput === correctPasscode) {
+            overlay.classList.add("fade-out");
+            setTimeout(() => {
+              overlay.style.display = "none";
+            }, 400); // Match animation duration
+          } else {
+            shakeAndClear();
+          }
+        }
+      }
+    });
+  });
+
+  overlay.style.display = "flex";
+});
