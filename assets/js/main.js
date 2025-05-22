@@ -499,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const buttons = overlay.querySelectorAll("button:not(.empty)");
 
   let currentInput = "";
-  const correctPasscode = "1234"; // Your passcode here
+  const correctPasscode = "7512"; // Your passcode here
 
   function updateDots() {
     dots.forEach((dot, i) => {
