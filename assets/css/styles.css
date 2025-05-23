@@ -690,7 +690,7 @@ body.dark-mode a.info-button svg circle:last-child {
   border-radius: 25px;
   padding: 30px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .passcode-box.shake {
@@ -777,12 +777,16 @@ numpad button.backspace {
 }
 
 .passcode-overlay.fade-out {
-  animation: fadeOut 0.4s ease;
+  animation: oneUIFadeOut 0.4s ease forwards;
 }
 
-@keyframes fadeOut {
-  to {
+@keyframes oneUIFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
     opacity: 0;
-    transform: scale(1.05);
+    transform: scale(1.05) translateY(20px);
   }
 }
