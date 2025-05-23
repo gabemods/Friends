@@ -158,22 +158,17 @@ function draw(e) {
   drawTexture(x, y);
 }
 
-canvas.addEventListener("mousedown", e => {
+canvas.addEventListener("pointerdown", e => {
   drawing = true;
   cursor.style.display = "block";
   draw(e);
 });
 
-canvas.addEventListener("mousemove", e => {
+canvas.addEventListener("pointermove", e => {
   if (drawing) draw(e);
 });
 
-canvas.addEventListener("mouseup", () => {
-  drawing = false;
-  cursor.style.display = "none";
-});
-
-canvas.addEventListener("mouseleave", () => {
+document.addEventListener("pointerup", () => {
   drawing = false;
   cursor.style.display = "none";
 });
