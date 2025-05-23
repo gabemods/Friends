@@ -830,27 +830,3 @@ numpad button.backspace {
   max-width: none;
   text-align: center; /* optional */
 }
-
-.passcode-text {
-  transition: opacity 0.4s ease;
-}
-
-.passcode-text.fade-out {
-  opacity: 0;
-}
-
-.passcode-dots {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.passcode-dots.fade-in {
-  opacity: 1;
-}
-
-.hidden {
-  display: none;
-}
