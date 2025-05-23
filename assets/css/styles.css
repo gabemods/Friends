@@ -693,6 +693,13 @@ body.dark-mode a.info-button svg circle:last-child {
   line-height: 1.4;
 }
 
+.passcode-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 260px; /* Lock consistent width */
+}
+
 .passcode-box {
   background: rgba(255, 255, 255, 0.0);
   border-radius: 25px;
