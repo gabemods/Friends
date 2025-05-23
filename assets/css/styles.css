@@ -682,8 +682,7 @@ body.dark-mode a.info-button svg circle:last-child {
   z-index: 90000;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  margin-top: 100px;
+  align-items: center;
 }
 
 .passcode-title {
@@ -721,6 +720,7 @@ body.dark-mode a.info-button svg circle:last-child {
   justify-content: center;
   width: fit-content;
   max-width: 90vw;
+  margin-top: 100px;
 }
 
 .passcode-box.shake {
