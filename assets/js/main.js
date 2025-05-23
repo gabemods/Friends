@@ -494,13 +494,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const dots = Array.from(document.querySelectorAll(".passcode-dot"));
   const buttons = overlay.querySelectorAll("button:not(.empty)");
 
-  const textContainer = document.querySelector(".passcode-text");
-  const dotsContainer = document.querySelector(".passcode-dots");
-
   let currentInput = "";
   const correctPasscode = "7512";
   const PASSCODE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
-  let hasStartedTyping = false;
 
   function updateDots() {
     dots.forEach((dot, i) => {
@@ -530,19 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 400);
   }
 
-  function showDotsFadeText() {
-    if (hasStartedTyping) return;
-    hasStartedTyping = true;
-
-    textContainer.classList.add("fade-out");
-    setTimeout(() => {
-      textContainer.style.display = "none";
-      dotsContainer.classList.remove("hidden");
-      dotsContainer.classList.add("fade-in");
-    }, 400);
-  }
-
-  // Skip passcode if recently unlocked
+  // Check if we should skip the passcode
   const lastUnlock = localStorage.getItem("passcodeUnlockTime");
   const now = Date.now();
   if (lastUnlock && now - parseInt(lastUnlock) < PASSCODE_TIMEOUT) {
@@ -566,9 +550,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (currentInput.length < 4) {
         currentInput += value;
         updateDots();
-
-        // Hide text and show dots on first press
-        showDotsFadeText();
 
         if (currentInput.length === 4) {
           if (currentInput === correctPasscode) {
