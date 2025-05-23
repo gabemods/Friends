@@ -59,17 +59,13 @@ window.addEventListener('load', () => {
   }
 });
 
-// Horizontal Scroll with Mouse Wheel
-const scroller = document.getElementById('cardScroller');
-
-if (scroller) {
-  scroller.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    scroller.scrollLeft += e.deltaY;
-  }, {
-    passive: false
+document.querySelector('.scroll-container').addEventListener('wheel', function (e) {
+  e.preventDefault();
+  this.scrollBy({
+    left: e.deltaY,
+    behavior: 'smooth'
   });
-}
+}, { passive: false });
 
 // Image Lightbox/Zoom Functionality
 const images = document.querySelectorAll('img');
