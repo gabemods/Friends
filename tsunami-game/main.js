@@ -1,5 +1,4 @@
-import * as THREE from 'https://unpkg.com/three@0.160.1/build/three.module.js';
-import { Water } from 'https://unpkg.com/three@0.160.1/examples/jsm/objects/Water.js';
+// main.js
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
@@ -9,11 +8,13 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// Lighting
 const directionalLight = new THREE.DirectionalLight(0xffd699, 1.2);
 directionalLight.position.set(30, 50, -10);
 scene.add(directionalLight);
 scene.add(new THREE.AmbientLight(0xffffff, 0.3));
 
+// Ground
 const groundTexture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/sand/sand1.jpg');
 groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
 groundTexture.repeat.set(50, 50);
@@ -25,23 +26,28 @@ const ground = new THREE.Mesh(
 ground.rotation.x = -Math.PI / 2;
 scene.add(ground);
 
+// Water
 const waterGeometry = new THREE.PlaneGeometry(15, 7);
-const water = new Water(waterGeometry, {
+const waterNormals = new THREE.TextureLoader().load('https://threejs.org/examples/textures/waternormals.jpg', function (texture) {
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+});
+
+const water = new THREE.Water(waterGeometry, {
   textureWidth: 512,
   textureHeight: 512,
-  waterNormals: new THREE.TextureLoader().load('https://threejs.org/examples/textures/waternormals.jpg', t => {
-    t.wrapS = t.wrapT = THREE.RepeatWrapping;
-  }),
+  waterNormals: waterNormals,
   alpha: 0.8,
   sunDirection: directionalLight.position.clone().normalize(),
   sunColor: 0xffffff,
   waterColor: 0x0066cc,
   distortionScale: 4.5,
+  fog: scene.fog !== undefined,
 });
 water.rotation.x = -Math.PI / 2;
 water.position.set(-7, 1, 0);
 scene.add(water);
 
+// Stickman
 const stickman = new THREE.Group();
 const mat = new THREE.MeshStandardMaterial({ color: 0x000000 });
 
@@ -74,6 +80,7 @@ stickman.add(rightLeg);
 stickman.position.set(-7, 0.5, 0);
 scene.add(stickman);
 
+// Controls
 const runButton = document.getElementById("runButton");
 const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 if (isMobile) runButton.style.display = "block";
@@ -86,6 +93,7 @@ runButton.addEventListener("touchend", e => { e.preventDefault(); run = false; }
 document.addEventListener("keydown", e => { if (e.key === "ArrowRight") run = true; });
 document.addEventListener("keyup", e => { if (e.key === "ArrowRight") run = false; });
 
+// Animation loop
 function animate() {
   requestAnimationFrame(animate);
   water.material.uniforms.time.value += 1.0 / 60.0;
