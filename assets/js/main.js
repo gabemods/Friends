@@ -495,18 +495,12 @@ window.addEventListener("orientationchange", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
-
-  // ✅ Skip passcode if already authenticated this session
-  if (sessionStorage.getItem("authenticated") === "true") {
-    overlay.style.display = "none";
-    return;
-  }
-
   const dots = Array.from(document.querySelectorAll(".passcode-dot"));
   const buttons = overlay.querySelectorAll("button:not(.empty)");
 
   let currentInput = "";
-  const correctPasscode = "7512"; // Your passcode here
+  const correctPasscode = "7512";
+  const PASSCODE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
   function updateDots() {
     dots.forEach((dot, i) => {
@@ -528,16 +522,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 400);
   }
 
-  function checkPasscode() {
-    if (currentInput === correctPasscode) {
-      sessionStorage.setItem("authenticated", "true"); // ✅ Only lasts until tab is closed or refreshed
-      overlay.classList.add("fade-out");
-      setTimeout(() => {
-        overlay.style.display = "none";
-      }, 400);
-    } else {
-      shakeAndClear();
-    }
+  function unlockSuccess() {
+    localStorage.setItem("passcodeUnlockTime", Date.now().toString());
+    overlay.classList.add("fade-out");
+    setTimeout(() => {
+      overlay.style.display = "none";
+    }, 400);
+  }
+
+  // Check if we should skip the passcode
+  const lastUnlock = localStorage.getItem("passcodeUnlockTime");
+  const now = Date.now();
+  if (lastUnlock && now - parseInt(lastUnlock) < PASSCODE_TIMEOUT) {
+    overlay.style.display = "none";
+    return;
   }
 
   buttons.forEach(button => {
@@ -548,13 +546,21 @@ document.addEventListener("DOMContentLoaded", () => {
         currentInput = currentInput.slice(0, -1);
         updateDots();
       } else if (button.classList.contains("ok")) {
-        checkPasscode();
+        if (currentInput === correctPasscode) {
+          unlockSuccess();
+        } else {
+          shakeAndClear();
+        }
       } else if (currentInput.length < 4) {
         currentInput += value;
         updateDots();
 
         if (currentInput.length === 4) {
-          checkPasscode();
+          if (currentInput === correctPasscode) {
+            unlockSuccess();
+          } else {
+            shakeAndClear();
+          }
         }
       }
     });
