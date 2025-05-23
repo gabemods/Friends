@@ -705,7 +705,8 @@ body.dark-mode a.info-button svg circle:last-child {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 260px; /* Lock consistent width */
+  width: 260px;
+  padding-top: 60px; /* ✅ Pushes content downward inside the box */
 }
 
 .passcode-box {
@@ -720,7 +721,6 @@ body.dark-mode a.info-button svg circle:last-child {
   justify-content: center;
   width: fit-content;
   max-width: 90vw;
-  margin-top: 100px;
 }
 
 .passcode-box.shake {
