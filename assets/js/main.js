@@ -496,8 +496,8 @@ window.addEventListener("orientationchange", () => {
 document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
 
-  // ✅ Skip passcode if already authenticated
-  if (localStorage.getItem("authenticated") === "true") {
+  // ✅ Skip passcode if already authenticated this session
+  if (sessionStorage.getItem("authenticated") === "true") {
     overlay.style.display = "none";
     return;
   }
@@ -510,11 +510,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateDots() {
     dots.forEach((dot, i) => {
-      if (i < currentInput.length) {
-        dot.classList.add("filled");
-      } else {
-        dot.classList.remove("filled");
-      }
+      dot.classList.toggle("filled", i < currentInput.length);
     });
   }
 
@@ -534,11 +530,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function checkPasscode() {
     if (currentInput === correctPasscode) {
-      localStorage.setItem("authenticated", "true"); // ✅ Save auth state
+      sessionStorage.setItem("authenticated", "true"); // ✅ Only lasts until tab is closed or refreshed
       overlay.classList.add("fade-out");
       setTimeout(() => {
         overlay.style.display = "none";
-      }, 400); // Match animation duration
+      }, 400);
     } else {
       shakeAndClear();
     }
@@ -552,7 +548,6 @@ document.addEventListener("DOMContentLoaded", () => {
         currentInput = currentInput.slice(0, -1);
         updateDots();
       } else if (button.classList.contains("ok")) {
-        // ✅ Trigger check on OK button
         checkPasscode();
       } else if (currentInput.length < 4) {
         currentInput += value;
