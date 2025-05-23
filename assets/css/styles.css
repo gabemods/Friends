@@ -686,7 +686,7 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .passcode-title {
-  font-size: 18px;
+  font-size: 16px;
   margin: 0 0 25px;
   color: #fff;
   font-weight: 500;
@@ -694,10 +694,10 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .passcode-subtext {
-  font-size: 14px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.5); /* Light gray on dark background */
-  margin-top: -15px;
-  margin-bottom: 30px;
+  margin-top: -25px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
