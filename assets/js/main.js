@@ -495,6 +495,13 @@ window.addEventListener("orientationchange", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
+
+  // ✅ Skip passcode if already authenticated
+  if (localStorage.getItem("authenticated") === "true") {
+    overlay.style.display = "none";
+    return;
+  }
+
   const dots = Array.from(document.querySelectorAll(".passcode-dot"));
   const buttons = overlay.querySelectorAll("button:not(.empty)");
 
@@ -525,6 +532,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 400);
   }
 
+  function checkPasscode() {
+    if (currentInput === correctPasscode) {
+      localStorage.setItem("authenticated", "true"); // ✅ Save auth state
+      overlay.classList.add("fade-out");
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 400); // Match animation duration
+    } else {
+      shakeAndClear();
+    }
+  }
+
   buttons.forEach(button => {
     button.addEventListener("click", () => {
       const value = button.textContent;
@@ -533,28 +552,14 @@ document.addEventListener("DOMContentLoaded", () => {
         currentInput = currentInput.slice(0, -1);
         updateDots();
       } else if (button.classList.contains("ok")) {
-        // Manually trigger passcode check
-        if (currentInput === correctPasscode) {
-          overlay.classList.add("fade-out");
-          setTimeout(() => {
-            overlay.style.display = "none";
-          }, 400);
-        } else {
-          shakeAndClear();
-        }
+        // ✅ Trigger check on OK button
+        checkPasscode();
       } else if (currentInput.length < 4) {
         currentInput += value;
         updateDots();
 
         if (currentInput.length === 4) {
-          if (currentInput === correctPasscode) {
-            overlay.classList.add("fade-out");
-            setTimeout(() => {
-              overlay.style.display = "none";
-            }, 400); // Match animation duration
-          } else {
-            shakeAndClear();
-          }
+          checkPasscode();
         }
       }
     });
