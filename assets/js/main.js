@@ -564,3 +564,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
   overlay.style.display = "flex";
 });
+
+let passcode = "";
+const dots = document.querySelectorAll(".passcode-dot");
+const numpadButtons = document.querySelectorAll(".numpad button");
+const passcodeInfo = document.getElementById("passcodeInfo");
+const passcodeDots = document.getElementById("passcodeDots");
+
+numpadButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const val = btn.textContent.trim();
+
+    if (val === "⌫") {
+      passcode = passcode.slice(0, -1);
+    } else if (val === "OK") {
+      // Handle passcode submit here
+    } else if (passcode.length < 4) {
+      passcode += val;
+    }
+
+    // Switch from info text to dots after first input
+    if (passcode.length > 0) {
+      passcodeInfo.style.display = "none";
+      passcodeDots.style.display = "flex";
+    } else {
+      passcodeInfo.style.display = "block";
+      passcodeDots.style.display = "none";
+    }
+
+    // Update dots
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("filled", i < passcode.length);
+    });
+  });
+});
