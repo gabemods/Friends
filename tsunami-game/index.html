@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>3D Tsunami Run</title>
+  <title>Stickman Running from Tsunami</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
-    html, body { margin: 0; overflow: hidden; touch-action: manipulation; }
-    canvas { display: block; }
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    canvas, button {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
     #runButton {
       position: absolute;
-      bottom: 20px; left: 50%;
+      bottom: 20px;
+      left: 50%;
       transform: translateX(-50%);
       padding: 15px 40px;
       font-size: 20px;
@@ -16,23 +28,177 @@
       border: none;
       border-radius: 30px;
       color: white;
-      font-weight: 700;
+      font-weight: bold;
       display: none;
       z-index: 10;
       box-shadow: 0 6px 20px rgba(0,127,255,0.7);
     }
+    #timer {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: white;
+      font-size: 24px;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 20px;
+      border-radius: 10px;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
-  <button id="runButton">RUN</button>
+<div id="timer">Time: 0.00</div>
+<button id="runButton">RUN</button>
 
-  <!-- Include Three.js core library -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
 
-  <!-- Include Water plugin -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/objects/Water.js"></script>
+<script>
+const scene = new THREE.Scene();
 
-  <!-- Include your main script -->
-  <script src="main.js"></script>
+const loader = new THREE.TextureLoader();
+loader.load("https://cdn.pixabay.com/photo/2016/11/21/15/46/beach-1846040_1280.jpg", texture => {
+  scene.background = texture;
+});
+
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 2000);
+camera.position.set(-5, 3, 10);
+
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(0,10,10);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+
+const sandTexture = loader.load("https://cdn.pixabay.com/photo/2017/07/28/14/28/sand-2547272_1280.jpg");
+sandTexture.wrapS = sandTexture.wrapT = THREE.RepeatWrapping;
+sandTexture.repeat.set(10, 10);
+
+const ground = new THREE.Mesh(
+  new THREE.PlaneGeometry(200, 200),
+  new THREE.MeshStandardMaterial({map: sandTexture})
+);
+ground.rotation.x = -Math.PI/2;
+scene.add(ground);
+
+const waterGeometry = new THREE.PlaneGeometry(20, 8, 32, 32);
+const waterMaterial = new THREE.MeshStandardMaterial({color: 0x0066cc, transparent: true, opacity: 0.8});
+const water = new THREE.Mesh(waterGeometry, waterMaterial);
+water.rotation.x = -Math.PI/2;
+water.position.set(-20, 1, 0);
+scene.add(water);
+
+function updateWater(time) {
+  const vertices = water.geometry.attributes.position.array;
+  for (let i=0; i<vertices.length; i+=3) {
+    const x = vertices[i];
+    const y = vertices[i+1];
+    vertices[i+2] = 0.3 * Math.sin(x * 2 + time * 3) * Math.cos(y * 2 + time * 2);
+  }
+  water.geometry.attributes.position.needsUpdate = true;
+  water.geometry.computeVertexNormals();
+}
+
+const stickman = new THREE.Group();
+const blackMat = new THREE.MeshStandardMaterial({color: 0x000000});
+
+const head = new THREE.Mesh(new THREE.SphereGeometry(0.35, 16, 16), blackMat);
+head.position.y = 1.8;
+stickman.add(head);
+
+const body = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 1.0, 8), blackMat);
+body.position.y = 1.05;
+stickman.add(body);
+
+function makeLimb() {
+  const upper = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4, 8), blackMat);
+  const lower = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.4, 8), blackMat);
+  lower.position.y = -0.4;
+  const joint = new THREE.Group();
+  upper.position.y = -0.2;
+  joint.add(upper);
+  upper.add(lower);
+  return joint;
+}
+
+const leftArm = makeLimb();
+leftArm.position.set(-0.4, 1.5, 0);
+const rightArm = makeLimb();
+rightArm.position.set(0.4, 1.5, 0);
+const leftLeg = makeLimb();
+leftLeg.position.set(-0.2, 0.5, 0);
+const rightLeg = makeLimb();
+rightLeg.position.set(0.2, 0.5, 0);
+
+stickman.add(leftArm, rightArm, leftLeg, rightLeg);
+stickman.rotation.y = -Math.PI / 2;
+stickman.position.set(-5, 0.5, 0);
+scene.add(stickman);
+
+const runButton = document.getElementById("runButton");
+const timerDisplay = document.getElementById("timer");
+const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+if (isMobile) runButton.style.display = "block";
+
+let run = false, speed = 0.12, legAngle = 0, waveSpeed = 0.02, waveSize = 1;
+let startTime = Date.now();
+let gameOver = false;
+
+runButton.addEventListener("touchstart", e => { e.preventDefault(); run = true; });
+runButton.addEventListener("touchend", e => { e.preventDefault(); run = false; });
+document.addEventListener("keydown", e => { if(e.key === "ArrowRight") run = true; });
+document.addEventListener("keyup", e => { if(e.key === "ArrowRight") run = false; });
+
+function animate(time=0){
+  requestAnimationFrame(animate);
+  if (gameOver) return;
+
+  const now = Date.now();
+  const elapsed = (now - startTime) / 1000;
+  timerDisplay.innerText = "Time: " + elapsed.toFixed(2);
+
+  waveSpeed = Math.min(0.15, 0.02 + elapsed * 0.01);
+  waveSize = Math.min(1.5, 1 + elapsed * 0.1);
+
+  water.position.x += waveSpeed;
+  water.scale.set(waveSize, 1, waveSize);
+
+  if(run) {
+    legAngle += 0.2;
+    leftLeg.rotation.x = Math.sin(legAngle) * 1.0;
+    rightLeg.rotation.x = Math.sin(legAngle + Math.PI) * 1.0;
+    leftArm.rotation.x = Math.sin(legAngle + Math.PI) * 0.7;
+    rightArm.rotation.x = Math.sin(legAngle) * 0.7;
+    stickman.position.x += speed;
+    camera.position.x += speed;
+  }
+
+  updateWater(elapsed);
+
+  if(water.position.x > stickman.position.x - 0.5){
+    gameOver = true;
+    const best = Math.max(elapsed, parseFloat(localStorage.getItem("bestTime") || "0"));
+    if (elapsed > best) localStorage.setItem("bestTime", elapsed.toFixed(2));
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        alert("Well done! You survived " + elapsed.toFixed(2) + "s. Best: " + best.toFixed(2) + "s.");
+        location.reload();
+      }, 100);
+    });
+  }
+
+  renderer.render(scene, camera);
+}
+
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+animate();
+</script>
 </body>
 </html>
