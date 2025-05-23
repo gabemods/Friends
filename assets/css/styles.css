@@ -686,6 +686,8 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .passcode-title {
+  white-space: normal;     /* allow wrapping */
+  width: 100%;
   font-size: 17px;
   margin: 0 0 25px;
   color: #fff;
