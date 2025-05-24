@@ -549,7 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => {
       const value = button.textContent;
 
-      if (value === "⌫") {
+      if (value === "backspace") {
         currentInput = currentInput.slice(0, -1);
         updateDots();
       } else if (button.classList.contains("ok")) {
