@@ -514,11 +514,13 @@ buttons.forEach(button => {
       return;
     }
 
-    // Get the number only (from first child or text node)
-    const value = button.firstChild?.textContent.trim();
+    // Get the first text node only (i.e., the number)
+    const number = Array.from(button.childNodes).find(
+      node => node.nodeType === Node.TEXT_NODE
+    )?.textContent.trim();
 
-    if (value && currentInput.length < 4) {
-      currentInput += value;
+    if (number && currentInput.length < 4) {
+      currentInput += number;
       updateDots();
       updateOKButton();
 
