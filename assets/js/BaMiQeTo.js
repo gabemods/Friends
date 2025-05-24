@@ -492,29 +492,41 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  buttons.forEach(button => {
+  const buttons = document.querySelectorAll(".numpad button");
+
+buttons.forEach(button => {
   button.addEventListener("click", () => {
+    // Handle backspace
     if (button.classList.contains("backspace")) {
       currentInput = currentInput.slice(0, -1);
       updateDots();
-    } else if (button.classList.contains("ok")) {
+      updateOKButton();
+      return;
+    }
+
+    // Handle OK
+    if (button.classList.contains("ok")) {
       if (currentInput === correctPasscode) {
         unlockSuccess();
       } else {
         shakeAndClear();
       }
-    } else {
-      const value = button.textContent.trim(); // get the button text
-      if (currentInput.length < 4) {
-        currentInput += value;
-        updateDots();
+      return;
+    }
 
-        if (currentInput.length === 4) {
-          if (currentInput === correctPasscode) {
-            unlockSuccess();
-          } else {
-            shakeAndClear();
-          }
+    // Get the number only (from first child or text node)
+    const value = button.firstChild?.textContent.trim();
+
+    if (value && currentInput.length < 4) {
+      currentInput += value;
+      updateDots();
+      updateOKButton();
+
+      if (currentInput.length === 4) {
+        if (currentInput === correctPasscode) {
+          unlockSuccess();
+        } else {
+          shakeAndClear();
         }
       }
     }
