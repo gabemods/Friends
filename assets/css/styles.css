@@ -723,7 +723,7 @@ body.dark-mode a.info-button svg circle:last-child {
   align-items: center; /* ✅ Centers dots & numpad horizontally */
   justify-content: center;
   width: fit-content;
-  max-width: 90vw;
+  max-width: 200vw;
 }
 
 .passcode-box.shake {
@@ -830,6 +830,6 @@ numpad button.backspace {
 .passcode-subtext {
   display: block;
   width: 100%;
-  max-width: 100px;
+  max-width: 700px !important;
   text-align: center; /* optional */
 }
