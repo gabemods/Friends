@@ -712,7 +712,7 @@ body.dark-mode a.info-button svg circle:last-child {
   align-items: center;
   width: 100%;
   max-width: none;
-  padding-top: 100px; /* ✅ Pushes content downward inside the box */
+  padding-top: 80px; /* ✅ Pushes content downward inside the box */
 }
 
 .passcode-box {
@@ -767,16 +767,16 @@ body.dark-mode a.info-button svg circle:last-child {
 .numpad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 30px;  /* wider horizontal spacing */
-  row-gap: 20px;     /* vertical spacing stays the same */
+  column-gap: 25px;  /* wider horizontal spacing */
+  row-gap: 15px;     /* vertical spacing stays the same */
   justify-items: center;
   align-items: center;
 }
 
 .numpad button {
-  width: 70px;
-  height: 70px;
-  font-size: 1.7rem;
+  width: 65px;
+  height: 65px;
+  font-size: 1.8rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   border: none;
