@@ -686,14 +686,16 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .passcode-title {
-  white-space: normal;     /* allow wrapping */
-  width: 100%;
-  max-width: 200px;
   font-size: 17px;
   margin: 0 0 25px;
   color: #fff;
   font-weight: 500;
   line-height: 1.4;
+  text-align: center;
+  max-width: 100%;
+  white-space: normal;
+  padding: 0 20px; /* Optional side padding for nice spacing */
+  box-sizing: border-box;
 }
 
 .passcode-subtext {
@@ -709,7 +711,7 @@ body.dark-mode a.info-button svg circle:last-child {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 260px;
+  max-width: none;
   padding-top: 50px; /* ✅ Pushes content downward inside the box */
 }
 
@@ -723,8 +725,9 @@ body.dark-mode a.info-button svg circle:last-child {
   flex-direction: column;
   align-items: center; /* ✅ Centers dots & numpad horizontally */
   justify-content: center;
-  width: fit-content;
-  max-width: 200vw;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
 }
 
 .passcode-box.shake {
