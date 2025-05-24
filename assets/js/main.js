@@ -546,19 +546,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   buttons.forEach(button => {
-    button.addEventListener("click", () => {
-      const value = button.textContent;
-
-      if (value === "backspace") {
-        currentInput = currentInput.slice(0, -1);
-        updateDots();
-      } else if (button.classList.contains("ok")) {
-        if (currentInput === correctPasscode) {
-          unlockSuccess();
-        } else {
-          shakeAndClear();
-        }
-      } else if (currentInput.length < 4) {
+  button.addEventListener("click", () => {
+    if (button.classList.contains("backspace")) {
+      currentInput = currentInput.slice(0, -1);
+      updateDots();
+    } else if (button.classList.contains("ok")) {
+      if (currentInput === correctPasscode) {
+        unlockSuccess();
+      } else {
+        shakeAndClear();
+      }
+    } else {
+      const value = button.textContent.trim(); // get the button text
+      if (currentInput.length < 4) {
         currentInput += value;
         updateDots();
 
@@ -570,8 +570,9 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
       }
-    });
+    }
   });
+});
 
   overlay.style.display = "flex";
 });
