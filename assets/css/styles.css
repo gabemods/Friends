@@ -786,6 +786,14 @@ body.dark-mode a.info-button svg circle:last-child {
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
+.numpad button .letters {
+  font-size: 10px;
+  color: #888;
+  letter-spacing: 1px;
+  font-weight: 500;
+  user-select: none;
+}
+
 .numpad button:active {
   transform: scale(0.95);
 }
