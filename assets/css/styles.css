@@ -687,22 +687,22 @@ body.dark-mode a.info-button svg circle:last-child {
 
 .passcode-title {
   font-size: 17px;
-  margin: 0 0 25px;
+  margin: 0 0 0px;
   color: #fff;
   font-weight: 500;
   line-height: 1.4;
   text-align: center;
   max-width: 100%;
   white-space: normal;
-  padding: 0 20px; /* Optional side padding for nice spacing */
+  padding: 0 1px; /* Optional side padding for nice spacing */
   box-sizing: border-box;
 }
 
 .passcode-subtext {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.5); /* Light gray on dark background */
-  margin-top: -25px;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 5px;
   text-align: center;
 }
 
