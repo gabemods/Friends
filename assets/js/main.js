@@ -499,10 +499,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const PASSCODE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
   function updateDots() {
-    dots.forEach((dot, i) => {
-      dot.classList.toggle("filled", i < currentInput.length);
-    });
+  dots.forEach((dot, i) => {
+    dot.classList.toggle("filled", i < currentInput.length);
+  });
+
+  const info = document.getElementById("passcodeInfo");
+  const dotsContainer = document.getElementById("passcodeDots");
+
+  if (currentInput.length > 0) {
+    info.classList.add("hidden");
+    dotsContainer.classList.add("visible");
+  } else {
+    info.classList.remove("hidden");
+    dotsContainer.classList.remove("visible");
   }
+}
 
   function clearInput() {
     currentInput = "";
