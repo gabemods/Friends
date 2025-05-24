@@ -700,9 +700,9 @@ body.dark-mode a.info-button svg circle:last-child {
 
 .passcode-subtext {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5); /* Light gray on dark background */
+  color: rgba(255, 255, 255, 0.7); /* Light gray on dark background */
   margin-top: 0px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -797,7 +797,7 @@ body.dark-mode a.info-button svg circle:last-child {
 numpad button.backspace {
   font-size: 22px;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.0) !important;
+  background: none !important;
   box-shadow: none;
   border: none;
 }
@@ -828,12 +828,4 @@ numpad button.backspace {
     opacity: 0;
     transform: scale(1.05) translateY(20px);
   }
-}
-
-.passcode-title,
-.passcode-subtext {
-  display: block;
-  width: 100%;
-  max-width: 700px !important;
-  text-align: center; /* optional */
 }
