@@ -492,43 +492,29 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const buttons = document.querySelectorAll(".numpad button");
-
-buttons.forEach(button => {
+  buttons.forEach(button => {
   button.addEventListener("click", () => {
-    // Handle backspace
     if (button.classList.contains("backspace")) {
       currentInput = currentInput.slice(0, -1);
       updateDots();
-      updateOKButton();
-      return;
-    }
-
-    // Handle OK
-    if (button.classList.contains("ok")) {
+    } else if (button.classList.contains("ok")) {
       if (currentInput === correctPasscode) {
         unlockSuccess();
       } else {
         shakeAndClear();
       }
-      return;
-    }
+    } else {
+      const value = button.textContent.trim(); // get the button text
+      if (currentInput.length < 4) {
+        currentInput += value;
+        updateDots();
 
-    // Get the first text node only (i.e., the number)
-    const number = Array.from(button.childNodes).find(
-      node => node.nodeType === Node.TEXT_NODE
-    )?.textContent.trim();
-
-    if (number && currentInput.length < 4) {
-      currentInput += number;
-      updateDots();
-      updateOKButton();
-
-      if (currentInput.length === 4) {
-        if (currentInput === correctPasscode) {
-          unlockSuccess();
-        } else {
-          shakeAndClear();
+        if (currentInput.length === 4) {
+          if (currentInput === correctPasscode) {
+            unlockSuccess();
+          } else {
+            shakeAndClear();
+          }
         }
       }
     }
