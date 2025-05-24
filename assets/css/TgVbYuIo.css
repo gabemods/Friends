@@ -575,7 +575,7 @@ body.dark-mode a.info-button svg circle:last-child {
 .passcode-overlay {
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(100px);
   background: rgba(0, 0, 0, 0.0);
   z-index: 90000;
   display: flex;
@@ -583,12 +583,49 @@ body.dark-mode a.info-button svg circle:last-child {
   align-items: center;
 }
 
+.passcode-title {
+  font-size: 17px;
+  margin: 0 0 0px;
+  color: #fff;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  max-width: 100%;
+  white-space: normal;
+  padding: 0 1px; /* Optional side padding for nice spacing */
+  box-sizing: border-box;
+}
+
+.passcode-subtext {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7); /* Light gray on dark background */
+  margin-top: 0px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.passcode-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  padding-top: 80px; /* ✅ Pushes content downward inside the box */
+}
+
 .passcode-box {
   background: rgba(255, 255, 255, 0.0);
   border-radius: 25px;
   padding: 30px;
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ✅ Centers dots & numpad horizontally */
+  justify-content: center;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
 }
 
 .passcode-box.shake {
@@ -628,13 +665,16 @@ body.dark-mode a.info-button svg circle:last-child {
 .numpad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  column-gap: 25px;  /* wider horizontal spacing */
+  row-gap: 15px;     /* vertical spacing stays the same */
+  justify-items: center;
+  align-items: center;
 }
 
 .numpad button {
-  width: 70px;
-  height: 70px;
-  font-size: 1.5rem;
+  width: 65px;
+  height: 65px;
+  font-size: 1.8rem; /* for number */
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   border: none;
@@ -642,6 +682,38 @@ body.dark-mode a.info-button svg circle:last-child {
   backdrop-filter: blur(15px);
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
+
+  /* NEW - stack number + letters vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px; /* space between number and letters */
+  font-family: "OneUISans", sans-serif;
+  user-select: none;
+  padding: 0;
+}
+
+.numpad button > * {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+.numpad button > :first-child {
+  font-size: 1.8rem; /* number size */
+  font-weight: 600;
+}
+
+.numpad button .letters {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1.3px;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+  user-select: none;
 }
 
 .numpad button:active {
@@ -653,12 +725,21 @@ body.dark-mode a.info-button svg circle:last-child {
   pointer-events: none;
 }
 
-numpad button.backspace {
-  font-size: 22px;
-  font-weight: bold;
-  background: rgba(255, 255, 255, 0.0) !important;
-  box-shadow: none;
+.numpad button.backspace {
+  background: none;
   border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit; /* Makes the icon follow theme */
+  height: 100%; /* Optional: ensures full height */
+  width: 100%;  /* Optional: ensures full width */
+}
+
+.numpad button.backspace svg {
+  width: 28px;
+  height: 28px;
 }
 
 .numpad button.ok {
@@ -675,11 +756,50 @@ numpad button.backspace {
 }
 
 .passcode-overlay.fade-out {
-  animation: fadeOut 0.4s ease;
+  animation: oneUIFadeOut 0.4s ease forwards;
 }
 
-@keyframes fadeOut {
-  to {
+@keyframes oneUIFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
     opacity: 0;
-    transform: scale(1.05);
+    transform: scale(1.05) translateY(20px);
+  }
+}
+
+.passcode-display {
+  position: relative;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passcode-info,
+.passcode-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.passcode-info.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.passcode-dots {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.passcode-dots.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
