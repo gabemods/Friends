@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **This project will is now rarely updated or possibly discontinued.**
+
+***The website will most likely not be deleted even though it is discontinued***
+
 # Friends
 Simple Friendship group project.
 
