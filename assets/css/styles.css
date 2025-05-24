@@ -712,7 +712,7 @@ body.dark-mode a.info-button svg circle:last-child {
   align-items: center;
   width: 100%;
   max-width: none;
-  padding-top: 50px; /* ✅ Pushes content downward inside the box */
+  padding-top: 60px; /* ✅ Pushes content downward inside the box */
 }
 
 .passcode-box {
