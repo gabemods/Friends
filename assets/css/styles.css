@@ -776,7 +776,7 @@ body.dark-mode a.info-button svg circle:last-child {
 .numpad button {
   width: 65px;
   height: 65px;
-  font-size: 1.8rem;
+  font-size: 1.8rem; /* for number */
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
   border: none;
@@ -784,13 +784,37 @@ body.dark-mode a.info-button svg circle:last-child {
   backdrop-filter: blur(15px);
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
+
+  /* NEW - stack number + letters vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px; /* space between number and letters */
+  font-family: "OneUISans", sans-serif;
+  user-select: none;
+  padding: 0;
+}
+
+.numpad button > * {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+.numpad button > :first-child {
+  font-size: 1.8rem; /* number size */
+  font-weight: 600;
 }
 
 .numpad button .letters {
-  font-size: 10px;
-  color: #888;
-  letter-spacing: 1px;
-  font-weight: 500;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 1.3px;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
   user-select: none;
 }
 
