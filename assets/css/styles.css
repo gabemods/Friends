@@ -830,3 +830,37 @@ numpad button.backspace {
     transform: scale(1.05) translateY(20px);
   }
 }
+
+.passcode-display {
+  position: relative;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passcode-info,
+.passcode-dots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  text-align: center;
+}
+
+.passcode-info.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.passcode-dots {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.passcode-dots.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
