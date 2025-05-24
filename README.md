@@ -1,15 +1,15 @@
 > [!IMPORTANT]
-> **This project will is now rarely updated or possibly discontinued.**
-
+> **This project will is now rarely updated or possibly discontinued.** <br> <br>
 ***The website will most likely not be deleted even though it is discontinued***
 
-# Friends
-Simple Friendship group project.
+## Friends
+A simple friendship group project.
 
-# Notice
-After optimising the website (such as scrolling horizontally and the ice cube game) for mouse on computers, this project will be rarely updated or possibly discontinued.
+## 🚫 Notice
+This website is currently **private** and protected by a passcode for security purposes.  
+**Unauthorized access attempts are strictly prohibited.**  
+Do **not** attempt to bypass security or gain access without permission.
 
-***The website will most likely not be deleted even if the project is discontinued***
-
-# License
-This project is not licensed for reuse. Please do not copy, redistribute, or use this code and images without explicit permission.
+## 📄 License
+This project is **not licensed for reuse**.  
+Please **do not copy, redistribute, or use** this code and images without explicit permission.
