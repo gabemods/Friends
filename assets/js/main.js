@@ -583,11 +583,12 @@ const overlay = document.getElementById("passcodeOverlay");
 overlay.addEventListener("touchend", (e) => {
   const now = Date.now();
   if (now - lastTouchEnd <= 300) {
-    e.preventDefault();
+    e.preventDefault(); // Prevent zoom, not normal touch
   }
   lastTouchEnd = now;
-});
+}, { passive: false }); // Required to allow preventDefault on some browsers
 
+// Only for iOS Safari to prevent pinch-zoom
 overlay.addEventListener("gesturestart", (e) => {
   e.preventDefault();
 });
