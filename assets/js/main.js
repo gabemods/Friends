@@ -576,3 +576,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   overlay.style.display = "flex";
 });
+
+let lastTouchEnd = 0;
+const overlay = document.getElementById("passcodeOverlay");
+
+overlay.addEventListener("touchend", (e) => {
+  const now = Date.now();
+  if (now - lastTouchEnd <= 300) {
+    e.preventDefault();
+  }
+  lastTouchEnd = now;
+});
+
+overlay.addEventListener("gesturestart", (e) => {
+  e.preventDefault();
+});
