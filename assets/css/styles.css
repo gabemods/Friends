@@ -675,7 +675,6 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .passcode-overlay {
-  touch-action: none;
   position: fixed;
   inset: 0;
   backdrop-filter: blur(100px);
