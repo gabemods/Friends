@@ -550,24 +550,31 @@ document.addEventListener("DOMContentLoaded", () => {
     if (button.classList.contains("backspace")) {
       currentInput = currentInput.slice(0, -1);
       updateDots();
-    } else if (button.classList.contains("ok")) {
+      updateOKButton();
+      return;
+    }
+
+    if (button.classList.contains("ok")) {
       if (currentInput === correctPasscode) {
         unlockSuccess();
       } else {
         shakeAndClear();
       }
-    } else {
-      const value = button.textContent.trim(); // get the button text
-      if (currentInput.length < 4) {
-        currentInput += value;
-        updateDots();
+      return;
+    }
 
-        if (currentInput.length === 4) {
-          if (currentInput === correctPasscode) {
-            unlockSuccess();
-          } else {
-            shakeAndClear();
-          }
+    const number = button.dataset.value;
+
+    if (number && currentInput.length < 4) {
+      currentInput += number;
+      updateDots();
+      updateOKButton();
+
+      if (currentInput.length === 4) {
+        if (currentInput === correctPasscode) {
+          unlockSuccess();
+        } else {
+          shakeAndClear();
         }
       }
     }
