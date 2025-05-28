@@ -672,8 +672,8 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .numpad button {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   font-size: 1.8rem; /* for number */
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.2);
@@ -716,7 +716,7 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .numpad button.no-letters span {
-  transform: translateY(-5px); /* adjust as needed for alignment */
+  transform: translateY(-7px); /* adjust as needed for alignment */
 }
 
 .numpad button:active {
