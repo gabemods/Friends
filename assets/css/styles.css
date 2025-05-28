@@ -810,7 +810,7 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .numpad button .letters {
-  font-size: 0.65rem;
+  font-size: 0.60rem;
   color: rgba(255, 255, 255, 1.0);
   font-weight: 500;
   text-align: center;
@@ -850,13 +850,12 @@ body.dark-mode a.info-button svg circle:last-child {
 
 .numpad button.ok {
   opacity: 0.5;
-  font-size: 18px;
+  font-size: 20px;
   background: rgba(255, 255, 255, 0.0) !important;
   box-shadow: none;
   border: none;
 }
 
-.numpad button.backspace:hover,
 .numpad button.ok:hover {
   background: rgba(255, 255, 255, 0.1); /* Optional subtle hover */
 }
