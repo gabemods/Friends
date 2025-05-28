@@ -1,4 +1,4 @@
-.oneui-popup-overlay {
+.ios-popup-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
@@ -10,61 +10,58 @@
   z-index: 10001;
 }
 
-.oneui-popup {
+.ios-popup {
   background: #fff;
-  color: #000;
   border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  padding: 20px;
   width: 90%;
-  max-width: 340px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 280px;
   font-family: "SamsungOne", sans-serif;
-  padding: 20px 24px 0 24px;
   box-sizing: border-box;
+  text-align: left;
 }
 
-.oneui-title {
+.ios-title {
+  margin: 0 0 10px;
   font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  text-align: left;
+  font-weight: bold;
+  color: #222;
 }
 
-.oneui-body {
+.ios-text {
+  margin: 0 0 16px;
   font-size: 14.5px;
-  line-height: 1.4;
+  line-height: 1.5;
   color: #444;
-  margin-bottom: 16px;
-  text-align: left;
 }
 
-.oneui-actions {
+.ios-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #eee;
-  margin: 0 -24px;
   height: 48px;
+  border-top: 1px solid #e0e0e0;
 }
 
-.oneui-actions button {
+.ios-buttons button {
   flex: 1;
   border: none;
   background: none;
+  color: #007aff;
   font-size: 15px;
   font-weight: 600;
-  color: #007aff;
-  cursor: pointer;
-  padding: 0;
   height: 100%;
-  transition: background-color 0.2s ease;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.oneui-actions button:hover {
+.ios-buttons button:hover {
   background-color: rgba(0, 0, 0, 0.04);
 }
 
-.oneui-action-divider {
+.ios-button-divider {
   width: 1px;
-  background-color: #e0e0e0;
-  height: 100%;
+  height: 60%;
+  background-color: #d0d0d0;
 }
