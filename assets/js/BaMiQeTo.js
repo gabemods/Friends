@@ -440,33 +440,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
   const dots = Array.from(document.querySelectorAll(".passcode-dot"));
   const buttons = overlay.querySelectorAll("button:not(.empty)");
-
+  
   let currentInput = "";
   const correctPasscode = "7512";
-  const PASSCODE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
-
+  
   function updateDots() {
-  dots.forEach((dot, i) => {
-    dot.classList.toggle("filled", i < currentInput.length);
-  });
-
-  const info = document.getElementById("passcodeInfo");
-  const dotsContainer = document.getElementById("passcodeDots");
-
-  if (currentInput.length > 0) {
-    info.classList.add("hidden");
-    dotsContainer.classList.add("visible");
-  } else {
-    info.classList.remove("hidden");
-    dotsContainer.classList.remove("visible");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("filled", i < currentInput.length);
+    });
+    
+    const info = document.getElementById("passcodeInfo");
+    const dotsContainer = document.getElementById("passcodeDots");
+    
+    if (currentInput.length > 0) {
+      info.classList.add("hidden");
+      dotsContainer.classList.add("visible");
+    } else {
+      info.classList.remove("hidden");
+      dotsContainer.classList.remove("visible");
+    }
   }
-}
-
+  
   function clearInput() {
     currentInput = "";
     updateDots();
   }
-
+  
   function shakeAndClear() {
     const box = document.querySelector(".passcode-box");
     box.classList.add("shake");
@@ -475,51 +474,79 @@ document.addEventListener("DOMContentLoaded", () => {
       clearInput();
     }, 400);
   }
-
+  
   function unlockSuccess() {
-    localStorage.setItem("passcodeUnlockTime", Date.now().toString());
     overlay.classList.add("fade-out");
     setTimeout(() => {
       overlay.style.display = "none";
-    }, 400);
-  }
+      
+    const message = document.createElement("div");
+message.className = "congrats-message";
+message.innerHTML = `
+      <p>Congratulations, you got the passcode right.<br>
+      <span class="gradient-text">More coming soon.</span></p>
+    `;
+document.body.appendChild(message);
 
-  // Check if we should skip the passcode
-  const lastUnlock = localStorage.getItem("passcodeUnlockTime");
-  const now = Date.now();
-  if (lastUnlock && now - parseInt(lastUnlock) < PASSCODE_TIMEOUT) {
-    overlay.style.display = "none";
-    return;
-  }
-
+// Create app icon dock
+const dock = document.createElement("div");
+dock.className = "app-dock";
+dock.innerHTML = `
+      <div class="page-indicators">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+<div class="app-icons">
+        <a href="#"><img src="assets/images/IMG_0511.png" alt="WhatsApp"></a>
+        <a href="#"><img src="/assets/images/IMG_0510.png" alt="Snapchat"></a>
+        <a href="#"><img src="assets/images/IMG_0512.jpeg" alt="Phone"></a>
+        <a href="#"><img src="assets/images/IMG_0513.jpeg" alt="Messages"></a>
+      </div>
+`;
+    document.body.appendChild(dock);
+  }, 400);
+}
+  
+  // Always show the overlay on load
+  overlay.style.display = "flex";
+  
   buttons.forEach(button => {
-  button.addEventListener("click", () => {
-    if (button.classList.contains("backspace")) {
-      currentInput = currentInput.slice(0, -1);
-      updateDots();
-    } else if (button.classList.contains("ok")) {
-      if (currentInput === correctPasscode) {
-        unlockSuccess();
-      } else {
-        shakeAndClear();
-      }
-    } else {
-      const value = button.textContent.trim(); // get the button text
-      if (currentInput.length < 4) {
-        currentInput += value;
-        updateDots();
+    button.addEventListener("click", () => {
+  // Vibrate for 50ms on any button press
+  if (navigator.vibrate) {
+    navigator.vibrate(50);
+  }
 
-        if (currentInput.length === 4) {
-          if (currentInput === correctPasscode) {
-            unlockSuccess();
-          } else {
-            shakeAndClear();
+      if (button.classList.contains("backspace")) {
+        currentInput = currentInput.slice(0, -1);
+        updateDots();
+      } else if (button.classList.contains("ok")) {
+        if (currentInput === correctPasscode) {
+          unlockSuccess();
+        } else {
+          shakeAndClear();
+        }
+      } else {
+        const value = button.dataset.value;
+        if (currentInput.length < 4) {
+          currentInput += value;
+          updateDots();
+          
+          if (currentInput.length === 4) {
+            if (currentInput === correctPasscode) {
+              unlockSuccess();
+            } else {
+              shakeAndClear();
+            }
           }
         }
       }
-    }
+    });
   });
 });
 
-  overlay.style.display = "flex";
+// Optional: block gestures (if you're using this for something specific)
+window.addEventListener("gesturestart", function(e) {
+  e.preventDefault();
 });
