@@ -819,7 +819,7 @@ body.dark-mode a.info-button svg circle:last-child {
 }
 
 .numpad button.no-letters span {
-  transform: translateY(-10px); /* adjust as needed for alignment */
+  transform: translateY(-7px); /* adjust as needed for alignment */
 }
 
 .numpad button:active {
