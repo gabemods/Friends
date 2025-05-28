@@ -703,17 +703,20 @@ body.dark-mode a.info-button svg circle:last-child {
 
 .numpad button > :first-child {
   font-size: 1.8rem; /* number size */
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .numpad button .letters {
   font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 1.3px;
-  font-weight: 600;
+  color: rgba(255, 255, 255, 1.0);
+  font-weight: 550;
   text-align: center;
   width: 100%;
   user-select: none;
+}
+
+.numpad button.no-letters span {
+  transform: translateY(-5px); /* adjust as needed for alignment */
 }
 
 .numpad button:active {
