@@ -1,84 +1,62 @@
-/* One UI style overlay */
 .oneui-popup-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); /* darker overlay */
+  background-color: rgba(0, 0, 0, 0.3); /* darker than iOS */
   display: none;
   justify-content: center;
   align-items: center;
   z-index: 10001;
-  transition: background-color 0.3s ease;
 }
 
-/* One UI style dialog */
 .oneui-popup {
-  background: #fff;
-  color: #000;
-  padding: 24px 20px 12px;
-  border-radius: 16px;
+  background: white;
+  color: #222;
+  border-radius: 28px;
+  padding: 24px 24px 0 24px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  transform: scale(0.95);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  width: 80%;
-  max-width: 320px;
+  width: 90%;
+  max-width: 360px;
   text-align: center;
+  font-family: 'SamsungOne', sans-serif;
 }
 
-/* Show and hide animations */
-.oneui-popup.show {
-  transform: scale(1);
-  opacity: 1;
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease-in;
+.oneui-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
 }
 
-.oneui-popup.hide {
-  transform: scale(0.9);
-  opacity: 0;
-  transition: transform 0.3s ease-in, opacity 0.2s ease-out;
+.oneui-body {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 24px;
 }
 
-/* Buttons */
-.oneui-popup button {
+.oneui-actions {
+  display: flex;
+  border-top: 1px solid #eee;
+  margin: 0 -24px;
+}
+
+.oneui-actions button {
+  flex: 1;
+  padding: 14px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E88E5; /* One UI blue */
   background: none;
   border: none;
-  font-size: 16px;
-  padding: 12px;
-  width: 100%;
-  font-weight: 500;
-  color: #1c1c1e;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
-.oneui-popup button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+.oneui-actions button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
-.oneui-popup button.destructive {
-  color: #e53935;
-}
-
-/* Divider between buttons */
-.oneui-divider {
-  height: 1px;
-  background: #e0e0e0;
-  margin: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  .oneui-popup {
-    background: #1f1f1f;
-    color: #fff;
-  }
-
-  .oneui-popup button {
-    color: #fff;
-  }
-
-  .oneui-divider {
-    background: #333;
-  }
+.oneui-action-divider {
+  width: 1px;
+  background-color: #eee;
 }
