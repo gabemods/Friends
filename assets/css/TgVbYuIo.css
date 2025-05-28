@@ -665,8 +665,8 @@ body.dark-mode a.info-button svg circle:last-child {
 .numpad {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: 30px;  /* wider horizontal spacing */
-  row-gap: 17px;     /* vertical spacing stays the same */
+  column-gap: 25px;  /* wider horizontal spacing */
+  row-gap: 15px;     /* vertical spacing stays the same */
   justify-items: center;
   align-items: center;
 }
