@@ -493,23 +493,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("passcodeOverlay");
   const dots = Array.from(document.querySelectorAll(".passcode-dot"));
   const buttons = overlay.querySelectorAll("button:not(.empty)");
+  const passcodeInfo = document.getElementById("passcodeInfo");
+  const dotsContainer = document.getElementById("passcodeDots");
+  const numpad = document.querySelector(".numpad");
+  const box = document.querySelector(".passcode-box");
+  
+  const correctPasscode = "7512";
+  const thresholds = [5, 8, 9, 10, 11, 12, 13];
+  const durations = [30, 30, 120, 300, 300, 600, 1800];
   
   let currentInput = "";
-  const correctPasscode = "7512";
+  
+  const lockoutDisplay = document.createElement("div");
+  lockoutDisplay.className = "lockout-display";
+  overlay.appendChild(lockoutDisplay);
+  
+  function getAttempts() {
+    return parseInt(localStorage.getItem("attempts") || "0");
+  }
+  
+  function setAttempts(val) {
+    localStorage.setItem("attempts", val);
+  }
+  
+  function getLockUntil() {
+    return parseInt(localStorage.getItem("lockUntil") || "0");
+  }
+  
+  function setLockUntil(timestamp) {
+    localStorage.setItem("lockUntil", timestamp);
+  }
+  
+  function resetLockout() {
+    localStorage.removeItem("attempts");
+    localStorage.removeItem("lockUntil");
+  }
   
   function updateDots() {
     dots.forEach((dot, i) => {
       dot.classList.toggle("filled", i < currentInput.length);
     });
     
-    const info = document.getElementById("passcodeInfo");
-    const dotsContainer = document.getElementById("passcodeDots");
-    
     if (currentInput.length > 0) {
-      info.classList.add("hidden");
+      passcodeInfo.classList.add("hidden");
       dotsContainer.classList.add("visible");
     } else {
-      info.classList.remove("hidden");
+      passcodeInfo.classList.remove("hidden");
       dotsContainer.classList.remove("visible");
     }
   }
@@ -520,7 +549,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   function shakeAndClear() {
-    const box = document.querySelector(".passcode-box");
     box.classList.add("shake");
     setTimeout(() => {
       box.classList.remove("shake");
@@ -529,48 +557,91 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   function unlockSuccess() {
-    overlay.classList.add("fade-out");
-    setTimeout(() => {
-      overlay.style.display = "none";
-      
-    const message = document.createElement("div");
-message.className = "congrats-message";
-message.innerHTML = `
-      <p>Congratulations, you got the passcode right.<br>
-      <span class="gradient-text">More coming soon.</span></p>
-    `;
-document.body.appendChild(message);
-
-// Create app icon dock
-const dock = document.createElement("div");
-dock.className = "app-dock";
-dock.innerHTML = `
-      <div class="page-indicators">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-<div class="app-icons">
-        <a href="#"><img src="assets/images/IMG_0511.png" alt="WhatsApp"></a>
-        <a href="#"><img src="/assets/images/IMG_0510.png" alt="Snapchat"></a>
-        <a href="#"><img src="assets/images/IMG_0512.jpeg" alt="Phone"></a>
-        <a href="#"><img src="assets/images/IMG_0513.jpeg" alt="Messages"></a>
-      </div>
-`;
-    document.body.appendChild(dock);
-  }, 400);
-}
+  resetLockout();
+  overlay.classList.add("fade-out");
   
-  // Always show the overlay on load
-  overlay.style.display = "flex";
+  setTimeout(() => {
+    overlay.style.display = "none";
+
+  
+  function startLockout(seconds) {
+    clearInput();
+    box.style.display = "none";
+    dotsContainer.style.display = "none";
+    numpad.style.display = "none";
+    
+    let remaining = seconds;
+    const unlockTime = Date.now() + seconds * 1000;
+    setLockUntil(unlockTime);
+    
+    function formatTime(secs) {
+      if (secs > 59) {
+        const minutes = Math.floor(secs / 60);
+        return `${minutes} minute${minutes > 1 ? "s" : ""}`;
+      } else {
+        return `${secs} second${secs !== 1 ? "s" : ""}`;
+      }
+    }
+    
+    function updateLockoutUI(timeLeft) {
+      lockoutDisplay.innerHTML = `
+        <p style="text-align:center;font-size:1.1em;font-weight:500;margin-bottom:0.5em;">Too many incorrect unlock attempts</p>
+        <p style="text-align:center;font-size:1em;">Try again in <span id="lockoutTimer">${formatTime(timeLeft)}</span></p>
+      `;
+      lockoutDisplay.style.display = "block";
+    }
+    
+    updateLockoutUI(remaining);
+    
+    const interval = setInterval(() => {
+      remaining--;
+      const timerSpan = document.getElementById("lockoutTimer");
+      if (remaining > 59) {
+        timerSpan.textContent = formatTime(remaining);
+      } else {
+        timerSpan.textContent = `${remaining} second${remaining !== 1 ? "s" : ""}`;
+      }
+      
+      if (remaining <= 0) {
+        clearInterval(interval);
+        lockoutDisplay.style.display = "none";
+        dotsContainer.style.display = "";
+        numpad.style.display = "";
+        box.style.display = "";
+      }
+    }, 1000);
+  }
+  
+  function checkLockout() {
+    const lockUntil = getLockUntil();
+    const now = Date.now();
+    if (now < lockUntil) {
+      const remaining = Math.ceil((lockUntil - now) / 1000);
+      startLockout(remaining);
+      return true;
+    }
+    return false;
+  }
+  
+  function handleIncorrectCode() {
+    const attempts = getAttempts() + 1;
+    setAttempts(attempts);
+    shakeAndClear();
+    
+    for (let i = 0; i < thresholds.length; i++) {
+      if (attempts === thresholds[i]) {
+        startLockout(durations[i]);
+        return;
+      }
+    }
+  }
   
   buttons.forEach(button => {
     button.addEventListener("click", () => {
-  // Vibrate for 50ms on any button press
-  if (navigator.vibrate) {
-    navigator.vibrate(50);
-  }
-
+      if (navigator.vibrate) navigator.vibrate(50);
+      
+      if (checkLockout()) return;
+      
       if (button.classList.contains("backspace")) {
         currentInput = currentInput.slice(0, -1);
         updateDots();
@@ -578,7 +649,7 @@ dock.innerHTML = `
         if (currentInput === correctPasscode) {
           unlockSuccess();
         } else {
-          shakeAndClear();
+          handleIncorrectCode();
         }
       } else {
         const value = button.dataset.value;
@@ -590,16 +661,16 @@ dock.innerHTML = `
             if (currentInput === correctPasscode) {
               unlockSuccess();
             } else {
-              shakeAndClear();
+              handleIncorrectCode();
             }
           }
         }
       }
     });
   });
-});
-
-// Optional: block gestures (if you're using this for something specific)
-window.addEventListener("gesturestart", function(e) {
-  e.preventDefault();
+  
+  // Initial lockout check
+  if (!checkLockout()) {
+    overlay.style.display = "flex";
+  }
 });
