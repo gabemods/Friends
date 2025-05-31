@@ -559,9 +559,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function unlockSuccess() {
   resetLockout();
   overlay.classList.add("fade-out");
-  
+
   setTimeout(() => {
     overlay.style.display = "none";
+  }, 300);
+}
 
   
   function startLockout(seconds) {
