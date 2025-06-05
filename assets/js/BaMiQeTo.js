@@ -62,6 +62,15 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
+document.querySelector('.scroll-container').addEventListener('wheel', function (e) {
+  e.preventDefault();
+  this.scrollBy({
+    left: e.deltaY,
+    behavior: 'smooth'
+  });
+}, { passive: false });
+  
   // --- Theme Toggle Functionality ---
   const themeToggle = document.getElementById("themeToggle");
   const themeIcon = document.getElementById("themeIcon");
