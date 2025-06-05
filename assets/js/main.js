@@ -358,15 +358,16 @@ if (dropdown && arrow && toggle) {
 
 // Popup/Modal Functionality
 window.addEventListener("load", () => {
-     const dialogBackdrop = document.getElementById('dialogBackdrop');
+  const dialogBackdrop = document.getElementById('dialogBackdrop');
 
-    function openDialog() {
-      dialogBackdrop.classList.add('active');
-    }
+  function openDialog() {
+    dialogBackdrop.classList.add('active');
+  }
 
-    function closeDialog() {
-      dialogBackdrop.classList.remove('active');
-    }
+  function closeDialog() {
+    dialogBackdrop.classList.remove('active');
+  }
+});
 
 
 // Custom link behavior for "ice-link"
