@@ -447,86 +447,82 @@ body.dark-mode .photos-button {
   color: #ababab !important;
 }
     
-.ios-popup-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); /* M3 overlay */
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 10001;
-  transition: background-color 0.3s ease;
-}
-
-.ios-popup {
-  background-color: #ffffff;
-  color: #1c1b1f; /* M3 on-surface */
-  padding: 24px;
-  border-radius: 28px;
-  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),
-              0px 6px 10px 0px rgba(0,0,0,0.14),
-              0px 1px 18px 0px rgba(0,0,0,0.12); /* M3 elevation level 3 */
-  width: 90%;
-  max-width: 360px;
-  transform: scale(0.95);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.ios-popup.show {
-  transform: scale(1);
-  opacity: 1;
-  transition: transform 0.3s ease-out, opacity 0.3s ease-in;
-}
-
-.ios-popup.hide {
-  transform: scale(0.9);
-  opacity: 0;
-  transition: transform 0.2s ease-in, opacity 0.2s ease-out;
-}
-
-.ios-popup button {
-  align-self: flex-end;
-  background: none;
-  border: none;
-  padding: 10px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #6750a4; /* M3 primary */
-  cursor: pointer;
-  border-radius: 20px;
-  transition: background 0.2s ease;
-}
-
-.ios-popup button:hover {
-  background-color: rgba(103, 80, 164, 0.08); /* M3 hover state */
-}
-
-.ios-popup button:active {
-  background-color: rgba(103, 80, 164, 0.12); /* M3 pressed state */
-}
-
-.ios-popup button.destructive {
-  color: #b3261e; /* M3 error */
-}
-
-.ios-popup button.destructive:hover {
-  background-color: rgba(179, 38, 30, 0.08);
-}
-
-.ios-popup button.destructive:active {
-  background-color: rgba(179, 38, 30, 0.12);
-}
-
-.ios-divider {
-  display: none;
+.dialog-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
+
+    .dialog-backdrop.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Dialog box */
+    .dialog {
+      background-color: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .dialog h2 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      color: #333333;
+    }
+
+    .dialog p {
+      font-size: 1rem;
+      margin-bottom: 24px;
+      color: #666666;
+    }
+
+    /* Buttons */
+    .dialog-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .dialog-buttons button {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .dialog-buttons .cancel {
+      background-color: #e0e0e0;
+      color: #333333;
+    }
+
+    .dialog-buttons .cancel:hover {
+      background-color: #d6d6d6;
+    }
+
+    .dialog-buttons .confirm {
+      background-color: #6200ee;
+      color: #ffffff;
+    }
+
+    .dialog-buttons .confirm:hover {
+      background-color: #3700b3;
+        }
 
 
 a.info-button {
