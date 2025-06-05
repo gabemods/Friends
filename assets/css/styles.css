@@ -452,7 +452,7 @@ body.dark-mode .photos-button {
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.0); /* lighter overlay */
+  background-color: rgba(0, 0, 0, 0.4); /* darker for Material */
   display: none;
   justify-content: center;
   align-items: center;
@@ -461,19 +461,17 @@ body.dark-mode .photos-button {
 }
 
 .ios-popup {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  color: black;
-  padding: 8px 17px;
-  border-radius: 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
-  transform: scale(0.9);
+  background: #fff;
+  color: #000;
+  padding: 16px 24px;
+  border-radius: 28px; /* Material You uses more rounded shapes */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* more subtle shadow */
+  transform: scale(0.95);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
   text-align: center;
-  width: 60%;
-  max-width: 300px;
+  width: 90%;
+  max-width: 320px;
   word-break: break-word;
   white-space: normal;
 }
@@ -485,42 +483,47 @@ body.dark-mode .photos-button {
 }
 
 .ios-popup.hide {
-  transform: scale(0.85);
+  transform: scale(0.9);
   opacity: 0;
   transition: transform 0.3s ease-in, opacity 0.2s ease-out;
 }
 
 .ios-popup button {
-  margin-top: 0px !important;
-  background: none;
+  background: transparent;
   border: none;
-  padding: 10px 0;
-  font-size: 17px;
-  font-weight: 600;
-  color: #007aff; /* iOS blue */
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a73e8; /* Material blue */
   cursor: pointer;
-  transition: color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
+  border-radius: 20px;
   width: 100%;
 }
 
+.ios-popup button:hover {
+  background: rgba(26, 115, 232, 0.08);
+}
+
+.ios-popup button:active {
+  background: rgba(26, 115, 232, 0.16);
+}
+
 .ios-popup button.destructive {
-  color: #ff3b30; /* iOS red for destructive actions */
+  color: #d93025; /* Material red */
+}
+
+.ios-popup button.destructive:hover {
+  background: rgba(217, 48, 37, 0.08);
 }
 
 .ios-popup button.destructive:active {
-  color: #ff3b30; /* prevent color change on press */
-}
-
-.ios-popup button:hover:not(.destructive) {
-  color: #0051cc;
+  background: rgba(217, 48, 37, 0.16);
 }
 
 .ios-divider {
-  height: 1px;
-  background: rgba(60, 60, 67, 0.07); /* softer and more iOS-like */
-  margin: 0 -17px;
-}
-    
+  display: none; /* removed as requested */
+    }    
     a.info-button {
   position: absolute;
   top: 12px;
