@@ -356,35 +356,17 @@ if (dropdown && arrow && toggle) {
   });
 }
 
-
 // Popup/Modal Functionality
 window.addEventListener("load", () => {
-  const overlay = document.getElementById("popupOverlay");
-  const popup = document.getElementById("popup");
-  const button = document.getElementById("popupOkButton");
-  const disagreeBtn = document.getElementById("popupDisagreeButton");
+     const dialogBackdrop = document.getElementById('dialogBackdrop');
 
-  if (overlay && popup && button) {
-    // Show popup
-    overlay.style.display = "flex";
-    requestAnimationFrame(() => popup.classList.add("show"));
+    function openDialog() {
+      dialogBackdrop.classList.add('active');
+    }
 
-    // Hide popup on OK button press
-    button.addEventListener("click", () => {
-      popup.classList.remove("show");
-      setTimeout(() => {
-        overlay.style.display = "none";
-      }, 300);
-    });
-  }
-
-  // Handle "I Disagree" destructive button
-  if (disagreeBtn) {
-    disagreeBtn.addEventListener("click", () => {
-      window.location.href = "https://raw.githubusercontent.com/gabemods/Friends/main/assets/images/IMG_0318.jpg"; // Replace with your URL
-    });
-  }
-});
+    function closeDialog() {
+      dialogBackdrop.classList.remove('active');
+    }
 
 
 // Custom link behavior for "ice-link"
