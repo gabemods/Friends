@@ -38,17 +38,27 @@
 
 </head>
 <body>
-<div class="ios-popup-overlay" id="popupOverlay">
-  <div class="ios-popup" id="popup">
-    <p>All content on this website is copyrighted and not permitted for reuse.</p>
-    <div class="ios-divider"></div>
-    <button id="popupOkButton">Okay</button>
-    <div class="ios-divider"></div>
-    <button class="destructive" id="popupDisagreeButton">I Disagree</button>
-  </div>
-</div>
-</div>
-</div>
+   const dialogBackdrop = document.getElementById('dialogBackdrop');
+
+    function openDialog() {
+      dialogBackdrop.classList.add('active');
+    }
+
+    function closeDialog() {
+      dialogBackdrop.classList.remove('active');
+    }
+  </script>
+</body>
+</html>
+<div class="dialog-backdrop" id="dialogBackdrop">
+    <div class="dialog">
+      <h2>Notice</h2>
+      <p>All content on this website is copyrighted and not permitted for reuse. Continue?</p>
+      <div class="dialog-buttons">
+        <button class="cancel" onclick="closeDialog()">Cancel</button>
+        <button class="confirm" onclick="closeDialog()">Confirm</button>
+      </div>
+    </div>
 </div>
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
