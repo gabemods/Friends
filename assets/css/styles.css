@@ -469,8 +469,8 @@ body.dark-mode .photos-button {
   transform: translateY(20px);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  width: 75%;
-  max-width: 400px; /* Adjusted to better match Android dialogs */
+  width: 70%;
+  max-width: 300px; /* Adjusted to better match Android dialogs */
 }
 
 .ios-popup.show {
@@ -509,7 +509,7 @@ body.dark-mode .photos-button {
   padding: 8px 16px;
   font-size: 15px;
   font-weight: 500;
-  color: #6200EE; /* Primary Material 3 color */
+  color: #2962FF; /* Primary Material 3 color */
   cursor: pointer;
   transition: color 0.2s ease;
 }
