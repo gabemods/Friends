@@ -54,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Optional: Close menu when a standard nav item is clicked (unless active)
+    // Removed the "Settings" item, so this logic is fine
+    navItems.forEach(item => {
+        if (!item.classList.contains('active')) {
+            item.addEventListener('click', toggleMenu);
+        }
+    });
 
     // --- Socials Expansion Functionality ---
     if (expansionHeader) {
@@ -62,24 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             expansionHeader.setAttribute('aria-expanded', !isExpanded);
         });
     }
-
-    // Optional: Close menu when a standard nav item is clicked (unless active)
-    navItems.forEach(item => {
-        if (!item.classList.contains('active')) {
-            item.addEventListener('click', toggleMenu);
-        }
-    });
-
-    // Optional: Dark Mode Toggle for demonstration
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('light-mode'); // Assuming light-mode is the default
-        });
-    }
 });
-
-
 
 // Navigation Buttons Animation
 window.addEventListener('DOMContentLoaded', () => {
