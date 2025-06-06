@@ -162,6 +162,7 @@
   --md3-state-layer-on-surface: rgba(230, 224, 234, 0.08); /* 8% onSurface */
 }
 
+
 /* --- Menu Icon (Hamburger to Cross Animation) --- */
 .menu-icon {
   background: none;
@@ -172,14 +173,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
-  top: 5px;
+  top: 10px;
   left: 10px;
-  z-index: 1000000; /* Increased z-index for the cross */
+  z-index: 100000; /* Highest z-index for the cross */
   overflow: hidden;
 }
 
@@ -247,7 +248,7 @@ body.menu-open .menu-icon-bar-bottom {
   transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
   
-  z-index: 999999; /* Menu z-index */
+  z-index: 99999; /* Menu z-index */
   display: flex;
   flex-direction: column;
 }
@@ -260,14 +261,14 @@ body.menu-open {
 
 /* Empty header for spacing consistent with the icon */
 .md3-nav-drawer-header-empty {
-    /* Adjusted padding to move items down a bit, and align with icon */
     padding: 24px 16px 20px; /* Increased bottom padding to move content down */
 }
 
 /* Main list */
 .md3-nav-list {
   list-style: none;
-  padding: 8px 12px;
+  /* Reduced top padding */
+  padding: 4px 12px; /* Reduced top padding to reduce gap above first item */
   margin: 0;
   flex-grow: 1;
 }
@@ -279,15 +280,15 @@ body.menu-open {
   text-decoration: none;
   
   background-color: transparent; /* No background by default */
-  color: var(--md3-sys-color-on-surface-variant); 
+  color: var(--md3-sys-color-on-surface-variant); /* Light text for others */
   
   padding: 10px 16px; /* Standard padding */
-  margin-bottom: 4px;
+  margin-bottom: 2px; /* Reduced gap between items */
   border-radius: 28px;
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 24px; /* Standard line height */
   transition: background-color 0.2s ease, color 0.2s ease;
   min-height: 56px; /* Material 3 standard min height for clickable areas */
 }
@@ -302,7 +303,7 @@ body.menu-open {
   outline: none;
 }
 
-/* Active "Profiles" Item (Specific Blue Background and Text) */
+/* Active "Profiles" Item (Specific Blue Background and White Text) */
 .md3-nav-item.active {
   background-color: var(--md3-menu-active-bg); /* Vibrant blue for "Profiles" */
   color: var(--md3-menu-active-text); /* White text for "Profiles" */
@@ -311,10 +312,9 @@ body.menu-open {
   pointer-events: none;
   
   /* Adjusted padding for a less tall background box, aligning left */
-  padding: 8px 16px; /* Reduced vertical padding */
-  margin-bottom: 4px; /* Maintain space between items */
-  line-height: 40px; /* Control vertical size more directly if needed */
-  /* Remove min-height here if you want it to shrink exactly to content */
+  padding: 8px 16px; /* Reduced vertical padding for compact look */
+  margin-bottom: 2px; /* Maintain small gap */
+  line-height: 40px; /* Control vertical size directly to be less tall */
   min-height: auto; /* Allow height to be determined by padding + line-height */
 }
 
@@ -322,7 +322,7 @@ body.menu-open {
 .md3-expansion-item {
   list-style: none;
   padding: 0 12px;
-  margin-bottom: 4px;
+  margin-bottom: 2px; /* Reduced gap between items */
 }
 
 .md3-expansion-header {
@@ -347,6 +347,7 @@ body.menu-open {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+/* Hover/Focus for Socials header */
 .md3-expansion-header:hover {
   background-color: var(--md3-state-layer-on-surface);
 }
@@ -356,8 +357,9 @@ body.menu-open {
   outline: none;
 }
 
+
 .md3-expansion-arrow {
-  margin-left: 16px;
+  margin-left: 24px; /* Increased margin for more distance */
   transition: transform 0.2s ease;
 }
 
@@ -408,17 +410,6 @@ body.menu-open {
 .md3-social-button:active {
   background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 88%, var(--md3-state-layer-on-surface));
   transform: translateY(1px);
-}
-
-
-/* --- JavaScript controlled classes for menu state --- */
-body.menu-open .menu-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-body.menu-open .md3-nav-drawer {
-  transform: translateX(0); 
 }
 
 
