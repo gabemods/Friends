@@ -38,14 +38,13 @@
 
 </head>
 <body>
-<div class="ios-popup-overlay" id="popupOverlay">
-  <div class="ios-popup" id="popup">
-    <h2 class="ios-popup-title">Notice</h2>
-    <p class="ios-popup-text">All content on this website is copyrighted and not permitted for reuse. Continue?</p>
-    
-    <div class="ios-popup-buttons">
-      <button class="primary" id="popupDisagreeButton">No</button>
-      <button class="primary" id="popupOkButton">Okay</button>
+<div id="material-dialog" class="material-dialog" style="z-index: 10000;">
+  <div class="dialog-content">
+    <h2>Notice</h2>
+    <p>All content on this website is copyrighted and not permitted for reuse. By continuing, you acknowledge this notice</p>
+    <div class="dialog-actions">
+      <button id="decline-button" class="material-button text-button">Exit Site</button>
+      <button id="okay-button" class="material-button text-button">Continue</button>
     </div>
   </div>
 </div>
