@@ -675,3 +675,38 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.style.display = "flex";
   }
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  const dialog = document.getElementById('material-dialog');
+  const okayButton = document.getElementById('okay-button');
+  const declineButton = document.getElementById('decline-button');
+
+  // Function to show the dialog
+  function showDialog() {
+    dialog.style.display = 'flex'; // Make it visible
+    // The animations are handled by CSS when display changes from none to flex
+  }
+
+  // Function to hide the dialog with animation
+  function hideDialog() {
+    dialog.classList.add('closing');
+    dialog.addEventListener('animationend', () => {
+      dialog.style.display = 'none';
+      dialog.classList.remove('closing');
+    }, { once: true }); // Ensure the event listener is removed after one execution
+  }
+
+  // Show the dialog on page load
+  showDialog();
+
+  // "Okay" button functionality
+  okayButton.addEventListener('click', () => {
+    hideDialog();
+    // You can add more functionality here if needed, e.g., setting a cookie
+  });
+
+  // "Decline" button functionality
+  declineButton.addEventListener('click', () => {
+    window.location.href = 'https://www.google.com'; // Redirect to Google
+  });
+});
