@@ -38,15 +38,18 @@
 
 </head>
 <body>
-<div class="dialog-backdrop" id="dialogBackdrop">
-    <div class="dialog">
-      <h2>Notice</h2>
-      <p>All content on this website is copyrighted and not permitted for reuse. Continue?</p>
-      <div class="dialog-buttons">
-        <button class="cancel" onclick="closeDialog()">Cancel</button>
-        <button class="confirm" onclick="closeDialog()">Confirm</button>
-      </div>
-    </div>
+<div class="ios-popup-overlay" id="popupOverlay">
+  <div class="ios-popup" id="popup">
+    <h1>Notice</h1>
+    <p>All content on this website is copyrighted and not permitted for reuse. Continue?</p>
+    <div class="ios-divider"></div>
+    <button id="popupOkButton">Okay</button>
+    <div class="ios-divider"></div>
+    <button class="destructive" id="popupDisagreeButton">No</button>
+  </div>
+</div>
+</div>
+</div>
 </div>
   <div class="landscape-warning">
   Please rotate your device to portrait mode for the best experience.
