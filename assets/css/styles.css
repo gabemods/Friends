@@ -179,7 +179,7 @@
   position: fixed;
   top: 5px;
   left: 10px;
-  z-index: 100000; /* Increased z-index for the cross */
+  z-index: 1000000; /* Increased z-index for the cross */
   overflow: hidden;
 }
 
@@ -247,7 +247,7 @@ body.menu-open .menu-icon-bar-bottom {
   transform: translateX(-100%);
   transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
   
-  z-index: 99999; /* Menu z-index */
+  z-index: 999999; /* Menu z-index */
   display: flex;
   flex-direction: column;
 }
