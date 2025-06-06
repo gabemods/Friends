@@ -162,35 +162,31 @@
   --md3-state-layer-on-surface: rgba(230, 224, 234, 0.08); /* 8% onSurface */
 }
 
-/* You can remove the light-mode block if you don't have a toggle */
-/* body.light-mode { ... } */
-
-
 /* --- Menu Icon (Hamburger to Cross Animation) --- */
 .menu-icon {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px; /* Adjusted padding to make overall button slightly smaller */
+  padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 44px; /* Slightly smaller button overall */
-  height: 44px; /* Slightly smaller button overall */
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
-  top: 10px; /* Moved up a bit */
-  left: 10px; /* Moved left a bit */
-  z-index: 20000; /* Increased z-index */
+  top: 5px;
+  left: 10px;
+  z-index: 100000; /* Increased z-index for the cross */
   overflow: hidden;
 }
 
 .menu-icon-bar {
   display: block;
-  width: 28px; /* Icon bars little smaller */
-  height: 3px; /* Slightly thinner */
+  width: 28px;
+  height: 3px;
   background-color: #FFFFFF; /* White bars */
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -198,7 +194,7 @@
 }
 
 .menu-icon-bar-top {
-  transform: translateY(-8px); /* Adjusted for smaller icon */
+  transform: translateY(-8px);
 }
 
 .menu-icon-bar-middle {
@@ -206,7 +202,7 @@
 }
 
 .menu-icon-bar-bottom {
-  transform: translateY(8px); /* Adjusted for smaller icon */
+  transform: translateY(8px);
 }
 
 /* Animation to Cross (when .menu-open is applied to body) */
@@ -234,7 +230,7 @@ body.menu-open .menu-icon-bar-bottom {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 1010;
+  z-index: 99998; /* Below menu */
 }
 
 /* --- Navigation Drawer --- */
@@ -249,17 +245,23 @@ body.menu-open .menu-icon-bar-bottom {
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
   
   transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth slide */
+  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
   
-  z-index: 1020;
+  z-index: 99999; /* Menu z-index */
   display: flex;
   flex-direction: column;
 }
 
+/* Fix: Allow body overflow to enable menu slide */
+body.menu-open {
+    overflow: hidden; /* Prevent scrolling when menu is open */
+}
+
+
 /* Empty header for spacing consistent with the icon */
 .md3-nav-drawer-header-empty {
     /* Adjusted padding to move items down a bit, and align with icon */
-    padding: 24px 16px 20px; /* Increased bottom padding */
+    padding: 24px 16px 20px; /* Increased bottom padding to move content down */
 }
 
 /* Main list */
@@ -270,17 +272,16 @@ body.menu-open .menu-icon-bar-bottom {
   flex-grow: 1;
 }
 
-/* Individual nav items (default styling) */
+/* Individual nav items (default styling for Photos/Socials) */
 .md3-nav-item {
   display: flex;
-  align-items: center; /* In line */
+  align-items: center;
   text-decoration: none;
   
-  /* Default: No background, light text for Photos/Socials */
-  background-color: transparent; 
+  background-color: transparent; /* No background by default */
   color: var(--md3-sys-color-on-surface-variant); 
   
-  padding: 10px 16px;
+  padding: 10px 16px; /* Standard padding */
   margin-bottom: 4px;
   border-radius: 28px;
   font-family: "Roboto", sans-serif;
@@ -288,7 +289,7 @@ body.menu-open .menu-icon-bar-bottom {
   font-weight: 500;
   line-height: 24px;
   transition: background-color 0.2s ease, color 0.2s ease;
-  min-height: 56px;
+  min-height: 56px; /* Material 3 standard min height for clickable areas */
 }
 
 /* Hover/Focus for inactive items */
@@ -308,8 +309,13 @@ body.menu-open .menu-icon-bar-bottom {
   font-weight: 500;
   cursor: default;
   pointer-events: none;
-  /* Ensure background doesn't get too massive, controlled by padding */
-  padding: 10px 16px; /* Keep consistent padding */
+  
+  /* Adjusted padding for a less tall background box, aligning left */
+  padding: 8px 16px; /* Reduced vertical padding */
+  margin-bottom: 4px; /* Maintain space between items */
+  line-height: 40px; /* Control vertical size more directly if needed */
+  /* Remove min-height here if you want it to shrink exactly to content */
+  min-height: auto; /* Allow height to be determined by padding + line-height */
 }
 
 /* --- Material 3 Expansion List Item --- */
@@ -321,14 +327,13 @@ body.menu-open .menu-icon-bar-bottom {
 
 .md3-expansion-header {
   display: flex;
-  align-items: center; /* In line */
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   border: none;
   cursor: pointer;
   
-  /* Default: No background, light text for Socials header */
-  background-color: transparent;
+  background-color: transparent; /* No background for Socials header */
   color: var(--md3-sys-color-on-surface-variant); 
   
   padding: 10px 16px;
@@ -342,7 +347,6 @@ body.menu-open .menu-icon-bar-bottom {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-/* Hover/Focus for Socials header */
 .md3-expansion-header:hover {
   background-color: var(--md3-state-layer-on-surface);
 }
@@ -351,7 +355,6 @@ body.menu-open .menu-icon-bar-bottom {
   background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
   outline: none;
 }
-
 
 .md3-expansion-arrow {
   margin-left: 16px;
@@ -372,13 +375,11 @@ body.menu-open .menu-icon-bar-bottom {
   transition: max-height 0.3s ease-out, padding 0.3s ease-out;
 }
 
-/* Show content when header is expanded */
 .md3-expansion-header[aria-expanded="true"] + .md3-expansion-content {
-  max-height: 200px; /* Adjust based on max content height */
+  max-height: 200px;
   padding: 8px 16px 8px 32px;
 }
 
-/* Material 3 Social Buttons within the expanded content */
 .md3-social-button {
   display: flex;
   align-items: center;
@@ -408,6 +409,18 @@ body.menu-open .menu-icon-bar-bottom {
   background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 88%, var(--md3-state-layer-on-surface));
   transform: translateY(1px);
 }
+
+
+/* --- JavaScript controlled classes for menu state --- */
+body.menu-open .menu-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.menu-open .md3-nav-drawer {
+  transform: translateX(0); 
+}
+
 
     .copyright {
       position: fixed;
