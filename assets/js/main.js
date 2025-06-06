@@ -9,15 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Toggle Menu Functionality ---
     function toggleMenu() {
         body.classList.toggle('menu-open');
-        // Set aria-expanded for accessibility
         const isMenuOpen = body.classList.contains('menu-open');
         menuIcon.setAttribute('aria-expanded', isMenuOpen);
 
-        // Adjust tab focus for accessibility (optional but good practice)
         if (isMenuOpen) {
-            navDrawer.focus(); // Focus on the drawer when it opens
+            navDrawer.focus();
         } else {
-            menuIcon.focus(); // Return focus to the icon when it closes
+            menuIcon.focus();
         }
     }
 
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (itemPath === '/') {
             normalizedItemPath = '/index.html';
         } else if (itemPath.endsWith('/') && itemPath !== '/') {
-            normalizedItemPath = itemPath + 'index.html'; // Handle /photos/ as /photos/index.html
+            normalizedItemPath = itemPath + 'index.html';
         }
 
         let normalizedCurrentPath = currentPath;
@@ -44,18 +42,15 @@ document.addEventListener('DOMContentLoaded', () => {
             normalizedCurrentPath = currentPath + 'index.html';
         }
 
-        // Special handling for the root path and its corresponding menu item
-        if (itemPath === '/' && (currentPath === '/' || currentPath === '/index.html')) {
+        // ONLY "Profiles" (index.html) will have the active background
+        if (itemPath === '/index.html' && (currentPath === '/' || currentPath === '/index.html')) {
             item.classList.add('active');
-        } else if (normalizedCurrentPath.startsWith(normalizedItemPath) && normalizedItemPath !== '/index.html') {
-            item.classList.add('active');
-        } else if (itemPath === normalizedCurrentPath) { // Fallback for exact match
-            item.classList.add('active');
+        } else {
+            item.classList.remove('active'); // Ensure other items don't have it
         }
     });
 
     // Optional: Close menu when a standard nav item is clicked (unless active)
-    // Removed the "Settings" item, so this logic is fine
     navItems.forEach(item => {
         if (!item.classList.contains('active')) {
             item.addEventListener('click', toggleMenu);
@@ -69,19 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             expansionHeader.setAttribute('aria-expanded', !isExpanded);
         });
     }
-});
-
-// Navigation Buttons Animation
-window.addEventListener('DOMContentLoaded', () => {
-  const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
-  buttons.forEach(btn => {
-    if (btn) {
-      btn.classList.add('nav-button-animate');
-      setTimeout(() => {
-        btn.classList.remove('nav-button-animate');
-      }, 800); // Match the animation duration
-    }
-  });
 });
 
 // Scroll Indicators for Horizontal Scroll
