@@ -446,110 +446,133 @@ body.dark-mode .photos-button {
   -webkit-backdrop-filter: blur(10px);
   color: #ababab !important;
 }
-    
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-/* Material 3 Color & Shadow References (approximate for light theme) */
-:root {
-  --m3-primary: #6750A4; /* Material 3 Primary color */
-  --m3-on-surface: #1C1B1F; /* Color for text/icons on primary surfaces */
-  --m3-on-surface-variant: #49454F; /* Less prominent text/icons */
-  --m3-surface-container-high: #E6E0E9; /* Background color for dialogs */
-  --m3-elevation-3-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
-}
 
-.ios-popup-overlay {
+.material-dialog {
+  display: flex;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); /* Kept original opacity, Material 3 often uses darker */
-  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10005;
   justify-content: center;
   align-items: center;
-  z-index: 10001;
+  animation: fadeIn 0.3s ease-out;
 }
 
-.ios-popup {
-  background: var(--m3-surface-container-high); /* Material 3 surface color for dialogs */
-  font-family: "Roboto", sans-serif;
-  color: var(--m3-on-surface); /* Default text color on surface */
-  padding: 24px; /* Increased padding slightly for M3 spacing */
-  border-radius: 28px; /* Consistent with Material 3 dialogs */
-  box-shadow: var(--m3-elevation-3-shadow); /* Material 3 elevation for dialogs */
-  transform: translateY(20px);
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+.dialog-content {
+  background-color: #e8f6ff;
+  border-radius: 28px;
+  padding: 24px;
+  padding-top: 5px;
+  box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),
+              0px 24px 38px 3px rgba(0,0,0,0.14),
+              0px 9px 46px 8px rgba(0,0,0,0.12);
+  max-width: 500px;
   width: 70%;
-  max-width: 420px;
-}
-
-.ios-popup.show {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.ios-popup.hide {
-  transform: translateY(20px);
+  text-align: left;
+  transform: scale(0.8);
   opacity: 0;
+  animation: slideIn 0.3s ease-out forwards;
 }
 
-/* Title - Material 3 Headline Small */
-.ios-popup-title {
-  font-size: 24px; /* Material 3 Headline Small */
-  font-weight: 500; /* Medium weight for clarity */
-  color: var(--m3-on-surface);
-  margin-bottom: 16px; /* Increased spacing */
-  line-height: 32px; /* Material 3 recommended line height */
+.dialog-content h2 {
+  font-family: "Roboto";
+  font-optical-sizing: auto;
+font-style: normal;
+font-weight: 450;
+  font-size: 24px;
+  color: #1C1B1F;
+  margin-bottom: -10px;
+  line-height: 52px;
 }
 
-/* Supporting Text - Material 3 Body Large */
-.ios-popup-text {
-  font-size: 16px; /* Material 3 Body Large */
-  font-weight: 400;
-  color: var(--m3-on-surface-variant); /* Slightly desaturated for supporting text */
-  margin-bottom: 24px; /* Increased spacing before buttons */
-  line-height: 24px; /* Material 3 recommended line height */
+.dialog-content p {
+  font-family: "Roboto";
+font-optical-sizing: auto;
+font-style: normal;
+  font-size: 14px;
+  font-weight: 450;
+  color: #49454F;
+  margin-bottom: 24px;
+  line-height: 24px;
 }
 
-/* Button Container */
-.ios-popup-buttons {
+.dialog-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 8px; /* Standard spacing for M3 buttons */
-  /* margin-top: 16px; -- Removed as text margin-bottom now handles spacing */
+  gap: 6px;
+  margin-top: 24px;
 }
 
-/* Buttons - Material 3 Text Button Style */
-.ios-popup button {
-  font-family: "Roboto", sans-serif;
+.material-button {
+  font-family: "Roboto";
+font-optical-sizing: auto;
+font-style: normal;
+font-weight: 520;
+  font-size: 15px;
+  padding: 10px 12px;
   border: none;
-  padding: 10px 24px; /* Material 3 recommended padding for text buttons */
-  font-size: 14px; /* Material 3 Label Large */
-  font-weight: 500; /* Medium weight for button text */
+  background-color: transparent;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  background-color: transparent; /* Text buttons have no background by default */
-  color: var(--m3-primary); /* Material 3 Primary color */
-  border-radius: 100px; /* Fully rounded corners for Material 3 buttons */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease-out;
+  text-transform: capitalize;
+  min-width: 48px;
+  min-height: 40px;
 }
 
-.ios-popup button:hover {
-  background-color: rgba(103, 80, 164, 0.08); /* 8% primary color overlay on hover */
-  color: var(--m3-primary);
+.material-button.text-button {
+  color: #007BFF;
 }
 
-.ios-popup button:focus {
-  background-color: rgba(103, 80, 164, 0.12); /* 12% primary color overlay on focus */
-  color: var(--m3-primary);
-  outline: none; /* Remove default outline */
+.material-button.text-button:active {
+  background-color: rgba(103, 80, 164, 0.12);
+  transform: translateY(1px);
 }
 
-.ios-popup button:active {
-  background-color: rgba(103, 80, 164, 0.16); /* 16% primary color overlay on active */
-  color: var(--m3-primary);
+.material-dialog.closing {
+  animation: fadeOut 0.3s ease-in forwards;
 }
+
+.material-dialog.closing .dialog-content {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
 
 
 
