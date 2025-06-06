@@ -2,19 +2,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuIcon = document.querySelector('.menu-icon');
     const menuOverlay = document.querySelector('.menu-overlay');
     const navDrawer = document.querySelector('.md3-nav-drawer');
-    const navItems = document.querySelectorAll('.md3-nav-item'); // Keep this for page highlighting
-    const expansionHeader = document.querySelector('.md3-expansion-header'); // New
+    const navItems = document.querySelectorAll('.md3-nav-item');
+    const expansionHeader = document.querySelector('.md3-expansion-header');
     const body = document.body;
 
     // --- Toggle Menu Functionality ---
     function toggleMenu() {
         body.classList.toggle('menu-open');
+        // Set aria-expanded for accessibility
+        const isMenuOpen = body.classList.contains('menu-open');
+        menuIcon.setAttribute('aria-expanded', isMenuOpen);
+
+        // Adjust tab focus for accessibility (optional but good practice)
+        if (isMenuOpen) {
+            navDrawer.focus(); // Focus on the drawer when it opens
+        } else {
+            menuIcon.focus(); // Return focus to the icon when it closes
+        }
     }
 
     menuIcon.addEventListener('click', toggleMenu);
     menuOverlay.addEventListener('click', toggleMenu);
 
-    // --- Active Page Highlighting (remains the same) ---
+    // --- Active Page Highlighting ---
     const currentPath = window.location.pathname;
 
     navItems.forEach(item => {
@@ -23,21 +33,35 @@ document.addEventListener('DOMContentLoaded', () => {
         let normalizedItemPath = itemPath;
         if (itemPath === '/') {
             normalizedItemPath = '/index.html';
-        } else if (itemPath.endsWith('/')) {
-            normalizedItemPath = itemPath + 'index.html';
+        } else if (itemPath.endsWith('/') && itemPath !== '/') {
+            normalizedItemPath = itemPath + 'index.html'; // Handle /photos/ as /photos/index.html
         }
 
         let normalizedCurrentPath = currentPath;
         if (currentPath === '/') {
             normalizedCurrentPath = '/index.html';
-        } else if (currentPath.endsWith('/')) {
+        } else if (currentPath.endsWith('/') && currentPath !== '/') {
             normalizedCurrentPath = currentPath + 'index.html';
         }
 
-        if (normalizedCurrentPath === normalizedItemPath) {
+        // Special handling for the root path and its corresponding menu item
+        if (itemPath === '/' && (currentPath === '/' || currentPath === '/index.html')) {
+            item.classList.add('active');
+        } else if (normalizedCurrentPath.startsWith(normalizedItemPath) && normalizedItemPath !== '/index.html') {
+            item.classList.add('active');
+        } else if (itemPath === normalizedCurrentPath) { // Fallback for exact match
             item.classList.add('active');
         }
     });
+
+
+    // --- Socials Expansion Functionality ---
+    if (expansionHeader) {
+        expansionHeader.addEventListener('click', () => {
+            const isExpanded = expansionHeader.getAttribute('aria-expanded') === 'true';
+            expansionHeader.setAttribute('aria-expanded', !isExpanded);
+        });
+    }
 
     // Optional: Close menu when a standard nav item is clicked (unless active)
     navItems.forEach(item => {
@@ -46,14 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- NEW: Socials Expansion Functionality ---
-    if (expansionHeader) { // Check if the element exists
-        expansionHeader.addEventListener('click', () => {
-            const isExpanded = expansionHeader.getAttribute('aria-expanded') === 'true';
-            expansionHeader.setAttribute('aria-expanded', !isExpanded);
+    // Optional: Dark Mode Toggle for demonstration
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode'); // Assuming light-mode is the default
         });
     }
 });
+
 
 
 // Navigation Buttons Animation
