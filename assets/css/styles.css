@@ -469,7 +469,7 @@ body.dark-mode .photos-button {
   transform: translateY(20px);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  width: 90%;
+  width: 75%;
   max-width: 400px; /* Adjusted to better match Android dialogs */
 }
 
