@@ -142,28 +142,30 @@
       transform: scale(1.1);
     }
 
-/* --- Base Material 3 Colors (Updated for Dark Mode as default for menu) --- */
-/* These vars will be primarily for the menu's dark appearance */
+/* --- Base Material 3 Colors (Dark Mode as default for menu) --- */
 :root {
-  --md3-sys-color-primary: #D0BCFF; /* Dark mode primary */
+  /* Default Material 3 Dark Colors */
+  --md3-sys-color-primary: #D0BCFF;
   --md3-sys-color-on-primary: #381E72;
   --md3-sys-color-primary-container: #4F378B;
   --md3-sys-color-on-primary-container: #EADDFF;
-  --md3-sys-color-surface: #1C1B1F; /* Main background for full page if dark mode */
+  --md3-sys-color-surface: #1C1B1F;
   --md3-sys-color-on-surface: #E6E0E9;
   --md3-sys-color-surface-container-high: #2F2F37; /* Default menu background */
   --md3-sys-color-on-surface-variant: #CAC4D0; /* For inactive text */
 
-  /* Menu Specific Colors from ReVanced Image (darker grey for active item) */
-  --md3-menu-active-bg: #333C45; /* Darker grey-blue for active item */
+  /* Menu Item Blue Backgrounds */
+  --md3-menu-item-bg-inactive: #384550; /* Subtle blue-grey background for all items */
+  --md3-menu-active-bg: #333C45; /* Darker grey-blue for active item, as in image */
   --md3-menu-active-text: #FFFFFF; /* White text on active item */
+  --md3-menu-item-text-inactive: #E6E0E9; /* Light text for inactive items */
 
   /* State Layers for hover/focus/pressed (Dark Mode) */
   --md3-state-layer-on-surface: rgba(230, 224, 234, 0.08); /* 8% onSurface */
 }
 
-/* Light Mode Overrides (if you have a dark mode toggle) */
-body.light-mode { /* Assuming you add a .light-mode class to body */
+/* Light Mode Overrides (if you have a dark mode toggle somewhere else) */
+/* body.light-mode {
   --md3-sys-color-primary: #6750A4;
   --md3-sys-color-on-primary: #FFFFFF;
   --md3-sys-color-primary-container: #EADDFF;
@@ -173,11 +175,13 @@ body.light-mode { /* Assuming you add a .light-mode class to body */
   --md3-sys-color-surface-container-high: #E6E0E9;
   --md3-sys-color-on-surface-variant: #49454F;
 
-  --md3-menu-active-bg: #E0E0E0; /* Lighter grey for active item in light mode */
+  --md3-menu-item-bg-inactive: #F0F0F0;
+  --md3-menu-active-bg: #E0E0E0;
   --md3-menu-active-text: #1C1B1F;
+  --md3-menu-item-text-inactive: #1C1B1F;
 
   --md3-state-layer-on-surface: rgba(29, 27, 32, 0.08);
-}
+} */
 
 
 /* --- Menu Icon (Hamburger to Cross Animation) --- */
@@ -187,28 +191,28 @@ body.light-mode { /* Assuming you add a .light-mode class to body */
   cursor: pointer;
   padding: 12px;
   display: flex;
-  flex-direction: column; /* Stack bars vertically */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 48px; /* Touch target size */
-  height: 48px; /* Touch target size */
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
   top: 15px;
-  left: 15px;
+  left: 15px; /* Consistent position with menu header */
   z-index: 1000;
-  overflow: hidden; /* Important for hiding parts of bars during rotation */
+  overflow: hidden;
 }
 
 .menu-icon-bar {
   display: block;
-  width: 32px; /* Bigger bars */
-  height: 4px; /* Thickness */
+  width: 32px;
+  height: 4px;
   background-color: #FFFFFF; /* White bars */
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  position: absolute; /* Allow precise positioning for animation */
+  position: absolute;
 }
 
 .menu-icon-bar-top {
@@ -216,7 +220,7 @@ body.light-mode { /* Assuming you add a .light-mode class to body */
 }
 
 .menu-icon-bar-middle {
-  opacity: 1; /* Initially visible */
+  opacity: 1;
 }
 
 .menu-icon-bar-bottom {
@@ -225,15 +229,15 @@ body.light-mode { /* Assuming you add a .light-mode class to body */
 
 /* Animation to Cross (when .menu-open is applied to body) */
 body.menu-open .menu-icon-bar-top {
-  transform: translateY(0) rotate(45deg); /* Move to center and rotate */
+  transform: translateY(0) rotate(45deg);
 }
 
 body.menu-open .menu-icon-bar-middle {
-  opacity: 0; /* Fade out middle bar */
+  opacity: 0;
 }
 
 body.menu-open .menu-icon-bar-bottom {
-  transform: translateY(0) rotate(-45deg); /* Move to center and rotate */
+  transform: translateY(0) rotate(-45deg);
 }
 
 
@@ -259,24 +263,21 @@ body.menu-open .menu-icon-bar-bottom {
   width: calc(100% - 60px); /* Covers most of the screen like ReVanced */
   max-width: 360px; /* Cap width for larger screens */
   height: 100%;
-  background-color: var(--md3-sys-color-surface-container-high); /* Dark Material 3 background */
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4); /* Stronger shadow for depth */
-  transform: translateX(-100%) scale(0.95); /* Hides it off-screen, slightly squashed */
-  transform-origin: left center; /* For scale animation */
-  transition: transform 0.3s ease-out; /* Slide and squash animation */
+  background-color: var(--md3-sys-color-surface-container-high);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
+  
+  /* NEW: Smooth slide animation without scale */
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); /* Material Design ease-out */
+  
   z-index: 1020;
   display: flex;
   flex-direction: column;
 }
 
-/* Menu header */
-.md3-nav-drawer-header {
-  padding: 24px 16px 16px; /* Matched image */
-  color: var(--md3-sys-color-on-surface);
-  font-family: "Roboto", sans-serif;
-  font-size: 1.375rem; /* 22px */
-  font-weight: 400;
-  line-height: 28px;
+/* Empty header for spacing consistent with the icon */
+.md3-nav-drawer-header-empty {
+    padding: 24px 16px 16px; /* Provides top padding where title used to be */
 }
 
 /* Main list */
@@ -284,20 +285,24 @@ body.menu-open .menu-icon-bar-bottom {
   list-style: none;
   padding: 8px 12px;
   margin: 0;
-  flex-grow: 1; /* Allow list to take available space */
+  flex-grow: 1;
 }
 
 /* Individual nav items */
 .md3-nav-item {
   display: flex;
-  align-items: center;
+  align-items: center; /* In line */
   text-decoration: none;
-  color: var(--md3-sys-color-on-surface-variant); /* Inactive text color */
+  
+  /* NEW: Constant Blue Round Background for all items */
+  background-color: var(--md3-menu-item-bg-inactive); 
+  color: var(--md3-menu-item-text-inactive); /* Light text for inactive items */
+  
   padding: 10px 16px;
   margin-bottom: 4px;
-  border-radius: 28px; /* Pill shape */
+  border-radius: 28px;
   font-family: "Roboto", sans-serif;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
   font-weight: 500;
   line-height: 24px;
   transition: background-color 0.2s ease, color 0.2s ease;
@@ -305,11 +310,11 @@ body.menu-open .menu-icon-bar-bottom {
 }
 
 .md3-nav-item:hover {
-  background-color: var(--md3-state-layer-on-surface);
+  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 92%, var(--md3-state-layer-on-surface));
 }
 
 .md3-nav-item:focus {
-  background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
+  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 88%, var(--md3-state-layer-on-surface));
   outline: none;
 }
 
@@ -322,34 +327,7 @@ body.menu-open .menu-icon-bar-bottom {
   pointer-events: none;
 }
 
-/* Settings item at the bottom */
-.md3-nav-drawer-bottom {
-    margin-top: auto; /* Pushes content to the bottom */
-    padding: 8px 12px 16px; /* Adjust padding for bottom section */
-}
-
-.md3-settings-item svg {
-    margin-right: 12px; /* Space between icon and text */
-    fill: currentColor; /* Inherit color from parent */
-}
-.md3-settings-item span {
-    /* For consistency with font-size and weight */
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-
-/* --- JavaScript controlled classes for menu state --- */
-body.menu-open .menu-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-body.menu-open .md3-nav-drawer {
-  transform: translateX(0) scale(1); /* Slides in and expands to full size */
-}
-
-/* --- Material 3 Expansion List Item (from previous response) --- */
+/* --- Material 3 Expansion List Item --- */
 .md3-expansion-item {
   list-style: none;
   padding: 0 12px;
@@ -358,12 +336,16 @@ body.menu-open .md3-nav-drawer {
 
 .md3-expansion-header {
   display: flex;
-  align-items: center;
+  align-items: center; /* In line */
   justify-content: space-between;
   width: 100%;
-  background: none;
   border: none;
   cursor: pointer;
+  
+  /* NEW: Constant Blue Round Background for expansion header */
+  background-color: var(--md3-menu-item-bg-inactive);
+  color: var(--md3-menu-item-text-inactive); /* Light text for inactive items */
+  
   padding: 10px 16px;
   border-radius: 28px;
   min-height: 56px;
@@ -372,17 +354,15 @@ body.menu-open .md3-nav-drawer {
   font-size: 1rem;
   font-weight: 500;
   line-height: 24px;
-  color: var(--md3-sys-color-on-surface-variant);
-
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .md3-expansion-header:hover {
-  background-color: var(--md3-state-layer-on-surface);
+  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 92%, var(--md3-state-layer-on-surface));
 }
 
 .md3-expansion-header:focus {
-  background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
+  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 88%, var(--md3-state-layer-on-surface));
   outline: none;
 }
 
@@ -402,9 +382,11 @@ body.menu-open .md3-nav-drawer {
   padding: 8px 16px 8px 32px;
   max-height: 0;
   overflow: hidden;
+  /* NEW: Smooth transition for expansion content */
   transition: max-height 0.3s ease-out, padding 0.3s ease-out;
 }
 
+/* Show content when header is expanded */
 .md3-expansion-header[aria-expanded="true"] + .md3-expansion-content {
   max-height: 200px; /* Adjust based on max content height */
   padding: 8px 16px 8px 32px;
@@ -422,7 +404,7 @@ body.menu-open .md3-nav-drawer {
   color: var(--md3-sys-color-on-surface-variant);
   text-decoration: none;
   transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0px 1px 2px rgba(0,0,0,0.1); /* Subtle elevation */
+  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
 }
 
 .md3-social-button svg,
@@ -439,6 +421,18 @@ body.menu-open .md3-nav-drawer {
 .md3-social-button:active {
   background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 88%, var(--md3-state-layer-on-surface));
   transform: translateY(1px);
+}
+
+
+/* --- JavaScript controlled classes for menu state --- */
+body.menu-open .menu-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.menu-open .md3-nav-drawer {
+  /* NEW: Smooth slide in, no scale */
+  transform: translateX(0); 
 }
 
     .copyright {
