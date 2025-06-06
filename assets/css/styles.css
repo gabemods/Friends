@@ -648,7 +648,7 @@ body.dark-mode a.info-button svg circle:last-child {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   font-family: 'OneUISans', sans-serif;
   color: #333;
-  z-index: 10002;
+  z-index: 10007;
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
   line-height: 1.3;
