@@ -1,3 +1,61 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const menuIcon = document.querySelector('.menu-icon');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const navDrawer = document.querySelector('.md3-nav-drawer');
+    const navItems = document.querySelectorAll('.md3-nav-item'); // Keep this for page highlighting
+    const expansionHeader = document.querySelector('.md3-expansion-header'); // New
+    const body = document.body;
+
+    // --- Toggle Menu Functionality ---
+    function toggleMenu() {
+        body.classList.toggle('menu-open');
+    }
+
+    menuIcon.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
+
+    // --- Active Page Highlighting (remains the same) ---
+    const currentPath = window.location.pathname;
+
+    navItems.forEach(item => {
+        const itemPath = item.getAttribute('data-page-path');
+
+        let normalizedItemPath = itemPath;
+        if (itemPath === '/') {
+            normalizedItemPath = '/index.html';
+        } else if (itemPath.endsWith('/')) {
+            normalizedItemPath = itemPath + 'index.html';
+        }
+
+        let normalizedCurrentPath = currentPath;
+        if (currentPath === '/') {
+            normalizedCurrentPath = '/index.html';
+        } else if (currentPath.endsWith('/')) {
+            normalizedCurrentPath = currentPath + 'index.html';
+        }
+
+        if (normalizedCurrentPath === normalizedItemPath) {
+            item.classList.add('active');
+        }
+    });
+
+    // Optional: Close menu when a standard nav item is clicked (unless active)
+    navItems.forEach(item => {
+        if (!item.classList.contains('active')) {
+            item.addEventListener('click', toggleMenu);
+        }
+    });
+
+    // --- NEW: Socials Expansion Functionality ---
+    if (expansionHeader) { // Check if the element exists
+        expansionHeader.addEventListener('click', () => {
+            const isExpanded = expansionHeader.getAttribute('aria-expanded') === 'true';
+            expansionHeader.setAttribute('aria-expanded', !isExpanded);
+        });
+    }
+});
+
+
 // Navigation Buttons Animation
 window.addEventListener('DOMContentLoaded', () => {
   const buttons = [document.getElementById('profilesBtn'), document.getElementById('photosBtn')];
