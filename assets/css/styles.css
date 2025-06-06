@@ -152,10 +152,10 @@
   --md3-sys-color-surface: #1C1B1F;
   --md3-sys-color-on-surface: #E6E0E9;
   --md3-sys-color-surface-container-high: #2F2F37; /* Default menu background */
-  --md3-sys-color-on-surface-variant: #CAC4D0; /* For inactive text */
+  --md3-sys-color-on-surface-variant: #CAC4D0; /* For inactive text (ReVanced light grey) */
 
-  /* Menu Item Blue Backgrounds (Now only for active 'Profiles') */
-  --md3-menu-active-bg: #1A73E8; /* A vibrant blue for "Profiles" background */
+  /* Menu Item Active Background (ReVanced 'Home' style) */
+  --md3-menu-active-bg: #333C45; /* Dark blue-grey from ReVanced image */
   --md3-menu-active-text: #FFFFFF; /* White text for active "Profiles" */
 
   /* State Layers for hover/focus/pressed (Dark Mode) */
@@ -178,7 +178,7 @@
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
-  top: 10px;
+  top: 5px;
   left: 10px;
   z-index: 100000; /* Highest z-index for the cross */
   overflow: hidden;
@@ -261,14 +261,15 @@ body.menu-open {
 
 /* Empty header for spacing consistent with the icon */
 .md3-nav-drawer-header-empty {
-    padding: 24px 16px 20px; /* Increased bottom padding to move content down */
+    /* Padding to move content down and align with where the X icon sits */
+    padding: 24px 16px 20px; 
 }
 
 /* Main list */
 .md3-nav-list {
   list-style: none;
-  /* Reduced top padding */
-  padding: 4px 12px; /* Reduced top padding to reduce gap above first item */
+  /* Reduced top padding to reduce gap above first item */
+  padding: 4px 12px; 
   margin: 0;
   flex-grow: 1;
 }
@@ -280,11 +281,11 @@ body.menu-open {
   text-decoration: none;
   
   background-color: transparent; /* No background by default */
-  color: var(--md3-sys-color-on-surface-variant); /* Light text for others */
+  color: var(--md3-sys-color-on-surface-variant); /* Light grey text for others */
   
   padding: 10px 16px; /* Standard padding */
   margin-bottom: 2px; /* Reduced gap between items */
-  border-radius: 28px;
+  border-radius: 28px; /* Rounded corners */
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
   font-weight: 500;
@@ -303,9 +304,9 @@ body.menu-open {
   outline: none;
 }
 
-/* Active "Profiles" Item (Specific Blue Background and White Text) */
+/* Active "Profiles" Item (ReVanced 'Home' style: dark blue-grey background, white text) */
 .md3-nav-item.active {
-  background-color: var(--md3-menu-active-bg); /* Vibrant blue for "Profiles" */
+  background-color: var(--md3-menu-active-bg); /* Dark blue-grey from image */
   color: var(--md3-menu-active-text); /* White text for "Profiles" */
   font-weight: 500;
   cursor: default;
@@ -314,7 +315,7 @@ body.menu-open {
   /* Adjusted padding for a less tall background box, aligning left */
   padding: 8px 16px; /* Reduced vertical padding for compact look */
   margin-bottom: 2px; /* Maintain small gap */
-  line-height: 40px; /* Control vertical size directly to be less tall */
+  line-height: 40px; /* Controls vertical size to be less tall */
   min-height: auto; /* Allow height to be determined by padding + line-height */
 }
 
@@ -334,7 +335,7 @@ body.menu-open {
   cursor: pointer;
   
   background-color: transparent; /* No background for Socials header */
-  color: var(--md3-sys-color-on-surface-variant); 
+  color: var(--md3-sys-color-on-surface-variant); /* Light grey text for Socials header */
   
   padding: 10px 16px;
   border-radius: 28px;
@@ -359,7 +360,7 @@ body.menu-open {
 
 
 .md3-expansion-arrow {
-  margin-left: 24px; /* Increased margin for more distance */
+  margin-left: 10px; /* Increased margin for more distance from text */
   transition: transform 0.2s ease;
 }
 
@@ -371,7 +372,8 @@ body.menu-open {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   gap: 8px;
-  padding: 8px 16px 8px 32px;
+  /* Reduced top padding for a tighter fit after header */
+  padding: 4px 16px 8px 32px; 
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out, padding 0.3s ease-out;
