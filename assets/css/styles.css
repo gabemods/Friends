@@ -191,7 +191,7 @@ body.menu-open {
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
-  top: 3px;
+  top: 5px;
   left: 10px;
   z-index: 100000; /* Highest z-index for the cross */
   overflow: hidden; /* Important for the bar animation */
