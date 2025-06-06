@@ -454,7 +454,7 @@ body.dark-mode .photos-button {
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4); /* Standard Material 3 backdrop */
+  background-color: rgba(0, 0, 0, 0.4);
   display: none;
   justify-content: center;
   align-items: center;
@@ -462,17 +462,17 @@ body.dark-mode .photos-button {
 }
 
 .ios-popup {
-  background: #FFFFFF;
+  background: #E3F2FD; /* Very light blue */
   font-family: "Roboto", sans-serif;
   color: rgba(0, 0, 0, 0.87);
-  padding: 20px;
+  padding: 16px;
   border-radius: 28px;
   box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.3);
   transform: translateY(20px);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  width: 90%;
-  max-width: 360px; /* Matches standard Material 3 dialog width */
+  width: 70%;
+  max-width: 420px;
 }
 
 .ios-popup.show {
@@ -509,30 +509,21 @@ body.dark-mode .photos-button {
   margin-top: 16px;
 }
 
-/* Default Button (Material Text Button) */
+/* Buttons - Material 3 Style */
 .ios-popup button {
   font-family: "Roboto", sans-serif;
-  background: none;
   border: none;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 500;
-  color: #2962FF; /* Lighter Material Blue */
   cursor: pointer;
   transition: color 0.2s ease;
+  background: none; /* No background */
+  color: #2962FF; /* Material Blue */
 }
 
-/* Primary Action Button (Material Filled Button) */
-.ios-popup button.primary {
-  background: #2962FF;
-  color: #FFFFFF;
-  border-radius: 20px;
-  padding: 8px 16px;
-}
-
-/* Destructive Button */
-.ios-popup button.destructive {
-  color: #B00020;
+.ios-popup button:hover {
+  color: #0039CB; /* Slightly darker blue */
 }
 
 
