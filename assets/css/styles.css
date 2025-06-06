@@ -733,8 +733,14 @@ body.dark-mode a.info-button svg circle:last-child {
   touch-action: manipulation;
   position: fixed;
   inset: 0;
-  backdrop-filter: blur(100px);
-  background: rgba(0, 0, 0, 0.0);
+  backdrop-filter: blur(50px);
+  background: conic-gradient(
+  from 0deg at 50% 50%,
+  #00FFFF,   /* Pure Electric Blue / Cyan */
+  #1E90FF,   /* Dodger Blue (a vibrant, slightly darker blue) */
+  #00BFFF,   /* Deep Sky Blue */
+  #00FFFF    /* Back to Pure Electric Blue */
+);
   z-index: 10002;
   display: flex;
   justify-content: center;
