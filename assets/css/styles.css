@@ -120,7 +120,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 1000;
+      z-index: 5;
     }
 
     .indicators {
@@ -162,6 +162,19 @@
   --md3-state-layer-on-surface: rgba(230, 224, 234, 0.08); /* 8% onSurface */
 }
 
+/* Ensure the body doesn't cause issues with menu transitions */
+body {
+    margin: 0;
+    padding: 0;
+    /* This is important: if body has overflow: hidden by default, it can block the slide */
+    overflow-x: hidden; /* Prevent horizontal scroll bars, but allow vertical by default */
+}
+
+/* Fix: Prevent scrolling when menu is open */
+body.menu-open {
+    overflow: hidden; 
+}
+
 
 /* --- Menu Icon (Hamburger to Cross Animation) --- */
 .menu-icon {
@@ -178,10 +191,10 @@
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
-  top: 5px;
+  top: 10px;
   left: 10px;
   z-index: 100000; /* Highest z-index for the cross */
-  overflow: hidden;
+  overflow: hidden; /* Important for the bar animation */
 }
 
 .menu-icon-bar {
@@ -231,7 +244,7 @@ body.menu-open .menu-icon-bar-bottom {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 99998; /* Below menu */
+  z-index: 99998; /* Below menu drawer */
 }
 
 /* --- Navigation Drawer --- */
@@ -245,31 +258,35 @@ body.menu-open .menu-icon-bar-bottom {
   background-color: var(--md3-sys-color-surface-container-high);
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
   
-  transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform: translateX(-100%); /* Start hidden */
+  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth slide */
   
-  z-index: 99999; /* Menu z-index */
+  z-index: 99999; /* Menu drawer z-index */
   display: flex;
   flex-direction: column;
 }
 
-/* Fix: Allow body overflow to enable menu slide */
-body.menu-open {
-    overflow: hidden; /* Prevent scrolling when menu is open */
+/* When menu is open, slide it into view */
+body.menu-open .md3-nav-drawer {
+  transform: translateX(0); 
+}
+
+/* When menu is open, show the overlay */
+body.menu-open .menu-overlay {
+  opacity: 1;
+  visibility: visible;
 }
 
 
 /* Empty header for spacing consistent with the icon */
 .md3-nav-drawer-header-empty {
-    /* Padding to move content down and align with where the X icon sits */
     padding: 24px 16px 20px; 
 }
 
 /* Main list */
 .md3-nav-list {
   list-style: none;
-  /* Reduced top padding to reduce gap above first item */
-  padding: 4px 12px; 
+  padding: 4px 12px; /* Reduced top padding to reduce gap above first item */
   margin: 0;
   flex-grow: 1;
 }
@@ -312,7 +329,6 @@ body.menu-open {
   cursor: default;
   pointer-events: none;
   
-  /* Adjusted padding for a less tall background box, aligning left */
   padding: 8px 16px; /* Reduced vertical padding for compact look */
   margin-bottom: 2px; /* Maintain small gap */
   line-height: 40px; /* Controls vertical size to be less tall */
@@ -360,7 +376,7 @@ body.menu-open {
 
 
 .md3-expansion-arrow {
-  margin-left: 10px; /* Increased margin for more distance from text */
+  margin-left: 24px; /* Increased margin for more distance from text */
   transition: transform 0.2s ease;
 }
 
@@ -413,7 +429,6 @@ body.menu-open {
   background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 88%, var(--md3-state-layer-on-surface));
   transform: translateY(1px);
 }
-
 
     .copyright {
       position: fixed;
@@ -689,7 +704,7 @@ body.dark-mode .arrow {
   text-align: center;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  z-index: 9999;
+  z-index: 10;
   line-height: 20px;
 }
 /* Dark mode override */
