@@ -449,12 +449,22 @@ body.dark-mode .photos-button {
     
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+/* Material 3 Color & Shadow References (approximate for light theme) */
+:root {
+  --m3-primary: #6750A4; /* Material 3 Primary color */
+  --m3-on-surface: #1C1B1F; /* Color for text/icons on primary surfaces */
+  --m3-on-surface-variant: #49454F; /* Less prominent text/icons */
+  --m3-surface-container-high: #E6E0E9; /* Background color for dialogs */
+  --m3-elevation-3-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+}
+
 .ios-popup-overlay {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4); /* Kept original opacity, Material 3 often uses darker */
   display: none;
   justify-content: center;
   align-items: center;
@@ -462,12 +472,12 @@ body.dark-mode .photos-button {
 }
 
 .ios-popup {
-  background: #E3F2FD; /* Very light blue */
+  background: var(--m3-surface-container-high); /* Material 3 surface color for dialogs */
   font-family: "Roboto", sans-serif;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 16px;
-  border-radius: 28px;
-  box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.3);
+  color: var(--m3-on-surface); /* Default text color on surface */
+  padding: 24px; /* Increased padding slightly for M3 spacing */
+  border-radius: 28px; /* Consistent with Material 3 dialogs */
+  box-shadow: var(--m3-elevation-3-shadow); /* Material 3 elevation for dialogs */
   transform: translateY(20px);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -485,46 +495,62 @@ body.dark-mode .photos-button {
   opacity: 0;
 }
 
-/* Title */
+/* Title - Material 3 Headline Small */
 .ios-popup-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.87);
-  margin-bottom: 8px;
+  font-size: 24px; /* Material 3 Headline Small */
+  font-weight: 500; /* Medium weight for clarity */
+  color: var(--m3-on-surface);
+  margin-bottom: 16px; /* Increased spacing */
+  line-height: 32px; /* Material 3 recommended line height */
 }
 
-/* Supporting Text */
+/* Supporting Text - Material 3 Body Large */
 .ios-popup-text {
-  font-size: 16px;
+  font-size: 16px; /* Material 3 Body Large */
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 16px;
+  color: var(--m3-on-surface-variant); /* Slightly desaturated for supporting text */
+  margin-bottom: 24px; /* Increased spacing before buttons */
+  line-height: 24px; /* Material 3 recommended line height */
 }
 
 /* Button Container */
 .ios-popup-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 8px; /* Standard spacing for M3 buttons */
+  /* margin-top: 16px; -- Removed as text margin-bottom now handles spacing */
 }
 
-/* Buttons - Material 3 Style */
+/* Buttons - Material 3 Text Button Style */
 .ios-popup button {
   font-family: "Roboto", sans-serif;
   border: none;
-  padding: 8px 16px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 10px 24px; /* Material 3 recommended padding for text buttons */
+  font-size: 14px; /* Material 3 Label Large */
+  font-weight: 500; /* Medium weight for button text */
   cursor: pointer;
-  transition: color 0.2s ease;
-  background: none; /* No background */
-  color: #2962FF; /* Material Blue */
+  transition: background-color 0.2s ease, color 0.2s ease;
+  background-color: transparent; /* Text buttons have no background by default */
+  color: var(--m3-primary); /* Material 3 Primary color */
+  border-radius: 100px; /* Fully rounded corners for Material 3 buttons */
 }
 
 .ios-popup button:hover {
-  color: #0039CB; /* Slightly darker blue */
+  background-color: rgba(103, 80, 164, 0.08); /* 8% primary color overlay on hover */
+  color: var(--m3-primary);
 }
+
+.ios-popup button:focus {
+  background-color: rgba(103, 80, 164, 0.12); /* 12% primary color overlay on focus */
+  color: var(--m3-primary);
+  outline: none; /* Remove default outline */
+}
+
+.ios-popup button:active {
+  background-color: rgba(103, 80, 164, 0.16); /* 16% primary color overlay on active */
+  color: var(--m3-primary);
+}
+
 
 
 a.info-button {
