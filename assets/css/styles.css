@@ -499,7 +499,7 @@ body.menu-open .menu-overlay {
 }
 
 body.dark-mode .card {
-  background: rgba(50, 50, 50, 0.4);
+  background: rgba(50, 50, 50, 0.2);
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
 }
 
