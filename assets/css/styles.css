@@ -154,34 +154,16 @@
   --md3-sys-color-surface-container-high: #2F2F37; /* Default menu background */
   --md3-sys-color-on-surface-variant: #CAC4D0; /* For inactive text */
 
-  /* Menu Item Blue Backgrounds */
-  --md3-menu-item-bg-inactive: #384550; /* Subtle blue-grey background for all items */
-  --md3-menu-active-bg: #333C45; /* Darker grey-blue for active item, as in image */
-  --md3-menu-active-text: #FFFFFF; /* White text on active item */
-  --md3-menu-item-text-inactive: #E6E0E9; /* Light text for inactive items */
+  /* Menu Item Blue Backgrounds (Now only for active 'Profiles') */
+  --md3-menu-active-bg: #1A73E8; /* A vibrant blue for "Profiles" background */
+  --md3-menu-active-text: #FFFFFF; /* White text for active "Profiles" */
 
   /* State Layers for hover/focus/pressed (Dark Mode) */
   --md3-state-layer-on-surface: rgba(230, 224, 234, 0.08); /* 8% onSurface */
 }
 
-/* Light Mode Overrides (if you have a dark mode toggle somewhere else) */
-/* body.light-mode {
-  --md3-sys-color-primary: #6750A4;
-  --md3-sys-color-on-primary: #FFFFFF;
-  --md3-sys-color-primary-container: #EADDFF;
-  --md3-sys-color-on-primary-container: #21005D;
-  --md3-sys-color-surface: #FFFBFE;
-  --md3-sys-color-on-surface: #1C1B1F;
-  --md3-sys-color-surface-container-high: #E6E0E9;
-  --md3-sys-color-on-surface-variant: #49454F;
-
-  --md3-menu-item-bg-inactive: #F0F0F0;
-  --md3-menu-active-bg: #E0E0E0;
-  --md3-menu-active-text: #1C1B1F;
-  --md3-menu-item-text-inactive: #1C1B1F;
-
-  --md3-state-layer-on-surface: rgba(29, 27, 32, 0.08);
-} */
+/* You can remove the light-mode block if you don't have a toggle */
+/* body.light-mode { ... } */
 
 
 /* --- Menu Icon (Hamburger to Cross Animation) --- */
@@ -189,26 +171,26 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 12px;
+  padding: 10px; /* Adjusted padding to make overall button slightly smaller */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 44px; /* Slightly smaller button overall */
+  height: 44px; /* Slightly smaller button overall */
   border-radius: 50%;
   transition: background-color 0.2s ease;
   position: fixed;
-  top: 15px;
-  left: 15px; /* Consistent position with menu header */
-  z-index: 1000;
+  top: 10px; /* Moved up a bit */
+  left: 10px; /* Moved left a bit */
+  z-index: 20000; /* Increased z-index */
   overflow: hidden;
 }
 
 .menu-icon-bar {
   display: block;
-  width: 32px;
-  height: 4px;
+  width: 28px; /* Icon bars little smaller */
+  height: 3px; /* Slightly thinner */
   background-color: #FFFFFF; /* White bars */
   border-radius: 2px;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -216,7 +198,7 @@
 }
 
 .menu-icon-bar-top {
-  transform: translateY(-10px);
+  transform: translateY(-8px); /* Adjusted for smaller icon */
 }
 
 .menu-icon-bar-middle {
@@ -224,7 +206,7 @@
 }
 
 .menu-icon-bar-bottom {
-  transform: translateY(10px);
+  transform: translateY(8px); /* Adjusted for smaller icon */
 }
 
 /* Animation to Cross (when .menu-open is applied to body) */
@@ -260,15 +242,14 @@ body.menu-open .menu-icon-bar-bottom {
   position: fixed;
   top: 0;
   left: 0;
-  width: calc(100% - 60px); /* Covers most of the screen like ReVanced */
-  max-width: 360px; /* Cap width for larger screens */
+  width: calc(100% - 60px);
+  max-width: 360px;
   height: 100%;
   background-color: var(--md3-sys-color-surface-container-high);
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
   
-  /* NEW: Smooth slide animation without scale */
   transform: translateX(-100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); /* Material Design ease-out */
+  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth slide */
   
   z-index: 1020;
   display: flex;
@@ -277,7 +258,8 @@ body.menu-open .menu-icon-bar-bottom {
 
 /* Empty header for spacing consistent with the icon */
 .md3-nav-drawer-header-empty {
-    padding: 24px 16px 16px; /* Provides top padding where title used to be */
+    /* Adjusted padding to move items down a bit, and align with icon */
+    padding: 24px 16px 20px; /* Increased bottom padding */
 }
 
 /* Main list */
@@ -288,15 +270,15 @@ body.menu-open .menu-icon-bar-bottom {
   flex-grow: 1;
 }
 
-/* Individual nav items */
+/* Individual nav items (default styling) */
 .md3-nav-item {
   display: flex;
   align-items: center; /* In line */
   text-decoration: none;
   
-  /* NEW: Constant Blue Round Background for all items */
-  background-color: var(--md3-menu-item-bg-inactive); 
-  color: var(--md3-menu-item-text-inactive); /* Light text for inactive items */
+  /* Default: No background, light text for Photos/Socials */
+  background-color: transparent; 
+  color: var(--md3-sys-color-on-surface-variant); 
   
   padding: 10px 16px;
   margin-bottom: 4px;
@@ -309,22 +291,25 @@ body.menu-open .menu-icon-bar-bottom {
   min-height: 56px;
 }
 
+/* Hover/Focus for inactive items */
 .md3-nav-item:hover {
-  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 92%, var(--md3-state-layer-on-surface));
+  background-color: var(--md3-state-layer-on-surface);
 }
 
 .md3-nav-item:focus {
-  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 88%, var(--md3-state-layer-on-surface));
+  background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
   outline: none;
 }
 
-/* Active Menu Item (ReVanced style: darker grey-blue, rounded background) */
+/* Active "Profiles" Item (Specific Blue Background and Text) */
 .md3-nav-item.active {
-  background-color: var(--md3-menu-active-bg); /* Darker grey-blue from image */
-  color: var(--md3-menu-active-text); /* White text */
-  font-weight: 500; /* ReVanced image uses medium weight */
+  background-color: var(--md3-menu-active-bg); /* Vibrant blue for "Profiles" */
+  color: var(--md3-menu-active-text); /* White text for "Profiles" */
+  font-weight: 500;
   cursor: default;
   pointer-events: none;
+  /* Ensure background doesn't get too massive, controlled by padding */
+  padding: 10px 16px; /* Keep consistent padding */
 }
 
 /* --- Material 3 Expansion List Item --- */
@@ -342,9 +327,9 @@ body.menu-open .menu-icon-bar-bottom {
   border: none;
   cursor: pointer;
   
-  /* NEW: Constant Blue Round Background for expansion header */
-  background-color: var(--md3-menu-item-bg-inactive);
-  color: var(--md3-menu-item-text-inactive); /* Light text for inactive items */
+  /* Default: No background, light text for Socials header */
+  background-color: transparent;
+  color: var(--md3-sys-color-on-surface-variant); 
   
   padding: 10px 16px;
   border-radius: 28px;
@@ -357,14 +342,16 @@ body.menu-open .menu-icon-bar-bottom {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+/* Hover/Focus for Socials header */
 .md3-expansion-header:hover {
-  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 92%, var(--md3-state-layer-on-surface));
+  background-color: var(--md3-state-layer-on-surface);
 }
 
 .md3-expansion-header:focus {
-  background-color: color-mix(in srgb, var(--md3-menu-item-bg-inactive) 88%, var(--md3-state-layer-on-surface));
+  background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
   outline: none;
 }
+
 
 .md3-expansion-arrow {
   margin-left: 16px;
@@ -382,7 +369,6 @@ body.menu-open .menu-icon-bar-bottom {
   padding: 8px 16px 8px 32px;
   max-height: 0;
   overflow: hidden;
-  /* NEW: Smooth transition for expansion content */
   transition: max-height 0.3s ease-out, padding 0.3s ease-out;
 }
 
@@ -421,18 +407,6 @@ body.menu-open .menu-icon-bar-bottom {
 .md3-social-button:active {
   background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 88%, var(--md3-state-layer-on-surface));
   transform: translateY(1px);
-}
-
-
-/* --- JavaScript controlled classes for menu state --- */
-body.menu-open .menu-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-body.menu-open .md3-nav-drawer {
-  /* NEW: Smooth slide in, no scale */
-  transform: translateX(0); 
 }
 
     .copyright {
