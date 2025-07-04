@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/material-dialog.js" defer></script>
 <link rel="stylesheet" href="assets/css/styles.css">
 <link rel="apple-touch-icon" sizes="152x152" href"assets/favicon/apple-icon-152x152.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-icon-180x180.png" />
@@ -80,7 +81,12 @@
   </div>
 
   <!-- Right side: Theme toggle -->
-  <button id="themeToggle" aria-label="Toggle theme"
+    <div class="header-icons">
+  <md-icon-button id="settings-button" aria-label="Settings">
+    <md-icon>settings</md-icon>
+  </md-icon-button>
+</div>
+    <button id="themeToggle" aria-label="Toggle theme"
     style="background: none; border: none; cursor: pointer;">
     <svg id="themeIcon"
       xmlns="http://www.w3.org/2000/svg"
@@ -338,5 +344,54 @@
  </div>
 </div>
 </div>
+<div id="backdrop" class="backdrop hidden"></div>
+<dialog id="settings-modal" class="settings-dialog">
+  <div class="modal-content">
+    <h2>Settings</h2>
+    <label for="theme-select">Theme</label>
+    <select id="theme-select">
+      <option value="system">System</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+    <div class="setting-row">
+      <div class="toggle-setting">
+        <span class="setting-label">Translucency</span>
+        <label class="switch">
+          <input type="checkbox" id="translucency-toggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="setting-row">
+      <label for="font-select">Font</label>
+      <select id="font-select">
+        <option value="system">System Default</option>
+        <option value="OneUISans">OneUISans</option>
+        <option value="Roboto">Roboto</option>
+        <option value="Open Sans">Open Sans</option>
+      </select>
+    </div>
+    <div class="setting-item">
+    <label for="background-select" class="setting-label">Background Image:</label>
+    <div class="background-image-controls">
+        <button id="choose-background-button" class="image-picker-button">
+            <md-icon>image</md-icon> Image picker
+        </button>
+        <button id="clear-background-button" class="image-picker-button clear-button">
+            <md-icon>close</md-icon> Clear
+        </button>
+
+        <input type="file" id="image-upload-input" accept="image/*" style="display: none;">
+
+        <span id="current-background-status" class="background-status">None selected</span>
+    </div>
+</div>
+    <div class="modal-actions">
+      <button id="reset-settings-button" class="reset-button">Reset</button>
+      <button id="close-settings" class="close-button">Close</button>
+    </div>
+  </div>
+</dialog>
 </body>
 </html>
