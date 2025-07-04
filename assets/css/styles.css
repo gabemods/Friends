@@ -1,4 +1,8 @@
-    @font-face {
+:root {
+      --transition: 0.25s ease-in-out;
+}
+
+@font-face {
   font-family: 'OneUISans';
   src: url('../fonts/OneUISans-Regular.ttf') format('truetype');
   font-weight: normal;
@@ -11,6 +15,7 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
+      transition: background var(--transition), color var(--transition), font-family 0.3s ease-in-out;
       background: linear-gradient(to bottom, #007FFF 0%, #00FFFF 100%);
       background-size: cover;
       background-repeat: no-repeat;
