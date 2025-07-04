@@ -518,6 +518,7 @@ body {
     .menu-overlay {
         display: none; /* No overlay needed on desktop */
     }
+}
 
     .copyright {
       position: fixed;
