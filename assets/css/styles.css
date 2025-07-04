@@ -142,293 +142,382 @@
       transform: scale(1.1);
     }
 
-/* --- Base Material 3 Colors (Dark Mode as default for menu) --- */
-:root {
-  /* Default Material 3 Dark Colors */
-  --md3-sys-color-primary: #D0BCFF;
-  --md3-sys-color-on-primary: #381E72;
-  --md3-sys-color-primary-container: #4F378B;
-  --md3-sys-color-on-primary-container: #EADDFF;
-  --md3-sys-color-surface: #1C1B1F;
-  --md3-sys-color-on-surface: #E6E0E9;
-  --md3-sys-color-surface-container-high: #2F2F37; /* Default menu background */
-  --md3-sys-color-on-surface-variant: #CAC4D0; /* For inactive text (ReVanced light grey) */
+:root { /* These are the default light theme variables */
+    --md3-primary: #6750A4;
+    --md3-on-primary: #FFFFFF;
+    --md3-primary-container: #EADDFF;
+    --md3-on-primary-container: #21005D;
+    --md3-secondary: #625B71;
+    --md3-on-secondary: #FFFFFF;
+    --md3-secondary-container: #E8DEF8;
+    --md3-on-secondary-container: #1D192B;
+    --md3-tertiary: #7D5260;
+    --md3-on-tertiary: #FFFFFF;
+    --md3-tertiary-container: #FFD8E4;
+    --md3-on-tertiary-container: #31111D;
+    --md3-error: #B3261E;
+    --md3-on-error: #FFFFFF;
+    --md3-error-container: #F2B8B5;
+    --md3-on-error-container: #410E0B;
+    --md3-background: #FFFBFE;
+    --md3-on-background: #1C1B1F;
+    --md3-surface: #FFFBFE;
+    --md3-on-surface: #1C1B1F;
+    --md3-surface-variant: #E7E0EC;
+    --md3-on-surface-variant: #49454F;
+    --md3-outline: #79747E;
+    --md3-shadow: rgba(0, 0, 0, 0.2);
+    --md3-inverse-surface: #313033;
+    --md3-inverse-on-surface: #F4EFF4;
+    --md3-inverse-primary: #D0BCFF;
+    --md3-surface-dim: #DED8E1;
+    --md3-surface-bright: #FFFBFE;
+    --md3-surface-container-lowest: #FFFFFF;
+    --md3-surface-container-low: #F7F2FA;
+    --md3-surface-container: #F3EDF7;
+    --md3-surface-container-high: #ECE6F0;
+    --md3-surface-container-highest: #E6E0E5;
 
-  /* Menu Item Active Background (ReVanced 'Home' style) */
-  --md3-menu-active-bg: #333C45; /* Dark blue-grey from ReVanced image */
-  --md3-menu-active-text: #FFFFFF; /* White text for active "Profiles" */
-
-  /* State Layers for hover/focus/pressed (Dark Mode) */
-  --md3-state-layer-on-surface: rgba(230, 224, 234, 0.08); /* 8% onSurface */
+    /* Specific to component states */
+    --md3-on-surface-hover: rgba(0, 0, 0, 0.08); /* 8% black overlay */
+    --md3-on-surface-focus: rgba(0, 0, 0, 0.12); /* 12% black overlay */
+    --md3-on-primary-container-hover: rgba(255, 255, 255, 0.08); /* White overlay for containers */
 }
 
-/* Ensure the body doesn't cause issues with menu transitions */
+/* Material 3 Color System - Dark Theme (Applied when body has 'dark' class) */
+body.dark {
+    --md3-primary: #D0BCFF;
+    --md3-on-primary: #381E72;
+    --md3-primary-container: #4F378B;
+    --md3-on-primary-container: #EADDFF;
+    --md3-secondary: #CCC2DC;
+    --md3-on-secondary: #332D41;
+    --md3-secondary-container: #4A4458;
+    --md3-on-secondary-container: #E8DEF8;
+    --md3-tertiary: #EFB8C8;
+    --md3-on-tertiary: #492532;
+    --md3-tertiary-container: #633B48;
+    --md3-on-tertiary-container: #FFD8E4;
+    --md3-error: #F2B8B5;
+    --md3-on-error: #601410;
+    --md3-error-container: #8C1D18;
+    --md3-on-error-container: #F2B8B5;
+    --md3-background: #1C1B1F;
+    --md3-on-background: #E6E1E5;
+    --md3-surface: #1C1B1F;
+    --md3-on-surface: #E6E1E5;
+    --md3-surface-variant: #49454F;
+    --md3-on-surface-variant: #CAC4D0;
+    --md3-outline: #938F99;
+    --md3-shadow: rgba(0, 0, 0, 0.5);
+    --md3-inverse-surface: #E6E1E5;
+    --md3-inverse-on-surface: #313033;
+    --md3-inverse-primary: #6750A4;
+    --md3-surface-dim: #1C1B1F;
+    --md3-surface-bright: #363438;
+    --md3-surface-container-lowest: #0F0D13;
+    --md3-surface-container-low: #1C1B1F;
+    --md3-surface-container: #211F26;
+    --md3-surface-container-high: #2B2930;
+    --md3-surface-container-highest: #363438;
+
+    /* Specific to component states */
+    --md3-on-surface-hover: rgba(255, 255, 255, 0.08); /* 8% white overlay */
+    --md3-on-surface-focus: rgba(255, 255, 255, 0.12); /* 12% white overlay */
+    --md3-on-primary-container-hover: rgba(0, 0, 0, 0.08);
+}
+
+/* Apply theme variables to body */
 body {
-    margin: 0;
-    padding: 0;
-    /* This is important: if body has overflow: hidden by default, it can block the slide */
-    overflow-x: hidden; /* Prevent horizontal scroll bars, but allow vertical by default */
+    background-color: var(--md3-background);
+    color: var(--md3-on-background);
 }
 
-/* Fix: Prevent scrolling when menu is open */
-body.menu-open {
-    overflow: hidden; 
+/* Main Content Area */
+.content {
+    flex-grow: 1; /* Takes remaining space */
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out; /* For desktop menu pushing content */
 }
 
+/* Menu Toggle Button */
+.menu-container {
+    position: fixed; /* Keep it fixed at the top-left */
+    top: 0;
+    left: 0;
+    z-index: 1002; /* Above menu and overlay */
+    padding: 16px; /* Padding around the button area */
+}
 
-/* --- Menu Icon (Hamburger to Cross Animation) --- */
 .menu-icon {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-  position: fixed;
-  top: 5px;
-  left: 10px;
-  z-index: 100000; /* Highest z-index for the cross */
-  overflow: hidden; /* Important for the bar animation */
+    background: var(--md3-surface-container-high); /* A subtle surface color for the button */
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px var(--md3-shadow);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    outline: none; /* Remove default focus outline */
+}
+
+.menu-icon:hover {
+    background-color: var(--md3-surface-container-highest); /* Slightly darker on hover */
+    box-shadow: 0 4px 8px var(--md3-shadow);
+}
+
+.menu-icon:focus-visible {
+    /* Better focus state for accessibility */
+    box-shadow: 0 0 0 4px var(--md3-primary);
+    background-color: var(--md3-surface-container-highest);
 }
 
 .menu-icon-bar {
-  display: block;
-  width: 28px;
-  height: 3px;
-  background-color: #FFFFFF; /* White bars */
-  border-radius: 2px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: var(--md3-on-surface-variant); /* Color of the bars */
+    margin: 3px 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.menu-icon-bar-top {
-  transform: translateY(-8px);
+/* Animation for menu icon when menu is open */
+.menu-container.open .menu-icon-bar-top {
+    transform: translateY(8px) rotate(45deg);
 }
 
-.menu-icon-bar-middle {
-  opacity: 1;
+.menu-container.open .menu-icon-bar-middle {
+    opacity: 0;
 }
 
-.menu-icon-bar-bottom {
-  transform: translateY(8px);
+.menu-container.open .menu-icon-bar-bottom {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Animation to Cross (when .menu-open is applied to body) */
-body.menu-open .menu-icon-bar-top {
-  transform: translateY(0) rotate(45deg);
-}
-
-body.menu-open .menu-icon-bar-middle {
-  opacity: 0;
-}
-
-body.menu-open .menu-icon-bar-bottom {
-  transform: translateY(0) rotate(-45deg);
-}
-
-
-/* --- Menu Overlay --- */
+/* Menu Overlay (for mobile/tablet) */
 .menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 99998; /* Below menu drawer */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999; /* Below menu, above content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-/* --- Navigation Drawer --- */
+.menu-container.open + .menu-overlay { /* Selector for overlay when menu-container is open */
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Navigation Drawer (Side Menu) */
 .md3-nav-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: calc(100% - 60px);
-  max-width: 360px;
-  height: 100%;
-  background-color: var(--md3-sys-color-surface-container-high);
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.4);
-  
-  transform: translateX(-100%); /* Start hidden */
-  transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); /* Smooth slide */
-  
-  z-index: 99999; /* Menu drawer z-index */
-  display: flex;
-  flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: -280px; /* Hidden by default */
+    width: 280px;
+    height: 100%;
+    background-color: var(--md3-surface);
+    color: var(--md3-on-surface);
+    box-shadow: 2px 0 8px var(--md3-shadow);
+    transition: left 0.3s ease-in-out;
+    z-index: 1000; /* Below toggle button, above overlay */
+    display: flex;
+    flex-direction: column;
 }
 
-/* When menu is open, slide it into view */
-body.menu-open .md3-nav-drawer {
-  transform: translateX(0); 
+.menu-container.open ~ .md3-nav-drawer { /* Adjust selector to target the nav drawer when menu-container is open */
+    left: 0; /* Show the menu */
 }
 
-/* When menu is open, show the overlay */
-body.menu-open .menu-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-
-/* Empty header for spacing consistent with the icon */
 .md3-nav-drawer-header-empty {
-    padding: 24px 16px 20px; 
+    height: 64px; /* Space for the top bar/status bar */
+    /* Add any branding/logo here if desired */
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    color: var(--md3-on-surface);
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
-/* Main list */
 .md3-nav-list {
-  list-style: none;
-  padding: 4px 12px; /* Reduced top padding to reduce gap above first item */
-  margin: 0;
-  flex-grow: 1;
+    list-style: none;
+    padding: 8px 0; /* Material 3 recommends 8px padding top/bottom for lists */
+    margin: 0;
 }
 
-/* Individual nav items (default styling for Photos/Socials) */
 .md3-nav-item {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  
-  background-color: transparent; /* No background by default */
-  color: var(--md3-sys-color-on-surface-variant); /* Light grey text for others */
-  
-  padding: 10px 16px; /* Standard padding */
-  margin-bottom: 2px; /* Reduced gap between items */
-  border-radius: 28px; /* Rounded corners */
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 24px; /* Standard line height */
-  transition: background-color 0.2s ease, color 0.2s ease;
-  min-height: 56px; /* Material 3 standard min height for clickable areas */
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: var(--md3-on-surface);
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 28px; /* For pill shape */
+    margin: 0 12px 4px 12px; /* Margins for the pill effect */
 }
 
-/* Hover/Focus for inactive items */
+.md3-nav-item .material-icons {
+    margin-right: 12px; /* Material 3 icon spacing */
+    font-size: 24px;
+    color: var(--md3-on-surface-variant); /* Icon color */
+}
+
 .md3-nav-item:hover {
-  background-color: var(--md3-state-layer-on-surface);
+    background-color: var(--md3-on-surface-hover);
 }
 
-.md3-nav-item:focus {
-  background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
-  outline: none;
+.md3-nav-item:focus-visible {
+    background-color: var(--md3-on-surface-focus);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--md3-primary); /* Focus ring */
 }
 
-/* Active "Profiles" Item (ReVanced 'Home' style: dark blue-grey background, white text) */
+/* Active navigation item (example) */
 .md3-nav-item.active {
-  background-color: var(--md3-menu-active-bg); /* Dark blue-grey from image */
-  color: var(--md3-menu-active-text); /* White text for "Profiles" */
-  font-weight: 500;
-  cursor: default;
-  pointer-events: none;
-  
-  padding: 8px 16px; /* Reduced vertical padding for compact look */
-  margin-bottom: 2px; /* Maintain small gap */
-  line-height: 40px; /* Controls vertical size to be less tall */
-  min-height: auto; /* Allow height to be determined by padding + line-height */
+    background-color: var(--md3-secondary-container);
+    color: var(--md3-on-secondary-container);
+}
+.md3-nav-item.active .material-icons {
+    color: var(--md3-on-secondary-container);
 }
 
-/* --- Material 3 Expansion List Item --- */
+
+/* Expansion Item (Dropdown) */
 .md3-expansion-item {
-  list-style: none;
-  padding: 0 12px;
-  margin-bottom: 2px; /* Reduced gap between items */
+    margin: 0 12px 4px 12px;
 }
 
 .md3-expansion-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  border: none;
-  cursor: pointer;
-  
-  background-color: transparent; /* No background for Socials header */
-  color: var(--md3-sys-color-on-surface-variant); /* Light grey text for Socials header */
-  
-  padding: 10px 16px;
-  border-radius: 28px;
-  min-height: 56px;
-
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 24px;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--md3-on-surface);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 28px;
+    outline: none;
 }
 
-/* Hover/Focus for Socials header */
+.md3-expansion-header .material-icons {
+    margin-right: 12px;
+    font-size: 24px;
+    color: var(--md3-on-surface-variant);
+}
+
 .md3-expansion-header:hover {
-  background-color: var(--md3-state-layer-on-surface);
+    background-color: var(--md3-on-surface-hover);
 }
 
-.md3-expansion-header:focus {
-  background-color: color-mix(in srgb, var(--md3-sys-color-on-surface-variant) 12%, var(--md3-state-layer-on-surface));
-  outline: none;
+.md3-expansion-header:focus-visible {
+    background-color: var(--md3-on-surface-focus);
+    box-shadow: 0 0 0 2px var(--md3-primary);
 }
-
 
 .md3-expansion-arrow {
-  margin-left: 24px; /* Increased margin for more distance from text */
-  transition: transform 0.2s ease;
+    margin-left: auto; /* Push arrow to the right */
+    transition: transform 0.3s ease-in-out;
+    font-size: 24px; /* Material Icon size */
 }
 
 .md3-expansion-header[aria-expanded="true"] .md3-expansion-arrow {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 .md3-expansion-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: 8px;
-  /* Reduced top padding for a tighter fit after header */
-  padding: 4px 16px 8px 32px; 
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding-left: 20px; /* Indent content */
 }
 
-.md3-expansion-header[aria-expanded="true"] + .md3-expansion-content {
-  max-height: 200px;
-  padding: 8px 16px 8px 32px;
+.md3-expansion-content.show {
+    max-height: 200px; /* Adjust as needed based on content */
 }
 
+/* Social Buttons within Expansion */
 .md3-social-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: var(--md3-sys-color-surface-container-high);
-  color: var(--md3-sys-color-on-surface-variant);
-  text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  box-shadow: 0px 1px 2px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    padding: 10px 16px; /* Slightly less padding than main items */
+    text-decoration: none;
+    color: var(--md3-on-surface);
+    font-size: 0.95em;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 28px;
+    margin: 0 12px 4px 12px; /* Match parent container's margin */
 }
 
-.md3-social-button svg,
-.md3-social-button img {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
+.md3-social-button .material-icons {
+    margin-right: 12px;
+    font-size: 20px; /* Slightly smaller icons for sub-items */
+    color: var(--md3-on-surface-variant);
 }
+
+/* For your custom SVG icons, if you keep them */
+.md3-social-button svg {
+    margin-right: 12px;
+    height: 20px; /* Set height for SVG icons */
+    width: 20px;
+    fill: var(--md3-on-surface-variant); /* Fill color based on theme */
+    transition: fill 0.2s ease-in-out;
+}
+
+.md3-social-button img { /* For your Snapchat PNG */
+    margin-right: 12px;
+    height: 20px; /* Set height for PNG/JPG icons */
+    width: 20px;
+    object-fit: contain;
+}
+
 
 .md3-social-button:hover {
-  background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 92%, var(--md3-state-layer-on-surface));
+    background-color: var(--md3-on-surface-hover);
 }
 
-.md3-social-button:active {
-  background-color: color-mix(in srgb, var(--md3-sys-color-surface-container-high) 88%, var(--md3-state-layer-on-surface));
-  transform: translateY(1px);
+.md3-social-button:focus-visible {
+    background-color: var(--md3-on-surface-focus);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--md3-primary);
 }
+
+
+/* Responsive adjustments for larger screens (e.g., desktop) */
+@media (min-width: 768px) {
+    .menu-container {
+        display: none; /* Hide toggle button on desktop */
+    }
+
+    .md3-nav-drawer {
+        position: static; /* Always visible on desktop */
+        left: 0; /* Ensure it's not off-screen */
+        box-shadow: none; /* No shadow needed when fixed */
+        width: 280px; /* Fixed width */
+        flex-shrink: 0; /* Don't let it shrink */
+    }
+
+    .content {
+        margin-left: 0; /* No push on content since drawer is static */
+    }
+
+    .menu-overlay {
+        display: none; /* No overlay needed on desktop */
+    }
 
     .copyright {
       position: fixed;
